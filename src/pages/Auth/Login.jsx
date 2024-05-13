@@ -7,7 +7,7 @@ const Login = () => {
         console.log("Received Values", values)
     }
     return (
-        <div className=''>
+        <div>
             <h1 className='text-[#12354E] text-2xl leading-8 poppins-semibold text-center mb-6'>Login to Account</h1>
             <p className='text-[#607888] text-sm leading-[21px] poppins-regular text-center'>Please enter your email and password to continue</p>
 
@@ -64,7 +64,7 @@ const Login = () => {
                     <a
                         className="poppins-medium text-base leading-6"
                         style={{ color: "#F16365" }}
-                        href="/forgot-password"
+                        href="/auth/forgot-password"
                     >
                         Forgot password
                     </a>
@@ -81,7 +81,8 @@ const Login = () => {
                             border: "1px solid #E0E0E0",
                             outline: "none",
                             margin: "0 auto",
-                            color: "white"
+                            color: "white",
+                            borderRadius: 8
                         }}
                         className='roboto-medium-italic text-[14px] leading-[17px]'
                     >
