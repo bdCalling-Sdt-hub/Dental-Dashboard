@@ -50,55 +50,20 @@ const Sidebar = () => {
             path: "/user-list"
         },
         {
-            id: 5,
+            id: 6,
             title: "Data Setting",
             icon: < BsDatabaseFillGear size={24} />,
             path: "/settings",
             subMenu: [
                 {
                     id: 1,
-                    title: "Hero Slider",
+                    title: "Contact Setting",
                     path: "/hero-slider"
                 },
                 {
-                    id: 3,
-                    title: "2nd Slider",
+                    id: 2,
+                    title: "Maintain Patient Category",
                     path: "/second-slider"
-                },
-                {
-                    id: 4,
-                    title: "Trending Brands",
-                    path: "/brands"
-                },
-                {
-                    id: 6,
-                    title: "Blog",
-                    path: "/blog"
-                },
-                {
-                    id: 7,
-                    title: "Contact",
-                    path: "/contact"
-                },
-                {
-                    id: 8,
-                    title: "FAQ",
-                    path: "/faq"
-                },
-                {
-                    id: 9,
-                    title: "About Us",
-                    path: "/about-us"
-                },
-                {
-                    id: 10,
-                    title: "Terms & Condition",
-                    path: "/terms-condition"
-                },
-                {
-                    id: 11,
-                    title: "Privacy Policy",
-                    path: "/privacy-policy"
                 },
 
             ]
@@ -111,54 +76,44 @@ const Sidebar = () => {
 
         },
         {
-            id: 5,
+            id: 8,
             title: "Interface Setting",
             icon: < RiListSettingsFill size={24} />,
             path: "/settings",
             subMenu: [
                 {
                     id: 1,
-                    title: "Hero Slider",
+                    title: "1st Slider",
                     path: "/hero-slider"
                 },
                 {
-                    id: 3,
-                    title: "2nd Slider",
+                    id: 2,
+                    title: "Offer Slider",
                     path: "/second-slider"
                 },
                 {
-                    id: 4,
-                    title: "Trending Brands",
+                    id: 3,
+                    title: "FAQ",
                     path: "/brands"
                 },
                 {
-                    id: 6,
-                    title: "Blog",
-                    path: "/blog"
-                },
-                {
-                    id: 7,
-                    title: "Contact",
-                    path: "/contact"
-                },
-                {
-                    id: 8,
-                    title: "FAQ",
-                    path: "/faq"
-                },
-                {
-                    id: 9,
+                    id: 4,
                     title: "About Us",
                     path: "/about-us"
                 },
                 {
-                    id: 10,
+                    id: 5,
                     title: "Terms & Condition",
                     path: "/terms-condition"
                 },
                 {
-                    id: 11,
+                    id: 6,
                     title: "Privacy Policy",
+                    path: "/privacy-policy"
+                },
+                {
+                    id: 7,
+                    title: "Smart Check",
                     path: "/privacy-policy"
                 },
 
@@ -166,7 +121,7 @@ const Sidebar = () => {
         },
         
         {
-            id: 8,
+            id: 9,
             title: "Make Admin",
             icon: <MdOutlineAdminPanelSettings size={24} />,
             path: "/make-admin"
