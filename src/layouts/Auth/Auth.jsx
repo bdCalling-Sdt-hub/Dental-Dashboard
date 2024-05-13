@@ -16,8 +16,10 @@ const Auth = () => {
                 flex items-center justify-end
             "
         >
-            <div className="w-[681px] h-[400px] rounded-lg bg-[#F9F9F9] mr-[60px]">
-                <Outlet />
+            <div className="w-[681px] h-[600px] rounded-lg bg-[#F9F9F9] mr-[60px] flex items-center justify-center">
+                <div className="w-[481px]">
+                    <Outlet />
+                </div>
             </div>
         </div>
     )
