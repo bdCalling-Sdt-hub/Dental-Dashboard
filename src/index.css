@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* otp input box style css */
+.ant-input-outlined{
+    width: 56px;
+    height: 49px;
+    border-radius: 8px;
+}
+
+/* sweat alert custom button style css */
+.custom-send-button {
+    background-color: #12354E !important; /* Green */
+    border: none;
+    outline: none;
+    width: 121px;
+    height: 48px;
+    border-radius: 8px !important;
+    color: white;
+    box-shadow: none !important;
+    font-family: Roboto;
+}

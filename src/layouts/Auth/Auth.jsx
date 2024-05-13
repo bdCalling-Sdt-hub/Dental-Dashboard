@@ -17,7 +17,7 @@ const Auth = () => {
             "
         >
             <div className="w-[681px] h-[600px] rounded-lg bg-[#F9F9F9] mr-[60px] flex items-center justify-center">
-                <div className="w-[481px]">
+                <div className="w-[481px] border">
                     <Outlet />
                 </div>
             </div>

@@ -1,36 +1,44 @@
-import { Button, Form, Input } from 'antd';
 import Heading from '../../components/Heading';
+import { Button, Form, Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
-const ForgotPassword = () => {
+const VerifyOtp = () => {
     const navigate = useNavigate();
+
+    const onChange = (text) => {
+        console.log('onChange:', text);
+    };
+
+    const sharedProps = {
+        onChange,
+    };
+
     const handleSubmit=(values)=>{
         console.log("Received Values", values);
-        navigate("/auth/verify-otp")
+        navigate("/auth/update-password")
     }
+
     return (
         <div>
-            <Heading title={"Forgot Password"} />
+            <Heading title={"Verify OTP"} />
+            <p className='poppins-regular text-base leading-6' style={{width: "380px", color: "#929394",  margin: "0 auto 30px auto"}}>
+                We sent a reset link to <span style={{color: "#545454"}}> contact@dscode...com </span>
+                enter 6 digit code that mentioned in the email
+            </p>
             <Form onFinish={handleSubmit}>
-                <label className='block mb-[5px]'>Email</label>
                 <Form.Item
+                    style={{display: "flex", alignItems: "center", justifyContent: 'center'}}
                     rules={[
                         {
                             required: true,
-                            message: "Please Enter Email"
+                            message: "Please Enter Valid OTP"
                         }
                     ]}
-                    name={"email"}
+                    name={"otp"}
                 >
-                    <Input
-                        placeholder='Enter Your Email'
-                        style={{
-                            background: "transparent",
-                            width: "100%",
-                            height: 50,
-                            border: "1px solid #E0E0E0",
-                            outline: "none"
-                        }}
+                    <Input.OTP 
+                        length={5} 
+                        {...sharedProps} 
                     />
                 </Form.Item>
 
@@ -49,7 +57,7 @@ const ForgotPassword = () => {
                         }}
                         className='roboto-medium-italic text-[14px] leading-[17px]'
                     >
-                        Send code
+                        Verity Code
                     </Button>
                 </Form.Item>
             </Form>
@@ -57,4 +65,4 @@ const ForgotPassword = () => {
     )
 }
 
-export default ForgotPassword;
+export default VerifyOtp
