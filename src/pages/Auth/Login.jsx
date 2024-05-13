@@ -1,5 +1,6 @@
 import { Button, Checkbox, Form, Input } from 'antd';
 import { useState } from 'react';
+import Heading from "../../components/Heading";
 
 const Login = () => {
     const [checked, setChecked] = useState(false);
@@ -8,7 +9,7 @@ const Login = () => {
     }
     return (
         <div>
-            <h1 className='text-[#12354E] text-2xl leading-8 poppins-semibold text-center mb-6'>Login to Account</h1>
+            <Heading title={"Login to Account"} />
             <p className='text-[#607888] text-sm leading-[21px] poppins-regular text-center'>Please enter your email and password to continue</p>
 
             <Form onFinish={handleSubmit} className='mt-6'>
