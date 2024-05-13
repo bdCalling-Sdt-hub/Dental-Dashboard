@@ -22,3 +22,14 @@
     box-shadow: none !important;
     font-family: Roboto;
 }
+
+/* custom style css for ant design side menu */
+.ant-menu-light.ant-menu-root.ant-menu-inline{
+    border-inline-end: none !important;
+}
+
+/* sidemenu selected style css */
+.ant-menu-light .ant-menu-item-selected{
+    background: #12354E !important;
+    color: white !important;
+}
