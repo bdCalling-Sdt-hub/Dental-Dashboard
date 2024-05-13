@@ -10,7 +10,7 @@ const ForgotPassword = () => {
     }
     return (
         <div>
-            <Heading title={"Forgot Password"} />
+            <Heading title={"Forgot Password"} style="mb-6" />
             <Form onFinish={handleSubmit}>
                 <label className='block mb-[5px]'>Email</label>
                 <Form.Item

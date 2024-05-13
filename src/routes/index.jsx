@@ -5,16 +5,17 @@ import ForgotPassword from "../pages/Auth/ForgotPassword";
 import VerifyOtp from "../pages/Auth/VerifyOtp";
 import UpdatePassword from "../pages/Auth/UpdatePassword";
 import Main from "../layouts/Main/Main";
+import Home from "../pages/Main/Home";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Main/>,
         children: [
-            /* {
+            {
                 path: "/",
-                element: <DashboardHome/>
-            } */
+                element: <Home/>
+            }
         ]
     },
     {

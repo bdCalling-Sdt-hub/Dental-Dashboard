@@ -24,7 +24,7 @@ const UpdatePassword = () => {
 
     return (
         <div>
-            <Heading title={"Set New Password"} />
+            <Heading title={"Set New Password"} style="mb-6" />
             <p className='poppins-regular text-base leading-6 text-center' style={{width: "320px", color: "#929394",  margin: "0 auto 30px auto"}}>
                 Create a new password. Ensure it differs from previous ones for security
             </p>

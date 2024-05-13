@@ -20,7 +20,7 @@ const VerifyOtp = () => {
 
     return (
         <div>
-            <Heading title={"Verify OTP"} />
+            <Heading title={"Verify OTP"}  style="mb-6" />
             <p className='poppins-regular text-base leading-6' style={{width: "380px", color: "#929394",  margin: "0 auto 30px auto"}}>
                 We sent a reset link to <span style={{color: "#545454"}}> contact@dscode...com </span>
                 enter 6 digit code that mentioned in the email
