@@ -9,6 +9,7 @@ import Home from "../pages/Main/Home";
 import PatientList from "../pages/Main/PatientList";
 import CreatePatientProfile from "../pages/Main/CreatePatientProfile";
 import Chat from "../pages/Main/Chat";
+import Package from "../pages/Main/Package";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
             {
                 path: "chat",
                 element: <Chat/>
+            },
+            {
+                path: "package",
+                element: <Package/>
             }
         ]
     },

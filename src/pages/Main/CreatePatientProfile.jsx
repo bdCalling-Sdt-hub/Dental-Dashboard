@@ -64,7 +64,7 @@ const CreatePatientProfile = () => {
             `,
             confirmButtonText: 'Send Email',
             customClass: {
-              confirmButton: 'custom-send-button',
+                confirmButton: 'custom-send-button',
             }
         }).then((result) => {
             if (result.isConfirmed) {
