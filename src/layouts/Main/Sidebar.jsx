@@ -29,7 +29,7 @@ const Sidebar = () => {
             id: 2,
             title: "Create Patient Profile",
             icon: <RiUserAddFill size={24} />,
-            path: "/products"
+            path: "/create-patient-profile"
         },
         {
             id: 3,

@@ -7,6 +7,7 @@ import UpdatePassword from "../pages/Auth/UpdatePassword";
 import Main from "../layouts/Main/Main";
 import Home from "../pages/Main/Home";
 import PatientList from "../pages/Main/PatientList";
+import CreatePatientProfile from "../pages/Main/CreatePatientProfile";
 
 const router = createBrowserRouter([
     {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
             {
                 path: "patient-list",
                 element: <PatientList/>
+            },
+            {
+                path: "create-patient-profile",
+                element: <CreatePatientProfile/>
             }
         ]
     },

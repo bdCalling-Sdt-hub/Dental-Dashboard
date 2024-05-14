@@ -85,3 +85,12 @@ h1, h2, h3, h4, h5, h6, tr, td, th, span, p, li, ul{
 }
 
 /* ant design pagition custom css end here */
+
+/* sweat alert  custom styles csss*/
+
+.patient-profile{
+    color: #607888 !important;
+    font-size: 14px;
+    line-height: 21px;
+    font-family: 'Courier New', Courier, monospace;
+}

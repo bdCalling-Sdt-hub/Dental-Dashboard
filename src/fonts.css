@@ -131,7 +131,7 @@
 .roboto-light-italic {
     font-family: "Roboto", sans-serif;
     font-weight: 300;
-    font-style: italic;
+    font-style: normal;
 }
   
 .roboto-regular {
@@ -140,20 +140,8 @@
     font-style: normal;
 }
   
-.roboto-regular-italic {
-    font-family: "Roboto", sans-serif;
-    font-weight: 400;
-    font-style: italic;
-}
-  
 .roboto-medium {
     font-family: "Roboto", sans-serif;
-    font-weight: 500;
-    font-style: normal;
-}
-  
-.roboto-medium-italic {
-    font-family: "Roboto";
     font-weight: 500;
     font-style: normal;
 }
