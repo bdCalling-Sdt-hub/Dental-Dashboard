@@ -35,7 +35,7 @@ const Sidebar = () => {
             id: 3,
             title: "Patient List",
             icon: <FaUserGroup size={24} />,
-            path: "/user-list"
+            path: "/patient-list"
         },
         {
             id: 4,

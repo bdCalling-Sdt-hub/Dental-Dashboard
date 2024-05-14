@@ -6,6 +6,7 @@ import VerifyOtp from "../pages/Auth/VerifyOtp";
 import UpdatePassword from "../pages/Auth/UpdatePassword";
 import Main from "../layouts/Main/Main";
 import Home from "../pages/Main/Home";
+import PatientList from "../pages/Main/PatientList";
 
 const router = createBrowserRouter([
     {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <Home/>
+            },
+            {
+                path: "patient-list",
+                element: <PatientList/>
             }
         ]
     },

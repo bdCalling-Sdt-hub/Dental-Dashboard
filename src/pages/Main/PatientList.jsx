@@ -1,19 +1,22 @@
-import { Link } from "react-router-dom"
-import Heading from "../Heading"
-import React, { useState } from "react";
 import person from "../../assets/person.png";
+import PatientEditModal from "../../components/Modal/PatientEditModal";
+import PatientDetailsModal from "../../components/Modal/PatientDetailsModal";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { RiEdit2Line } from "react-icons/ri";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Swal from "sweetalert2";
-import PatientEditModal from "../Modal/PatientEditModal";
-import PatientDetailsModal from "../Modal/PatientDetailsModal";
+import React, { useState } from "react";
+import Heading from "../../components/Heading";
+import { Input, Pagination, Select } from "antd";
+import { GoSearch } from "react-icons/go";
+const { Option } = Select;
 
-
-const PatientListTable = () => {
+const PatientList = () => {
     const [detailsModal, setDetailsModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
 
+
+    // delete patient function
     const handleDelete=()=>{
         Swal.fire({
             title: "Are Your Sure ?",
@@ -28,14 +31,46 @@ const PatientListTable = () => {
             }
         });
     }
+
     return (
-        <>
-            <div className='flex items-center justify-between p-4'>
+        <div>
+
+            {/* header section */}
+            <div className='flex items-center justify-between'>
                 <Heading title={"Patient List"}/>
-                <Link className='underline poppins-regular text-[#707070] text-[12px] leading-[18px] pb-[4px]' to={"/patient-list"}>View All</Link>
+                <div className="flex items-center gap-6">
+                    <Input
+                        prefix={<GoSearch color="#B6C0C8" size={16} />}
+                        placeholder="Enter Search..."
+                        style={{
+                            width: 320,
+                            height: 48,
+                            border: "1px solid #E7EBED",
+                            outline: "none",
+                            borderRadius: 8
+                        }}
+                        className="poppins-regular text-[#B6C0C8] text-[14px] leading-5"
+                    />
+
+                    <Select
+                        style={{
+                            width: 250,
+                            height: 48,
+                            border: "1px solid #E7EBED",
+                            outline: "none",
+                            borderRadius: 8
+                        }}
+                        className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
+                        defaultValue={"Gum"}
+                    >
+                        <Option value="gum">Gum</Option>
+                        <Option value="cavities">Cavities</Option>
+                    </Select>
+                </div>
             </div>
-                
-            <table className="w-full table">
+
+            {/* table container start here */}
+            <table className="w-full table my-5">
                 <thead>
                     <tr className="text-left w-full bg-[#E7EBED] custom-table-list">
                         {
@@ -50,7 +85,7 @@ const PatientListTable = () => {
 
                 <tbody>
                     {
-                        [...Array(5)].map((item, index)=>
+                        [...Array(10)].map((item, index)=>
                         <React.Fragment key={index}>
                             <tr className={`${(index + 1) % 2 === 0 ? 'bg-[#FCF8F9]' : 'bg-white'}`}>
                                 <td>{index + 1}</td>
@@ -86,14 +121,25 @@ const PatientListTable = () => {
                     }
                 </tbody>
             </table>
+            {/* table container end here */}
+
+            {/* pagination */}
+            <div className="flex items-center justify-center relative">
+                <Pagination 
+                    defaultCurrent={1} 
+                    total={50}
+                    showTotal={(total, range) => 
+                        <span className="text-[#607888] roboto-regular text-base leading-[18px] absolute top-[25%] left-0">
+                            {`Showing ${range[0]}-${range[1]} of ${total} items`}
+                        </span>
+                    }
+                />
+            </div>
 
             <PatientEditModal editModal={editModal} setEditModal={setEditModal} />
             <PatientDetailsModal open={detailsModal} setOpen={setDetailsModal} />
-
-            
-
-        </>
+        </div>
     )
 }
 
-export default PatientListTable;
+export default PatientList

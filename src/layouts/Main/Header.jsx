@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
     return (
-        <div className='bg-white flex items-end justify-end gap-6 py-3 px-5'>
+        <div className='bg-white flex items-end justify-end gap-6 py-3 pr-10'>
             <div className='w-10 h-10 shadow-lg rounded-full bg-white p-2'>
                 <Link to={"/notification"}>
                     <Badge count={2} color='#E2BCC1'>

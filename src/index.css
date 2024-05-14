@@ -68,3 +68,20 @@ h1, h2, h3, h4, h5, h6, tr, td, th, span, p, li, ul{
 .ant-select-selector{
     border: none !important;
 }
+
+
+/* ant design pagition custom css start here */
+
+.ant-pagination .ant-pagination-item-active{
+    font-weight: 600;
+    background-color: #E2BCC1 !important;
+    border: none !important;
+    border-color: none !important;
+    border-radius: 100% !important;
+}
+
+.ant-pagination .ant-pagination-item-active a{
+    color: #607888 !important;
+}
+
+/* ant design pagition custom css end here */
