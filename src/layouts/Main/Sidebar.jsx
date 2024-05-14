@@ -41,7 +41,7 @@ const Sidebar = () => {
             id: 4,
             title: "Patients Massage",
             icon: <IoChatbubbles size={24} />,
-            path: "/user-list"
+            path: "/chat"
         },
         {
             id: 5,

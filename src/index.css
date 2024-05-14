@@ -98,3 +98,19 @@ h1, h2, h3, h4, h5, h6, tr, td, th, span, p, li, ul{
     line-height: 21px;
     font-family: 'Courier New', Courier, monospace;
 }
+
+
+
+.scroll-bar::-webkit-scrollbar {
+    width: 7px;
+    margin-left: 10px;
+}
+
+.scroll-bar::-webkit-scrollbar-track {
+    background: white;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb {
+    background: #607888;
+    border-radius: 20px;
+}
