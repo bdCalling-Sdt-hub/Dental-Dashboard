@@ -6,11 +6,11 @@ import { MdOutlineArrowOutward } from "react-icons/md";
 import { RiEdit2Line } from "react-icons/ri";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Swal from "sweetalert2";
-import UserEditModal from "../Modal/UserEditModal";
-import UserDetailsModal from "../Modal/UserDetailsModal";
+import PatientEditModal from "../Modal/PatientEditModal";
+import PatientDetailsModal from "../Modal/PatientDetailsModal";
 
 
-const UserlistTable = () => {
+const PatientListTable = () => {
     const [detailsModal, setDetailsModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
 
@@ -31,7 +31,7 @@ const UserlistTable = () => {
     return (
         <>
             <div className='flex items-center justify-between p-4'>
-                <Heading title={"User Details List"}/>
+                <Heading title={"Patient List"}/>
                 <Link className='underline poppins-regular text-[#707070] text-[12px] leading-[18px] pb-[4px]' to={"/product-list"}>View All</Link>
             </div>
                 
@@ -39,7 +39,7 @@ const UserlistTable = () => {
                 <thead>
                     <tr className="text-left w-full bg-[#E7EBED] custom-table-list">
                         {
-                        ["S.ID ", "User", "Email", "Contact", "P. Category", "Actions"].map((item, index)=>
+                        ["S.ID ", "Patient", "Email", "Contact", "P. Category", "Actions"].map((item, index)=>
                             <th key={index} className="text-[#575757] poppins-medium text-[18px] leading-7">
                                 {item}
                             </th>
@@ -87,8 +87,8 @@ const UserlistTable = () => {
                 </tbody>
             </table>
 
-            <UserEditModal editModal={editModal} setEditModal={setEditModal} />
-            <UserDetailsModal open={detailsModal} setOpen={setDetailsModal} />
+            <PatientEditModal editModal={editModal} setEditModal={setEditModal} />
+            <PatientDetailsModal open={detailsModal} setOpen={setDetailsModal} />
 
             
 
@@ -96,4 +96,4 @@ const UserlistTable = () => {
     )
 }
 
-export default UserlistTable;
+export default PatientListTable;

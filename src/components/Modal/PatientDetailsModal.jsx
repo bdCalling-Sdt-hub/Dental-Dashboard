@@ -26,7 +26,7 @@ const UserDetailsModal = ({open, setOpen}) => {
                     <div className="grid grid-cols-1 gap-3 mt-6 px-2">
                         <div className="">
                             <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Name</label>
-                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular">Gum</p>
+                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular">John Cruise</p>
                         </div>
 
                         <div className="">
@@ -36,33 +36,33 @@ const UserDetailsModal = ({open, setOpen}) => {
 
                         <div className="">
                             <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Email</label>
-                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular">Gum</p>
+                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular">johncruise@gmail.com</p>
                         </div>
 
 
                         <div className="">
                             <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Contact No</label>
-                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular">Gum</p>
+                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular">+65974145852</p>
                         </div>
 
                         <div className="">
-                            <label htmlFor="" style={{marginBottom: 8, display: "block"}}>Date of Birth</label>
-                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular">Gum</p>
+                            <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Date of Birth</label>
+                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular">2024-10-10</p>
                         </div>
 
                         <div className="">
                             <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Age</label>
-                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular">Gum</p>
+                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular">21</p>
                         </div>
 
                         <div className="">
                             <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Gender</label>
-                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular">Gum</p>
+                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular">Male</p>
                         </div>
 
                         <div className="">
                             <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Plan</label>
-                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular">Gum</p>
+                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular">Essential Pro</p>
                         </div>
                     </div>
 

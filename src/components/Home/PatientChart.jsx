@@ -49,7 +49,7 @@ const data = [
     amt: 2100,
   },
 ];
-const UserChart = () => {
+const PatientChart = () => {
     const [year, setYear] = useState(new URLSearchParams(window.location.search).get('year') || 2024);
 
     const items = [
@@ -80,7 +80,7 @@ const UserChart = () => {
     return (
         <div className='p-4' style={{ width: '100%', height: '312px' }}>
             <div className='flex items-center justify-between mb-1'>
-                <Heading title="Total Seller" style="mb-0" />
+                <Heading title="Patient Overview" style="mb-0" />
                 <Dropdown  menu={{ items, onClick }}>
                     <p style={{ 
                         cursor: "pointer", 
@@ -120,4 +120,4 @@ const UserChart = () => {
     )
 }
 
-export default UserChart
+export default PatientChart

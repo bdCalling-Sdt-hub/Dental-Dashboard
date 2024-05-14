@@ -5,7 +5,7 @@ import person2 from "../../assets/person2.png";
 const { Option } = Select;
 
 
-const UserEditModal = ({editModal, setEditModal}) => {
+const PatientEditModal = ({editModal, setEditModal}) => {
     return (
         <>
             <Modal
@@ -268,4 +268,4 @@ const UserEditModal = ({editModal, setEditModal}) => {
     )
 }
 
-export default UserEditModal
+export default PatientEditModal

@@ -33,7 +33,7 @@ const Sidebar = () => {
         },
         {
             id: 3,
-            title: "User Details",
+            title: "Patient List",
             icon: <FaUserGroup size={24} />,
             path: "/user-list"
         },

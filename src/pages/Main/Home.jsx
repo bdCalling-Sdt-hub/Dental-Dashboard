@@ -1,12 +1,12 @@
 import { FaUsers } from 'react-icons/fa'
-import UserChart from '../../components/Home/UserChart'
-import UserlistTable from '../../components/Home/UserlistTable'
+import PatientChart from '../../components/Home/PatientChart'
+import PatientListTable from '../../components/Home/PatientListTable'
 
 const Home = () => {
     const item = [
         {
             id: 1,
-            name: "Total Users",
+            name: "Total Patient List",
             total: 520,
             icon: <FaUsers size={40} color='#594A05' />
         },
@@ -69,11 +69,11 @@ const Home = () => {
 
             {/* User overview by chart */}
             <div className='my-6 shadow-lg border rounded-lg'>
-                <UserChart/>
+                <PatientChart/>
             </div>
 
             <div className='shadow-lg border rounded-lg p-1'>
-                <UserlistTable/>
+                <PatientListTable/>
             </div>
         </div>
     )
