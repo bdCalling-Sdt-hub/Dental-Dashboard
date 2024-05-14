@@ -81,7 +81,7 @@ const UserChart = () => {
         <div className='p-4' style={{ width: '100%', height: '312px' }}>
             <div className='flex items-center justify-between mb-1'>
                 <Heading title="Total Seller" style="mb-0" />
-                <Dropdown menu={{ items, onClick }}>
+                <Dropdown  menu={{ items, onClick }}>
                     <p style={{ 
                         cursor: "pointer", 
                         color:'#717171', 

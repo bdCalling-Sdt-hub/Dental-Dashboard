@@ -3,6 +3,16 @@
 @tailwind utilities;
 
 
+*{
+    padding: 0;
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6, tr, td, th, span, p, li, ul{
+    padding: 0;
+    margin: 0;
+}
+
 /* otp input box style css */
 .ant-input-outlined{
     width: 56px;
@@ -32,4 +42,29 @@
 .ant-menu-light .ant-menu-item-selected{
     background: #12354E !important;
     color: white !important;
+}
+
+
+/* table styles css */
+
+.table th {
+    padding: 14px 16px;
+}
+
+.table td {
+    padding: 0 16px;
+}
+
+/* ant design modal remove padding */
+.ant-modal-content{
+    padding: 8px !important;
+}
+
+/* select item color */
+.ant-select-selection-item{
+    color: #6A6A6A !important;
+}
+
+.ant-select-selector{
+    border: none !important;
 }

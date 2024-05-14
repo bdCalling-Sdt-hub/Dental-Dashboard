@@ -1,5 +1,6 @@
 import { FaUsers } from 'react-icons/fa'
 import UserChart from '../../components/Home/UserChart'
+import UserlistTable from '../../components/Home/UserlistTable'
 
 const Home = () => {
     const item = [
@@ -20,7 +21,7 @@ const Home = () => {
         <div>
 
             {/* over view */}
-            <div className='flex items-center justify-center gap-6 '>
+            <div className='grid grid-cols-2 gap-6 '>
                 {
                     item?.map((item, index)=>{
                         return (
@@ -28,7 +29,6 @@ const Home = () => {
                                 key={index}
                                 className='
                                     bg-white
-                                    w-[400px] 
                                     rounded-[10px] 
                                     shadow-lg 
                                     p-6 flex 
@@ -68,8 +68,12 @@ const Home = () => {
             </div>
 
             {/* User overview by chart */}
-            <div className='mt-6 shadow-lg border rounded-lg'>
+            <div className='my-6 shadow-lg border rounded-lg'>
                 <UserChart/>
+            </div>
+
+            <div className='shadow-lg border rounded-lg p-1'>
+                <UserlistTable/>
             </div>
         </div>
     )
