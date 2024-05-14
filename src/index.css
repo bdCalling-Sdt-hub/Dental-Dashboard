@@ -80,6 +80,10 @@ h1, h2, h3, h4, h5, h6, tr, td, th, span, p, li, ul{
     border-radius: 100% !important;
 }
 
+.ant-pagination .ant-pagination-item{
+    border-radius: 100% !important;
+}
+
 .ant-pagination .ant-pagination-item-active a{
     color: #607888 !important;
 }

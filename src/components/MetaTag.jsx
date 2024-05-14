@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet'
 const MetaTag = ({title}) => {
     return (
         <Helmet>
-            <title> {`Star tech - ${title}`}</title>
+            <title> {`Dental - ${title}`}</title>
         </Helmet>
     );
 }

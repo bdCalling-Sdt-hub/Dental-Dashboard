@@ -19,7 +19,7 @@ const Home = () => {
     ]
     return (
         <div>
-
+            
             {/* over view */}
             <div className='grid grid-cols-2 gap-6 '>
                 {

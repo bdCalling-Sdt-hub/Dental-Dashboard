@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import Heading from "../../components/Heading";
 import { Input, Pagination, Select } from "antd";
 import { GoSearch } from "react-icons/go";
+import MetaTag from "../../components/MetaTag";
 const { Option } = Select;
 
 const PatientList = () => {
@@ -34,7 +35,7 @@ const PatientList = () => {
 
     return (
         <div>
-
+            <MetaTag title={"Patient List"}/>
             {/* header section */}
             <div className='flex items-center justify-between'>
                 <Heading title={"Patient List"}/>

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { RiImageAddLine } from "react-icons/ri";
 import { FaRandom } from "react-icons/fa";
 import Swal from "sweetalert2";
+import MetaTag from "../../components/MetaTag"
 const { Option } = Select;
 
 
@@ -74,6 +75,7 @@ const CreatePatientProfile = () => {
 
     return (
         <div className="bg-white shadow-lg rounded-lg p-6">
+            <MetaTag title={"Create Patient Profile"}/>
             <h1 className={`text-[#12354E] text-base leading-8 poppins-semibold text-left mb-5 `}>Create Patient Profile</h1>
             <div>
                 <input onChange={handleChange} type="file" id="img" style={{display: "none"}} />
