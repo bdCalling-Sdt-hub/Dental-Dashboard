@@ -114,7 +114,7 @@ const Sidebar = () => {
                 {
                     id: 7,
                     title: "Smart Check",
-                    path: "/privacy-policy"
+                    path: "/smart-checker"
                 },
 
             ]
