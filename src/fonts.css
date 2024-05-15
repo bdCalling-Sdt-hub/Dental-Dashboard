@@ -145,6 +145,12 @@
     font-weight: 500;
     font-style: normal;
 }
+
+.roboto-semibold {
+    font-family: "Roboto", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+}
   
 .roboto-bold {
     font-family: "Roboto", sans-serif;

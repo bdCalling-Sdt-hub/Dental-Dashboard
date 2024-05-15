@@ -25,6 +25,7 @@ import SmartChecker from "../pages/Main/SmartChecker";
 import OfferSlider from "../pages/Main/OfferSlider";
 import Banner from "../pages/Main/Banner";
 import NotFound from "../pages/Main/NotFound";
+import Profile from "../pages/Main/Profile";
 
 const router = createBrowserRouter([
     {
@@ -106,6 +107,10 @@ const router = createBrowserRouter([
             {
                 path: "banner",
                 element: <Banner/>
+            },
+            {
+                path: "profile",
+                element: <Profile/>
             }
         ]
     },

@@ -12,12 +12,15 @@ const Header = () => {
                     </Badge>
                 </Link>
             </div>
-            <div className='flex items-center gap-[10px]'>
-                <div className='w-10 h-10 rounded-full bg-[#E0E0E0] p-2 border-[#12354E] border-[2px]'>
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="" />
+
+            <Link to={"/profile"}>
+                <div className='flex items-center gap-[10px]' >
+                    <div className='w-10 h-10 rounded-full bg-[#E0E0E0] p-2 border-[#12354E] border-[2px]'>
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="" />
+                    </div>
+                    <p className='text-[16px] font-medium leading-6 text-[#575757]'>Nadir Hossain</p>
                 </div>
-                <p className='text-[16px] font-medium leading-6 text-[#575757]'>Nadir Hossain</p>
-            </div>
+            </Link>
         </div>
     )
 }
