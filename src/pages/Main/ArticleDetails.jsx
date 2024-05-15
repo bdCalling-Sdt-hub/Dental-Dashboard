@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Heading from '../../components/Heading';
 import MetaTag from '../../components/MetaTag';
 import { GoArrowLeft, GoSearch } from "react-icons/go";
@@ -39,21 +39,23 @@ const ArticleDetails = () => {
                         suffix={<IoClose onClick={()=>setKeyword("")} className={`${keyword ? "block" : "hidden"} cursor-pointer`} color="#B6C0C8" size={16} />}
                         className="poppins-regular text-[#B6C0C8] text-[14px] leading-5"
                     />
-                    <Button
-                        style={{
-                            background: "#12354E",
-                            width: 134,
-                            height: 40,
-                            border: "none",
-                            outline: "none",
-                            color: "#FCFCFC",
-                            borderRadius: 8,
-                        }}
-                        className='roboto-regular text-[14px] leading-[17px] flex items-center justify-center'
-                        icon={<HiOutlinePlusSm color="#FCFCFC" size={20} />}
-                    >
-                        Add Article
-                    </Button>
+                    <Link to={`/create-article/${name}`}>
+                        <Button
+                            style={{
+                                background: "#12354E",
+                                width: 134,
+                                height: 40,
+                                border: "none",
+                                outline: "none",
+                                color: "#FCFCFC",
+                                borderRadius: 8,
+                            }}
+                            className='roboto-regular text-[14px] leading-[17px] flex items-center justify-center'
+                            icon={<HiOutlinePlusSm color="#FCFCFC" size={20} />}
+                        >
+                            Add Article
+                        </Button>
+                    </Link>
                 </div>
             </div>
             <MetaTag title={`${name} Articles`} />

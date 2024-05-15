@@ -13,6 +13,7 @@ import Package from "../pages/Main/Package";
 import ArticleDetails from "../pages/Main/ArticleDetails";
 import Article from "../pages/Main/Article";
 import EditArticalBlog from "../pages/Main/EditArticalBlog";
+import CreateArticle from "../pages/Main/CreateArticle";
 
 const router = createBrowserRouter([
     {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
             {
                 path: "edit-article-blog/:id",
                 element: <EditArticalBlog/>
+            },
+            {
+                path: "create-article/:id",
+                element: <CreateArticle/>
             }
         ]
     },
