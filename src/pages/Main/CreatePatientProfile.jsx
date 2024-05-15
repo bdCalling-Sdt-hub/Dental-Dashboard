@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Button, Form, Input, Select } from "antd";
 import { useState } from "react";
 import { RiImageAddLine } from "react-icons/ri";

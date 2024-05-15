@@ -58,12 +58,12 @@ const Sidebar = () => {
                 {
                     id: 1,
                     title: "Contact Setting",
-                    path: "/hero-slider"
+                    path: "/contact"
                 },
                 {
                     id: 2,
                     title: "Maintain Patient Category",
-                    path: "/second-slider"
+                    path: "/category"
                 },
 
             ]

@@ -15,6 +15,7 @@ import Article from "../pages/Main/Article";
 import EditArticalBlog from "../pages/Main/EditArticalBlog";
 import CreateArticle from "../pages/Main/CreateArticle";
 import MakeAdmin from "../pages/Main/MakeAdmin";
+import Contact from "../pages/Main/Contact";
 
 const router = createBrowserRouter([
     {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
             {
                 path: "make-admin",
                 element: <MakeAdmin/>
+            },
+            {
+                path: "contact",
+                element: <Contact/>
             }
         ]
     },
