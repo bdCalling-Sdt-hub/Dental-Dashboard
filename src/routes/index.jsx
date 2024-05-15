@@ -20,6 +20,7 @@ import Category from "../pages/Main/Category";
 import AboutUs from "../pages/Main/AboutUs";
 import PrivacyPolicy from "../pages/Main/PrivacyPolicy";
 import TermsAndConditions from "../pages/Main/TermsAndConditions";
+import FAQ from "../pages/Main/FAQ";
 
 const router = createBrowserRouter([
     {
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
             {
                 path: "terms-condition",
                 element: <TermsAndConditions/>
+            },
+            {
+                path: "faq",
+                element: <FAQ/>
             }
         ]
     },

@@ -28,7 +28,7 @@ const MakeAdminModal = ({open, setOpen, setRefresh}) => {
                 onCancel={() => setOpen(false)}
                 width={500}
                 footer={false}
-                title={<p className='text-[#262727] poppins-medium text-[20px] leading-[30px]'>Make Admin</p>}
+                title={<p className='text-[#262727] pl-4 poppins-medium text-[20px] leading-[30px]'>Make Admin</p>}
             >
                 <div className='p-4'>
                     {/* <h1 style={{marginBottom: "12px"}}>Make Admin</h1> */}

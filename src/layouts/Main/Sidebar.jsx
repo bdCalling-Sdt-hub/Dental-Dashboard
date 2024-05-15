@@ -94,7 +94,7 @@ const Sidebar = () => {
                 {
                     id: 3,
                     title: "FAQ",
-                    path: "/brands"
+                    path: "/faq"
                 },
                 {
                     id: 4,
@@ -135,6 +135,7 @@ const Sidebar = () => {
     }
     return (
         <div className=''>
+            
             <div className='pt-5 pb-[50px]'>
                 <img src={Logo} style={{width: 78, height: 82, margin: "0 auto"}} alt="" />
             </div>
