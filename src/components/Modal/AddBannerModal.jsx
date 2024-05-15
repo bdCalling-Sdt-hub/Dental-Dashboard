@@ -4,7 +4,7 @@ import { Button, Form, Input, Modal } from 'antd'
 import { useState } from 'react'
 import { RiImageAddLine } from 'react-icons/ri';
 
-const OfferSliderEditModal = ({open, setOpen}) => {
+const AddBannerModal = ({open, setOpen}) => {
     
     const [image, setimage] = useState();
     const [imageURL, setImageURL] = useState();
@@ -22,7 +22,7 @@ const OfferSliderEditModal = ({open, setOpen}) => {
 
     return (
         <Modal
-            title={<p className='text-[#262727] poppins-medium text-[20px] pl-4 leading-[30px]'>Edit Offer Slider</p>}
+            title={<p className='text-[#262727] poppins-medium text-[20px] pl-4 leading-[30px]'>Add Banner</p>}
             centered
             open={open} 
             onOk={()=>setOpen(false)} 
@@ -39,8 +39,8 @@ const OfferSliderEditModal = ({open, setOpen}) => {
                 
 
                 <Form.Item
-                    name={"slider"}
-                    label={<p className="text-[#415D71] text-sm leading-5 poppins-semibold">Slider Image</p>}
+                    name={"banner"}
+                    label={<p className="text-[#415D71] text-sm leading-5 poppins-semibold">Banner Image</p>}
                 >
                     <Input
                         onChange={handleChange}
@@ -75,10 +75,10 @@ const OfferSliderEditModal = ({open, setOpen}) => {
 
                 <Form.Item
                     name={"name"}
-                    label={<p className="text-[#415D71] text-sm leading-5 poppins-semibold">Offer Name</p>}
+                    label={<p className="text-[#415D71] text-sm leading-5 poppins-semibold">Name</p>}
                 >
                     <Input
-                        placeholder="Enter Offer Name"
+                        placeholder="Enter Name"
                         style={{
                             width: "100%",
                             height: 48,
@@ -113,4 +113,4 @@ const OfferSliderEditModal = ({open, setOpen}) => {
     )
 }
 
-export default OfferSliderEditModal
+export default AddBannerModal

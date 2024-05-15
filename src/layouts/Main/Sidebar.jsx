@@ -83,8 +83,8 @@ const Sidebar = () => {
             subMenu: [
                 {
                     id: 1,
-                    title: "1st Slider",
-                    path: "/slider"
+                    title: "Banner",
+                    path: "/banner"
                 },
                 {
                     id: 2,

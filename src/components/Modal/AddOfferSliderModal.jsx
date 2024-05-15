@@ -91,7 +91,7 @@ const AddOfferSliderModal = ({open, setOpen}) => {
                     />
                 </Form.Item>
 
-                <Form.Item style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "center"}}>
+                <Form.Item style={{width: "100%", display: "flex", marginBottom: 0, alignItems: "center", justifyContent: "center"}}>
                     <Button
                         htmlType='submit'
                         style={{

@@ -23,6 +23,7 @@ import TermsAndConditions from "../pages/Main/TermsAndConditions";
 import FAQ from "../pages/Main/FAQ";
 import SmartChecker from "../pages/Main/SmartChecker";
 import OfferSlider from "../pages/Main/OfferSlider";
+import Banner from "../pages/Main/Banner";
 
 const router = createBrowserRouter([
     {
@@ -100,6 +101,10 @@ const router = createBrowserRouter([
             {
                 path: "offer-slider",
                 element: <OfferSlider/>
+            },
+            {
+                path: "banner",
+                element: <Banner/>
             }
         ]
     },
