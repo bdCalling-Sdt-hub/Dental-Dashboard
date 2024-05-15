@@ -11,7 +11,7 @@ const ContactTableList = ({keyword, setKeyword}) => {
     const handleDelete=()=>{
         Swal.fire({
             title: "Are Your Sure ?",
-            html: `Do you want to  delete your patients profile ? <br> Only Super admin can delete patients profile.`,
+            html: `Do you want to  delete This Contact Number ? <br> Only Super admin can delete Contact Number`,
             confirmButtonText: 'Confirm',
             customClass: {
               confirmButton: 'custom-send-button',

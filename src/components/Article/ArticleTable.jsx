@@ -10,7 +10,7 @@ const ArticleTable = ({name}) => {
     const handleDelete=()=>{
         Swal.fire({
             title: "Are Your Sure ?",
-            html: `Do you want to  delete your patients profile ? <br> Only Super admin can delete patients profile.`,
+            html: `Do you want to  delete This Article ? <br> Only Super admin can delete Article`,
             confirmButtonText: 'Confirm',
             customClass: {
               confirmButton: 'custom-send-button',
