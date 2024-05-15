@@ -58,7 +58,7 @@ const OfferSliderTableList = ({ keyword }) => {
                                         <img src={Slider} alt="" />
                                     </div>
                                 </td>
-                                <td className="text-[#707070] h-[60px]  roboto-regular text-base ">Hospital{index+1}</td>
+                                <td className="text-[#707070] h-[60px]  roboto-regular text-base ">2{index+1}% Offer</td>
 
                                 <td>
                                     <div className="flex items-center gap-2 h-[60px]">
