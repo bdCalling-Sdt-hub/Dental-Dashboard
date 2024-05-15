@@ -47,6 +47,8 @@ const EditArticalBlog = () => {
 
             <Form>
                 <div className='flex gap-[60px]'>
+
+                    {/* name and category input container */}
                     <div className='w-[334px]'>
                         <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Article Name</label>
                         <Form.Item
@@ -98,6 +100,7 @@ const EditArticalBlog = () => {
                         </Form.Item>
                     </div>
 
+                    {/* thubnail image container */}
                     <div>
                         <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Article Image</label>
                         <input onChange={handleChange} type="file" id="img" style={{display: "none"}} />
@@ -126,6 +129,7 @@ const EditArticalBlog = () => {
 
                 <hr className='my-[30px]' />
                 
+                {/* slider image contianer list */}
                 <section>
                     <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Article Slider Image</label>
                     
@@ -172,6 +176,7 @@ const EditArticalBlog = () => {
                     </div>
                 </section>
                 
+                {/* jodit editor contect edit container */}
                 <section className="my-[30px]">
                     <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Article Details</label>
                     <JoditEditor
