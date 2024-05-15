@@ -18,6 +18,8 @@ import MakeAdmin from "../pages/Main/MakeAdmin";
 import Contact from "../pages/Main/Contact";
 import Category from "../pages/Main/Category";
 import AboutUs from "../pages/Main/AboutUs";
+import PrivacyPolicy from "../pages/Main/PrivacyPolicy";
+import TermsAndConditions from "../pages/Main/TermsAndConditions";
 
 const router = createBrowserRouter([
     {
@@ -75,6 +77,14 @@ const router = createBrowserRouter([
             {
                 path: "about-us",
                 element: <AboutUs/>
+            },
+            {
+                path: "privacy-policy",
+                element: <PrivacyPolicy/>
+            },
+            {
+                path: "terms-condition",
+                element: <TermsAndConditions/>
             }
         ]
     },
