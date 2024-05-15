@@ -72,7 +72,7 @@ const Sidebar = () => {
             id: 7,
             title: "Post Article",
             icon: <FiPlusSquare size={24} />,
-            path: "/artical"
+            path: "/article"
 
         },
         {

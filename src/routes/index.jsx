@@ -10,7 +10,9 @@ import PatientList from "../pages/Main/PatientList";
 import CreatePatientProfile from "../pages/Main/CreatePatientProfile";
 import Chat from "../pages/Main/Chat";
 import Package from "../pages/Main/Package";
-import Artical from "../pages/Main/Artical";
+import ArticleDetails from "../pages/Main/ArticleDetails";
+import Article from "../pages/Main/Article";
+import EditArticalBlog from "../pages/Main/EditArticalBlog";
 
 const router = createBrowserRouter([
     {
@@ -38,8 +40,16 @@ const router = createBrowserRouter([
                 element: <Package/>
             },
             {
-                path: "artical",
-                element: <Artical/>
+                path: "article",
+                element: <Article/>
+            },
+            {
+                path: "article-details/:name",
+                element: <ArticleDetails/>
+            },
+            {
+                path: "edit-article-blog/:id",
+                element: <EditArticalBlog/>
             }
         ]
     },

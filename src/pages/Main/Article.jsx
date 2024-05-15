@@ -1,12 +1,14 @@
-import React from 'react'
 import Heading from '../../components/Heading';
 import patient1 from "../../assets/patient_care.png"
 import patient2 from "../../assets/dental.png"
 import patient3 from "../../assets/skin.png"
 import patient4 from "../../assets/medical.png"
 import { Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import MetaTag from '../../components/MetaTag';
 
-const Artical = () => {
+const Article = () => {
+    const navigate = useNavigate();
     const artical = [
         {
             name: "Patient care",
@@ -27,7 +29,8 @@ const Artical = () => {
     ]
     return (
         <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-auto">
-            <Heading title={"Artical"} style={"text-left mb-6"} />
+            <Heading title={"Article"} style={"text-left mb-6"} />
+            <MetaTag title="Article" />
 
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
                 {
@@ -38,7 +41,8 @@ const Artical = () => {
                                     <img src={item?.image} style={{width: 63, height: 63, margin: "0 auto"}} alt="" />
                                     <p className='text-[#415D71] poppins-regular text-center text-sm leading-5 mt-10'>{item?.name}</p>
                                 </div>
-                                <Button 
+                                <Button
+                                    onClick={()=>navigate(`/article-details/${item?.name}`)} 
                                     style={{
                                         background: "#E5E5E5",
                                         width: "100%",
@@ -62,4 +66,4 @@ const Artical = () => {
     )
 }
 
-export default Artical
+export default Article;
