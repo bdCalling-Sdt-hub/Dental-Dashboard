@@ -65,7 +65,7 @@ const ArticleTable = ({name}) => {
 
                                 <td>
                                     <div className="flex items-center gap-2 h-[60px]">
-                                        <Link to={`/edit-article-blog/${index}`}>
+                                        <Link to={`/edit-article-blog/${name}`}>
                                             <div onClick={()=>localStorage.setItem("article", JSON.stringify(item))} className="flex  cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
                                                 <RiEdit2Line size={18} color="#B6C0C8" />
                                             </div>
