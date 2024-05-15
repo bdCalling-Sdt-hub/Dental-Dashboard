@@ -92,9 +92,14 @@ const Article = () => {
                 <div className='p-4'>
                     <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Thumbnail Image</label>
                     <div>
-                        <input onChange={handleChange} type="file" id="imgList" style={{display: "none"}} />
+                        <input onChange={handleChange} type="file" id="img" style={{display: "none"}} />
                         <label 
-                            htmlFor="imgList"
+                            htmlFor="img"
+                            style={{
+                                backgroundImage: `url(${imageURL})`,
+                                backgroundSize: "cover",
+                                backgroundPosition: "center" 
+                            }}
                             className={`
                                 w-full 
                                 h-[139px]
@@ -114,6 +119,7 @@ const Article = () => {
                         style={{display: "flex", marginTop: 40, alignItems: "center", justifyContent: "center"}}
                     >
                         <Button
+                            onClick={()=>setOpen(false)}
                             style={{
                                 background: "#12354E",
                                 width: 134,
