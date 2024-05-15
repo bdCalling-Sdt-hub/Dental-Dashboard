@@ -10,6 +10,7 @@ import PatientList from "../pages/Main/PatientList";
 import CreatePatientProfile from "../pages/Main/CreatePatientProfile";
 import Chat from "../pages/Main/Chat";
 import Package from "../pages/Main/Package";
+import Artical from "../pages/Main/Artical";
 
 const router = createBrowserRouter([
     {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
             {
                 path: "package",
                 element: <Package/>
+            },
+            {
+                path: "artical",
+                element: <Artical/>
             }
         ]
     },

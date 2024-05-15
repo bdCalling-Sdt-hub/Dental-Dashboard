@@ -1,7 +1,5 @@
 import { useState } from 'react'
 import MetaTag from '../../components/MetaTag';
-import { Input } from 'antd';
-import { GoSearch } from 'react-icons/go';
 import Person from "../../assets/person3.png";
 import Inbox from '../../components/Chat/Inbox';
 import Unread from '../../components/Chat/Unread';
