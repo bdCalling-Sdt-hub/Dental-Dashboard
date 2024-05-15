@@ -22,6 +22,7 @@ import PrivacyPolicy from "../pages/Main/PrivacyPolicy";
 import TermsAndConditions from "../pages/Main/TermsAndConditions";
 import FAQ from "../pages/Main/FAQ";
 import SmartChecker from "../pages/Main/SmartChecker";
+import OfferSlider from "../pages/Main/OfferSlider";
 
 const router = createBrowserRouter([
     {
@@ -95,6 +96,10 @@ const router = createBrowserRouter([
             {
                 path: "smart-checker",
                 element: <SmartChecker/>
+            },
+            {
+                path: "offer-slider",
+                element: <OfferSlider/>
             }
         ]
     },

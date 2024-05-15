@@ -84,12 +84,12 @@ const Sidebar = () => {
                 {
                     id: 1,
                     title: "1st Slider",
-                    path: "/hero-slider"
+                    path: "/slider"
                 },
                 {
                     id: 2,
                     title: "Offer Slider",
-                    path: "/second-slider"
+                    path: "/offer-slider"
                 },
                 {
                     id: 3,
