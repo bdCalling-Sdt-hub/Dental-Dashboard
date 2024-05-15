@@ -18,7 +18,6 @@ const EditArticalBlog = () => {
     const [imageList, setimageList] = useState([]);
     const [imageURL, setImageURL] = useState();
     const [imageURLList, setImageURLList] = useState([]);
-    console.log(imageURLList)
 
     const handleChange = (e)=>{
         const file = e.target.files[0];

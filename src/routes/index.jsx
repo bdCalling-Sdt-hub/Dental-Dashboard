@@ -17,6 +17,7 @@ import CreateArticle from "../pages/Main/CreateArticle";
 import MakeAdmin from "../pages/Main/MakeAdmin";
 import Contact from "../pages/Main/Contact";
 import Category from "../pages/Main/Category";
+import AboutUs from "../pages/Main/AboutUs";
 
 const router = createBrowserRouter([
     {
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
             {
                 path: "category",
                 element: <Category/>
+            },
+            {
+                path: "about-us",
+                element: <AboutUs/>
             }
         ]
     },
