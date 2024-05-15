@@ -24,6 +24,7 @@ import FAQ from "../pages/Main/FAQ";
 import SmartChecker from "../pages/Main/SmartChecker";
 import OfferSlider from "../pages/Main/OfferSlider";
 import Banner from "../pages/Main/Banner";
+import NotFound from "../pages/Main/NotFound";
 
 const router = createBrowserRouter([
     {
@@ -107,6 +108,10 @@ const router = createBrowserRouter([
                 element: <Banner/>
             }
         ]
+    },
+    {
+        path: "*",
+        element: <NotFound/>,
     },
     {
         path: "/auth",
