@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Heading from '../../components/Heading';
 import patient1 from "../../assets/patient_care.png"
 import patient2 from "../../assets/dental.png"

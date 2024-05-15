@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useNavigate, useParams } from 'react-router-dom'
 import MetaTag from '../../components/MetaTag';
 import { GoArrowLeft } from 'react-icons/go';

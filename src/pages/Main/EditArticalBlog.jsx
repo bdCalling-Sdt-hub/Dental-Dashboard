@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useNavigate, useParams } from 'react-router-dom'
 import Heading from '../../components/Heading';
 import { GoArrowLeft } from 'react-icons/go';
@@ -5,7 +6,7 @@ import MetaTag from '../../components/MetaTag';
 import { Button, Form, Input, Select } from 'antd';
 import { RiImageAddLine } from 'react-icons/ri';
 const { Option } = Select;
-import React, { useState, useRef, useMemo } from 'react';
+import { useState, useRef, } from 'react';
 import JoditEditor from 'jodit-react';
 
 const EditArticalBlog = () => {
