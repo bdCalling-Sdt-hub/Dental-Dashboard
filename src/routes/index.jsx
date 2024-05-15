@@ -26,6 +26,7 @@ import OfferSlider from "../pages/Main/OfferSlider";
 import Banner from "../pages/Main/Banner";
 import NotFound from "../pages/Main/NotFound";
 import Profile from "../pages/Main/Profile";
+import Notification from "../pages/Main/Notification";
 
 const router = createBrowserRouter([
     {
@@ -111,6 +112,10 @@ const router = createBrowserRouter([
             {
                 path: "profile",
                 element: <Profile/>
+            },
+            {
+                path: "notification",
+                element: <Notification/>
             }
         ]
     },
