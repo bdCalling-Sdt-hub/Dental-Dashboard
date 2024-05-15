@@ -114,3 +114,7 @@ h1, h2, h3, h4, h5, h6, tr, td, th, span, p, li, ul{
     background: #607888;
     border-radius: 20px;
 }
+
+.custom-input .ant-form-item .ant-form-item-control-input-content .ant-input-affix-wrapper{
+    padding: 0 10px !important; 
+}

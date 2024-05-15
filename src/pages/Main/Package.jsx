@@ -2,13 +2,25 @@ import { useState } from 'react'
 import MetaTag from '../../components/MetaTag'
 import { Button, Form, Input, Modal } from 'antd'
 import { FaCircleCheck } from "react-icons/fa6";
-import { FaPlus } from "react-icons/fa6";
 import Swal from 'sweetalert2';
+import { CiCircleMinus } from 'react-icons/ci';
+import { GoPlusCircle } from "react-icons/go";
 
 const Package = () => {
     const [open, setOpen] = useState(false);
     const [keyword, setKeyword] = useState("")
-    const [data, setData] = useState(["data", "data", "data", "data", "Data"])
+    const [data, setData] = useState([
+        "Complimentary Dental Examinations", 
+        "Complimentary Hygienist Cleans", 
+        "Complimentary Dental X-rays", 
+        "Complimentary 3D in-mouth scans", 
+        "Priority Appointments",
+        "Discounted Routine Dental Treatments",
+        "Free Private Prescriptions",
+        "Free Referrals",
+        "Fee Skin Consultations",
+        "Cancer screening"
+    ])
 
     const handleSubmit=(values)=>{
         console.log("Recieved Values", values)
@@ -26,7 +38,7 @@ const Package = () => {
         feature : data
     }
     return (
-        <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-hidden">
+        <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-y-scroll">
 
             {/* helmet */}
             <MetaTag title={"Manage Package"}/>
@@ -53,31 +65,86 @@ const Package = () => {
                     />
                 </Form.Item>
                 
-                <div className='w-[407px]'>
-                    <div className='flex items-center justify-between mb-2'>
-                        <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Package Details</label>
-                        <div onClick={()=>setOpen(true)} className='w-8 h-8 cursor-pointer bg-[#12354E] shadow-lg rounded-lg flex items-center justify-center'>
-                            <FaPlus size={16} color='white' />
-                        </div>
-                    </div>
+                <div className='w-[407px] custom-input'>
+                    <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Package Details</label>
+                    
                     <Form.Item
-                        name="feature"
-                        style={{ border: "1px solid #E7EBED", borderRadius: 8, padding: " 11px 24px "}}
+                        name={"feature"}
+                        style={{ border: "1px solid #E7EBED", borderRadius: 8, padding: " 16px 24px "}}
                     >
-                        {
-                            data?.map((item, index)=>{
-                                return (
-                                    <div key={index} className='flex items-center gap-2'>
-                                        <FaCircleCheck size={20} color='#12354E' />
-                                        <p className='text-[#415D71] roboto-regular text-sm leading-10'>{item}</p>
-                                    </div>
-                                )
-                            })
-                        }
+                        <Form.List name="feature">
+                                    {
+                                        (fields, { add, remove }) => (
+                                            <>
+                                                {
+                                                    fields.map((field, index) => {
+                                                        return(
+                                                        <Form.Item
+                                                            required={false}
+                                                            key={index}
+                                                            className="w-full"
+                                                            style={{marginBottom : 0}}
+                                                        >
+                                                            <div  className='flex items-center mb-2 gap-[30px] w-full'>
+                                                                <Form.Item
+                                                                    name={field.name}
+                                                                    fieldKey={field.fieldKey}
+                                                                    validateTrigger={['onChange', 'onBlur']}
+                                                                    style={{marginBottom : 0}}
+                                                                    className='w-full'
+                                                                >
+                                                                    <Input
+                                                                        style={{
+                                                                            width:"100%",
+                                                                            height: 40,
+                                                                            border: "1px solid #E7EBED",
+                                                                            background: "transparent",
+                                                                            borderRadius: "none",
+                                                                            outline: "none",
+                                                                            color: "#415D71",
+                                                                        }}
+                                                                        placeholder='Enter Package Services'
+                                                                        className='roboto-regular text-sm leading-5'
+                                                                        prefix={<FaCircleCheck size={20} style={{marginRight: 5}} color='#12354E' />}
+                                                                    />
+                                                                </Form.Item>
+                                                                <div>
+                                                                    {
+                                                                        fields.length > 0 ? (
+                                                                            <CiCircleMinus
+                                                                                size={30}
+                                                                                className="dynamic-delete-button cursor-pointer text-[#D7263D]"
+                                                                                onClick={() => remove(field.name)}
+                                                                            />
+                                                                        ) 
+                                                                        : 
+                                                                        null
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </Form.Item>
+                                                    )})
+                                                }
+
+                                                <Form.Item 
+                                                    style={{width: "100%", margin: 0, display: "flex", alignItems: "flex-end", justifyContent: "flex-end"}}
+                                                >
+                                                    <GoPlusCircle
+                                                        size={30}
+                                                        color='#12354E'
+                                                        onClick={() => add()}
+                                                    />
+                                                </Form.Item>
+                                            </>
+                                        )
+                                    }
+                        </Form.List>
                     </Form.Item>
                 </div>
 
-                <Form.Item>
+                <Form.Item
+                    style={{margin: 0}}
+                >
                     <Button
                         htmlType='submit'
                         style={{
