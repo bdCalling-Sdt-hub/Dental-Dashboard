@@ -137,7 +137,9 @@ const Sidebar = () => {
         <div className=''>
             
             <div className='pt-5 pb-[50px]'>
-                <img src={Logo} style={{width: 78, height: 82, margin: "0 auto"}} alt="" />
+                <Link to="/">
+                    <img src={Logo} style={{width: 78, height: 82, margin: "0 auto"}} alt="" />
+                </Link>
             </div>
 
             <Menu

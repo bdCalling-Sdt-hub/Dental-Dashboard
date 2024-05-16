@@ -118,3 +118,18 @@ h1, h2, h3, h4, h5, h6, tr, td, th, span, p, li, ul{
 .custom-input .ant-form-item .ant-form-item-control-input-content .ant-input-affix-wrapper{
     padding: 0 10px !important; 
 }
+
+/* sub menu item color css  */
+.ant-menu-submenu-title{
+    color: #415D71 !important;
+}
+
+/* sub menu item container backaground color */
+.ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline{
+    background: #FCF8F9 !important;
+}
+
+/* sub menu hover color change */
+.ant-menu-item .ant-menu-item-only-child:hover{
+    background: red !important;
+}
