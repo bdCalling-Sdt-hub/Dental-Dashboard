@@ -6,7 +6,50 @@ import Swal from 'sweetalert2';
 import { Pagination } from 'antd';
 import { Link } from 'react-router-dom';
 
-const ArticleTable = ({name}) => {
+
+const data = [
+    {
+        name: "Dental Hygiene & The Role of Regular Visits at Banning Dental Group",
+        detetails: `Maintaining oral health is a critical component of overall wellbeing. Regular visits to a dental hygienist, like those provided by the Banning Dental Group, offer comprehensive care that goes beyond just keeping your teeth clean. These appointments are crucial for preventing dental issues and ensuring long-term dental health.
+        When you visit a dental hygienist, you receive thorough cleanings that remove plaque and tartar buildup. Such accumulations, if left unchecked, can lead to gum disease and tooth decay—common conditions that can be both painful and expensive to treat. The hygienist's specialized tools clean areas of your mouth that regular brushing and flossing might miss.
+        Moreover, dental hygienists are pivotal in spotting early signs of oral problems. Early detection can lead to simpler and less costly treatments. Dental hygienists can also offer tailored advice for at-home care, including brushing techniques and suitable products, ensuring your personal routine is as effective as possible.
+        Education is another significant aspect of a dental hygienist's role. Understanding the effects of diet, lifestyle choices, and other factors on oral health can empower you to make better decisions for your teeth and gums. For example, learning about the impact of smoking or sugar on oral health can motivate behavior change for enhanced overall health.
+        At Banning Dental Group, consistency in visiting dental hygienists ensures that any changes in your oral health are recorded and monitored. This way, the hygienist and dentist can work together to adjust treatment plans promptly, maintaining optimal oral health.
+        In short, dental hygienists are essential allies in the fight against gum disease, tooth decay, and other oral conditions. Their expertise contributes to a healthier smile and a healthier you. Regular appointments at Banning Dental Group can save you from future discomfort and expensive dental procedures, while also providing a foundation for a lifetime of healthy smiles.
+        `
+    },
+    {
+        name: "",
+        detetails: ""
+    },
+    {
+        name: "",
+        detetails: ""
+    },
+    {
+        name: "",
+        detetails: ""
+    },
+    {
+        name: "",
+        detetails: ""
+    },
+    {
+        name: "",
+        detetails: ""
+    },
+    {
+        name: "",
+        detetails: ""
+    },
+    {
+        name: "",
+        detetails: ""
+    }
+]
+
+
+const ArticleTable = ({data, name}) => {
     const handleDelete=()=>{
         Swal.fire({
             title: "Are Your Sure ?",
@@ -47,17 +90,17 @@ const ArticleTable = ({name}) => {
 
                 <tbody>
                     {
-                        [...Array(9)].map((item, index)=>
+                        data?.map((item, index)=>
                         <React.Fragment key={index}>
                             <tr className={`${(index + 1) % 2 === 0 ? 'bg-[#FCF8F9]' : 'bg-white'} w-full`}>
                                 <td>#123{index}</td>
                                 <td >
                                     <div className="h-[60px]">
-                                        <img  src={thubmnail} alt="" />
+                                        <img  src={item?.image} alt="" />
                                     </div>
                                 </td>
 
-                                <td className="text-[#707070] h-[60px]  roboto-regular text-base ">Checkups</td>
+                                <td className="text-[#707070] h-[60px]  roboto-regular text-base ">{item?.name}</td>
                                 {
 
                                     name === "Patient care" && <td className="text-[#707070] h-[60px]  roboto-regular text-base ">Gum</td>

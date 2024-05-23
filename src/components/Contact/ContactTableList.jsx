@@ -28,7 +28,7 @@ const ContactTableList = ({keyword, setKeyword}) => {
                 <thead>
                     <tr className="text-left w-full bg-[#E7EBED] custom-table-list">
                         {
-                            ["S.ID ", "Contact No.", "Actions"].map((item, index)=>{
+                            ["S.ID ", "Contact No.", "Email", "Actions"].map((item, index)=>{
                                 return (
                                     <th 
                                         key={index} 
@@ -54,6 +54,7 @@ const ContactTableList = ({keyword, setKeyword}) => {
                                 <td>#123{index}</td>
 
                                 <td className="text-[#707070] h-[60px]  roboto-regular text-base ">+6458712645</td>
+                                <td className="text-[#707070] h-[60px]  roboto-regular text-base ">azad@gmail.com</td>
 
                                 <td>
                                     <div className="flex items-center gap-2 h-[60px]">

@@ -29,7 +29,7 @@ const EditBannerModal = ({open, setOpen}) => {
             onCancel={()=>setOpen(false)} 
             footer={false}
             closeIcon={true}
-            width={519}
+            width={900}
         >
             <Form
                 layout="vertical"
@@ -59,8 +59,8 @@ const EditBannerModal = ({open, setOpen}) => {
                             backgroundPosition: "center" 
                         }}
                         className={`
-                            w-full
-                            h-[139px]
+                            w-[840px]
+                            h-[300px]
                             cursor-pointer  
                             border border-[#929394]  border-dashed
                             flex 
@@ -70,6 +70,7 @@ const EditBannerModal = ({open, setOpen}) => {
                     >
                         <RiImageAddLine color='#607888' size={38} /> 
                         <h3 className="text-[#12354E] text-[14px] leading-5 poppins-light ">Browse Photo</h3>
+                        <h3 className="text-[#12354E] text-[14px] leading-5 poppins-light ">Size: 840 x 300</h3>
                     </label>
                 </Form.Item>
 

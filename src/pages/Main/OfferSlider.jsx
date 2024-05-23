@@ -11,7 +11,6 @@ const OfferSlider = () => {
     const [open, setOpen] = useState(false)
     return (
         <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-auto">
-            <MetaTag title={"Offer Slider"} />
             <PageHeader title={"Offer Slider"} buttonName={"Slider"} keyword={keyword} setKeyword={setKeyword} setOpen={setOpen} />
 
             <OfferSliderTableList keyword={keyword} />

@@ -113,6 +113,7 @@ const Article = () => {
                         >
                             <RiImageAddLine color='#607888' size={38} /> 
                             <h3 className="text-[#12354E] text-[14px] mt-[4px] leading-5 poppins-light ">Browse Thumbnail Photo</h3>
+                            <h3 className="text-[#12354E] text-[14px] mt-[4px] leading-5 poppins-light ">Size : 63 x 63</h3>
                         </label>
                     </div>
 
