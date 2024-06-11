@@ -5,30 +5,68 @@ import { MdOutlineArrowOutward } from "react-icons/md";
 import { RiEdit2Line } from "react-icons/ri";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Swal from "sweetalert2";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Heading from "../../components/Heading";
 import { Input, Pagination, Select } from "antd";
 import { GoSearch } from "react-icons/go";
 import MetaTag from "../../components/MetaTag";
+import { useDispatch, useSelector } from "react-redux";
+import { getPatient } from "../../redux/apiSlice/Patient/getPatientSlice";
+import { getCategory } from "../../redux/apiSlice/Category/getCategorySlice";
+import { IoClose } from "react-icons/io5";
+import { deletePatient } from "../../redux/apiSlice/Patient/deletePatientSlice";
+
 const { Option } = Select;
 
 const PatientList = () => {
-    const [detailsModal, setDetailsModal] = useState(false);
-    const [editModal, setEditModal] = useState(false);
+    const [detailsModal, setDetailsModal] = useState(null);
+    const [editModal, setEditModal] = useState(null);
+    const dispatch = useDispatch();
+    const {patients, pagination} = useSelector(state=>state.getPatient);
+    const [keyword, setKeyword] = useState(null)
+    const [page, setPage] = useState(new URLSearchParams(window.location.search).get('page') || 1);
+    const {categories} = useSelector(state=> state.getCategory);
+
+    const handlePageChange = (page) => {
+        setPage(page);
+        const params = new URLSearchParams(window.location.search);
+        params.set('page', page);
+        window.history.pushState(null, "", `?${params.toString()}`);
+    };
+
+    useEffect(()=>{
+        dispatch(getCategory())
+    }, [dispatch])
+
+    useEffect(()=>{
+        dispatch(getPatient(keyword, page))
+    }, [dispatch, keyword, page]) 
 
 
     // delete patient function
-    const handleDelete=()=>{
+    const handleDelete=(id)=>{
         Swal.fire({
             title: "Are Your Sure ?",
-            html: `Do you want to  delete your patients profile ? <br> Only Super admin can delete patients profile.`,
+            html: `Do you want to  delete Patient?`,
             confirmButtonText: 'Confirm',
             customClass: {
               confirmButton: 'custom-send-button',
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log(result)
+                dispatch(deletePatient(id)).then((response)=>{
+                    if(response.type === "deletePatient/fulfilled"){
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: response?.payload,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(()=>{
+                            dispatch(getPatient(keyword, page))
+                        })
+                    }
+                })
             }
         });
     }
@@ -41,7 +79,9 @@ const PatientList = () => {
                 <Heading title={"Patient List"}/>
                 <div className="flex items-center gap-6">
                     <Input
+                        onChange={(e)=>setKeyword(e.target.value)}
                         prefix={<GoSearch color="#B6C0C8" size={16} />}
+                        suffix={<IoClose onClick={()=>setKeyword(null)} style={{display: keyword ?  "block" : "none"}} color="#B6C0C8" size={16} />}
                         placeholder="Enter Search..."
                         style={{
                             width: 320,
@@ -50,6 +90,7 @@ const PatientList = () => {
                             outline: "none",
                             borderRadius: 8
                         }}
+                        value={keyword}
                         className="poppins-regular text-[#B6C0C8] text-[14px] leading-5"
                     />
 
@@ -64,8 +105,13 @@ const PatientList = () => {
                         className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
                         defaultValue={"Gum"}
                     >
-                        <Option value="gum">Gum</Option>
-                        <Option value="cavities">Cavities</Option>
+                        {
+                            categories?.map((category, index)=>{
+                                return(
+                                    <Option key={index} value={category?.categoryName} >{category?.categoryName}</Option>
+                                )
+                            })
+                        }
                     </Select>
                 </div>
             </div>
@@ -86,7 +132,7 @@ const PatientList = () => {
 
                 <tbody>
                     {
-                        [...Array(10)].map((item, index)=>
+                        patients?.map((patient, index)=>
                         <React.Fragment key={index}>
                             <tr className={`${(index + 1) % 2 === 0 ? 'bg-[#FCF8F9]' : 'bg-white'}`}>
                                 <td>{index + 1}</td>
@@ -103,11 +149,11 @@ const PatientList = () => {
 
                                 <td >
                                     <div className="flex items-center gap-2 h-[60px]">
-                                        <div onClick={()=>setDetailsModal(true)} className="flex cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
+                                        <div onClick={()=>setDetailsModal(patient)} className="flex cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
                                             <MdOutlineArrowOutward size={18} color="#B6C0C8" />
                                         </div>
 
-                                        <div onClick={()=>setEditModal(true)} className="flex  cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
+                                        <div onClick={()=>setEditModal(patient)} className="flex  cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
                                             <RiEdit2Line size={18} color="#B6C0C8" />
                                         </div>
 
@@ -129,6 +175,7 @@ const PatientList = () => {
                 <Pagination 
                     defaultCurrent={1} 
                     total={50}
+                    onChange={handlePageChange}
                     showTotal={(total, range) => 
                         <span className="text-[#607888] roboto-regular text-base leading-[18px] absolute top-[25%] left-0">
                             {`Showing ${range[0]}-${range[1]} of ${total} items`}

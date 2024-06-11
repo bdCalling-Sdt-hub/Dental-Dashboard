@@ -10,11 +10,6 @@ const Category = () => {
     const [open, setOpen] = useState(false);
     const [refresh, setRefresh] = useState("");
     const [value, setValue] = useState(null);
-    console.log(value)
-
-    const handleOpen=()=>{
-        setOpen(true)
-    }
 
     const handleClose=()=>{
         setOpen(false)

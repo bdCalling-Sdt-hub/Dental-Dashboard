@@ -66,7 +66,7 @@ const router = createBrowserRouter([
                 element: <EditArticalBlog/>
             },
             {
-                path: "create-article/:id",
+                path: "create-article/:name",
                 element: <CreateArticle/>
             },
             {

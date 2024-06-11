@@ -9,16 +9,17 @@ const initialState = {
 };
 
 
-export const deletePatient = createAsyncThunk(
-    'deletePatient',
+export const deleteArticle = createAsyncThunk(
+    'deleteArticle',
     async (id, thunkApi) => {
         try{
-            const response = await baseURL.delete(`/user/delete-patient/${id}`, {
+            const response = await baseURL.delete(`/article/${id}`, {
                 headers: {
                     "Content-Type": "application/json",
-                    authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+                    authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
                 }
             });
+            console.log(response)
             return response?.data?.message;
         }catch(error){
             const message = error?.response?.data?.message;
@@ -30,20 +31,20 @@ export const deletePatient = createAsyncThunk(
 
 
 
-export const deletePatientSlice = createSlice({
-    name: 'deletePatient',
+export const deleteArticleSlice = createSlice({
+    name: 'category',
     initialState,
     reducers: {},
     extraReducers: (builder) =>{
-        builder.addCase(deletePatient.pending, (state)=> {
+        builder.addCase(deleteArticle.pending, (state)=> {
             state.loading= true;
         }),
-        builder.addCase(deletePatient.fulfilled, (state)=> {
+        builder.addCase(deleteArticle.fulfilled, (state)=> {
             state.error= false;
             state.success= true;
             state.loading= false;
         }),
-        builder.addCase(deletePatient.rejected, (state)=> {
+        builder.addCase(deleteArticle.rejected, (state)=> {
             state.error= true;
             state.success= false;
             state.loading= false;
@@ -51,4 +52,4 @@ export const deletePatientSlice = createSlice({
     }
 })
 
-export default deletePatientSlice.reducer
+export default deleteArticleSlice.reducer

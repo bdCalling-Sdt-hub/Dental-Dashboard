@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseURL } from "@/Config";
+import { baseURL } from "../../api/baseApi";
 
 
 const initialState = {
@@ -12,8 +12,9 @@ const initialState = {
 export const updatePatient = createAsyncThunk(
     'updatePatient',
     async (value, thunkApi) => {
+        const {id, data} = value;
         try{
-            const response = await baseURL.patch(`/user/profile-update`, value, {
+            const response = await baseURL.patch(`/user/create-patient/${id}`, data, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,

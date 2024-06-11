@@ -5,17 +5,22 @@ import { RiImageAddLine } from "react-icons/ri";
 import { FaRandom } from "react-icons/fa";
 import Swal from "sweetalert2";
 import MetaTag from "../../components/MetaTag"
+import { useDispatch } from "react-redux";
+import { createPatient } from "../../redux/apiSlice/Patient/createPatientSlice";
 const { Option } = Select;
 
 
 const CreatePatientProfile = () => {
     const [image, setimage] = useState();
     const [imageURL, setImageURL] = useState();
-
+    const dispatch = useDispatch();
     const [randomPin, setRandomPin] = useState("")
     const [randomPinState, setRandomPinState] = useState("");
     const [randomPasswordState, setRandomPasswordState] = useState("");
-    const [randomPassword, setRandomPassword] = useState("")
+    const [randomPassword, setRandomPassword] = useState("");
+    const [form] = Form.useForm();
+
+    form.setFieldsValue()
 
     const handleChange = (e)=>{
         const file = e.target.files[0];
@@ -46,8 +51,32 @@ const CreatePatientProfile = () => {
         setRandomPassword(randomNumber)
     }
 
-    const handleSubmit=()=>{
-        Swal.fire({
+    const handleSubmit=(values)=>{
+        console.log(values)
+        const formData = new FormData();
+
+        form.append("image", image)
+
+        Object.keys(values).forEach((key)=>{
+            formData.append(key, values[key])
+        })
+
+        dispatch(createPatient(formData)).then((response)=>{
+            if(response.type === "createPatient/fulfilled"){
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: response?.payload,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(()=>{
+                    // form.
+                })
+            }
+        })
+
+
+        /* Swal.fire({
             title: "Congratulations!",
             html: `
                 <div className="patient-profile">
@@ -71,7 +100,7 @@ const CreatePatientProfile = () => {
             if (result.isConfirmed) {
                 console.log(result)
             }
-        });
+        }); */
     }
 
     return (
@@ -103,9 +132,9 @@ const CreatePatientProfile = () => {
             </div>
 
 
-            <Form className="grid grid-cols-12 gap-6 mt-6" onFinish={handleSubmit}>
+            <Form layout="vertical" className="grid grid-cols-12 gap-6 mt-6" onFinish={handleSubmit}>
                 <div className="col-span-6">
-                    <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Name</label>
+                    
                     <Form.Item
                         style={{marginBottom: 0}}
                         name={"name"}
@@ -115,6 +144,8 @@ const CreatePatientProfile = () => {
                                 message: "Enter Patiant Name"
                             }
                         ]}
+                        className="col-span-6"
+                        label={<label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Name</label>}
                     >
                         <Input
                             placeholder="Enter Patient Name"
@@ -131,8 +162,9 @@ const CreatePatientProfile = () => {
                 </div>
 
                 <div className="col-span-6">
-                    <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Patient Category</label>
+                    
                     <Form.Item
+                        className="col-span-6"
                         style={{marginBottom: 0}}
                         name={"category"}
                         rules={[
@@ -141,6 +173,7 @@ const CreatePatientProfile = () => {
                                 message: "Enter Patient Category"
                             }
                         ]}
+                        label={<label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Patient Category</label>}
                     >
                         <Select
                             style={{
@@ -160,16 +193,18 @@ const CreatePatientProfile = () => {
                 </div>
 
                 <div className="col-span-6">
-                    <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Email</label>
+                    
                     <Form.Item
                         style={{marginBottom: 0}}
-                        name={"Email"}
+                        name={"email"}
                         rules={[
                             {
                                 required: true,
                                 message: "Enter Patient Email"
                             }
                         ]}
+                        className="col-span-6"
+                        label={<label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Email</label>}
                     >
                         <Input
                             placeholder="Enter Patient Email"
@@ -187,16 +222,18 @@ const CreatePatientProfile = () => {
 
 
                 <div className="col-span-6">
-                    <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Contact No</label>
+                    
                     <Form.Item
                         style={{marginBottom: 0}}
-                        name={"contact_no"}
+                        name={"contactNo"}
                         rules={[
                             {
                                 required: true,
                                 message: "Enter Patient Contact No."
                             }
                         ]}
+                        className="col-span-6"
+                        label={<label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Contact No</label>}
                     >
                         <Input
                             placeholder="Enter Patient Contact No."
@@ -213,16 +250,18 @@ const CreatePatientProfile = () => {
                 </div>
 
                 <div className="col-span-6">
-                    <label htmlFor="" style={{marginBottom: 8, display: "block"}}>Date of Birth</label>
+                    
                     <Form.Item
                         style={{marginBottom: 0}}
-                        name={"date_of_birth"}
+                        name={"dateOfBirth"}
                         rules={[
                             {
                                 required: true,
                                 message: "Enter Patient Date Of Birth"
                             }
                         ]}
+                        className="col-span-6"
+                        label={<label htmlFor="" style={{marginBottom: 8, display: "block"}}>Date of Birth</label>}
                     >
                         <Input
                             placeholder="Enter Patient Date Of Birth"
@@ -239,16 +278,18 @@ const CreatePatientProfile = () => {
                 </div>
 
                 <div className="col-span-6">
-                    <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Age</label>
+                    
                     <Form.Item
                         style={{marginBottom: 0}}
                         name={"age"}
+                        className="col-span-6"
                         rules={[
                             {
                                 required: true,
                                 message: "Enter Patient Age"
                             }
                         ]}
+                        label={<label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Age</label>}
                     >
                         <Input
                             placeholder="Enter Patient Age"
@@ -265,7 +306,7 @@ const CreatePatientProfile = () => {
                 </div>
 
                 <div className="col-span-6">
-                    <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Gender</label>
+                    
                     <Form.Item
                         style={{marginBottom: 0}}
                         name={"gender"}
@@ -275,6 +316,8 @@ const CreatePatientProfile = () => {
                                 message: "Enter Patient Gender"
                             }
                         ]}
+                        className="col-span-6"
+                        label={<label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Gender</label>}
                     >
                         <Select
                             style={{
@@ -294,7 +337,7 @@ const CreatePatientProfile = () => {
                 </div>
 
                 <div className="col-span-6">
-                    <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Plan</label>
+                   
                     <Form.Item
                         style={{marginBottom: 0}}
                         name={"plan"}
@@ -304,6 +347,8 @@ const CreatePatientProfile = () => {
                                 message: "Enter Patiant Plan"
                             }
                         ]}
+                        className="col-span-6"
+                        label={ <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Plan</label>}
                     >
                         <Input
                             placeholder="Enter Patient Plan"
@@ -320,10 +365,13 @@ const CreatePatientProfile = () => {
                 </div>
 
                 <div className="col-span-6">
-                    <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Random Pin number</label>
+                    
                     <div className="flex items-center justify-between gap-6">
                         <Form.Item
                             style={{marginBottom: 0, width: "100%"}}
+                            name={"pin"}
+                            getValueFromEvent={(e)=>e.target.value}
+                            label={<label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Random Pin number</label>}
                         >
                             <Input
                                 type={`${randomPinState ? "text" : "password"}`}
@@ -358,11 +406,12 @@ const CreatePatientProfile = () => {
                 </div>
 
                 <div className="col-span-6">
-                    <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Random Password</label>
-
                     <div className="flex items-center justify-between gap-6">
                         <Form.Item
                             style={{marginBottom: 0, width: "100%"}}
+                            name={"password"}
+                            getValueFromEvent={(e)=>e.target.value}
+                            label={ <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Random Password</label>}
                         >
                             <Input
                                 placeholder="Enter Patient Random Password"

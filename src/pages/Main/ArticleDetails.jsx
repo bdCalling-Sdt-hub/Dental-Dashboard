@@ -15,7 +15,7 @@ const ArticleDetails = () => {
     const navigate = useNavigate();
     const [keyword, setKeyword] = useState("")
     const dispatch = useDispatch();
-    const { articles, paginaton } = useSelector(state=> state.getArticle)
+    const { articles, pagination } = useSelector(state=> state.getArticle)
 
     useEffect(()=>{
         dispatch(getArticle(name))
@@ -70,7 +70,7 @@ const ArticleDetails = () => {
 
             {/* article table */}
             <div>
-                <ArticleTable paginaton={paginaton} data={articles} name={name} />
+                <ArticleTable pagination={pagination} data={articles} name={name} />
             </div>
         </div>
     )

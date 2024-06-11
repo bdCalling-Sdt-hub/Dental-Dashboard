@@ -6,3 +6,4 @@ export const baseURL = axios.create({
     headers: {'X-Custom-Header': 'foobar'}
 });
 export const ImageConfig = "http://192.168.10.16:5001"
+export const socketURL = "http://192.168.10.16";

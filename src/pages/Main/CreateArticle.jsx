@@ -3,21 +3,41 @@ import { useNavigate, useParams } from 'react-router-dom'
 import MetaTag from '../../components/MetaTag';
 import { GoArrowLeft } from 'react-icons/go';
 import Heading from '../../components/Heading';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import JoditEditor from 'jodit-react';
 import { RiImageAddLine } from 'react-icons/ri';
 import { Button, Form, Input, Select } from 'antd';
+import { useDispatch } from 'react-redux';
+import { createArticle } from '../../redux/apiSlice/Article/createArticleSlice';
+import Swal from 'sweetalert2';
+import { ImageConfig } from '../../redux/api/baseApi';
+import { updateArticle } from '../../redux/apiSlice/Article/updateArticleSlice';
+
 const { Option } = Select;
 
 const CreateArticle = () => {
-    const { id } = useParams();
+    const { name } = useParams();
     const navigate = useNavigate();
     const editor = useRef(null)
     const [content, setContent] = useState('');
     const [image, setimage] = useState();
-    const [imageList, setimageList] = useState([]);
+    const [imageList, setimageList] = useState(null);
+    const [imageToDelete, setImageToDelete] = useState(null)
     const [imageURL, setImageURL] = useState();
-    const [imageURLList, setImageURLList] = useState([]);
+    const [imageURLList, setImageURLList] = useState(null);
+    const [form] = Form.useForm();
+    const dispatch = useDispatch();
+    const article = true
+
+    useEffect(()=>{
+        if(article){
+            form.setFieldsValue(article)
+            setImageURLList(`${ImageConfig}${article?.image}`)
+        }
+    }, [form, article])
+
+
+    form.setFieldsValue();
 
     const handleChange = (e)=>{
         const file = e.target.files[0];
@@ -32,12 +52,70 @@ const CreateArticle = () => {
         const url = URL.createObjectURL(file);
         setImageURLList([...imageURLList, url])
     }
+
+    const handleSubmit=(values)=>{
+        const data = {
+            articleName: values?.articleName,
+            patientCategory: values?.patientCategory,
+            articleCategory: name,
+            articleDetails: content
+        }
+
+        const formData = new FormData();
+
+        if(imageToDelete){
+            formData.append("imageToDelete", JSON.stringify(imageToDelete))
+        }
+        if(image){
+            formData.append("buttonImage", image)
+        }
+
+        formData.append("data", JSON.stringify(data))
+
+        for (const image of imageList) {
+            formData.append("articleSlider", image)
+        }
+
+        dispatch(createArticle(formData)).then((response)=>{
+            if(response.type === "createArticle/fulfilled"){
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: response?.payload,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(()=>{
+                    form.resetFields()
+                    setImageURLList(null)
+                    setimageList(null)
+                })
+            }
+        })
+
+        dispatch(updateArticle({id: article?._id, data : formData})).then((response)=>{
+            if(response.type === "updateArticle/fulfilled"){
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: response?.payload,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(()=>{
+                    form.resetFields()
+                    setImageURLList(null)
+                    setimageList(null)
+                })
+            }
+        })
+
+    }
+
     return (
         <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-auto">
             <MetaTag title={"Create Article"} />
             <div className='flex items-center gap-3 mb-6'>
                 <div 
-                    onClick={()=>navigate(`/article-details/${id}`)}   
+                    onClick={()=>navigate(`/article-details/${name}`)}   
                     className="w-10 h-10 cursor-pointer rounded-lg border shadow-md flex items-center justify-center"
                 >
                     <GoArrowLeft   size={24} color='#12354E' />
@@ -46,14 +124,14 @@ const CreateArticle = () => {
             </div>
 
 
-            <Form>
+            <Form onFinish={handleSubmit} form={form}>
                 <div className='flex gap-[60px]'>
 
                     {/* name and category input container */}
                     <div className='w-[334px]'>
                         <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Article Name</label>
                         <Form.Item
-                            name={"article_name"}
+                            name={"articleName"}
                         >
                             <Input
                                 placeholder='Enter Article Name'
@@ -72,15 +150,15 @@ const CreateArticle = () => {
                             htmlFor="" 
                             style={{
                                 marginBottom: 8, 
-                                display: id === "Patient care" ? "block" : "none"
+                                display: name === "Patient Care" ? "block" : "none"
                             }}
                         >
                             Patient Category
                         </label>
                         <Form.Item
-                            name={"patient_category"}
+                            name={"patientCategory"}
                             style={{
-                                display: id === "Patient care" ? "block" : "none",
+                                display: name === "Patient Care" ? "block" : "none",
                                 marginBottom: 0
                             }}
                         >

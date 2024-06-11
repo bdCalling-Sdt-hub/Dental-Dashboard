@@ -40,6 +40,14 @@ import getPackageSlice  from './apiSlice/Package/getPackageSlice';
 import getArticleCategorySlice from './apiSlice/ArticleCategory/getArticleCategorySlice';
 import getArticleSlice from './apiSlice/Article/getArticleSlice';
 import updateArticleCategorySlice from './apiSlice/ArticleCategory/updateArticleCategorySlice';
+import createPatientSlice from './apiSlice/Patient/createPatientSlice';
+import updatePatientSlice from './apiSlice/Patient/updatePatientSlice';
+import deletePatientSlice from './apiSlice/Patient/deletePatientSlice';
+import getPatientSlice from './apiSlice/Patient/getPatientSlice';
+import createArticleSlice from './apiSlice/Article/createArticleSlice';
+import updateArticleSlice from './apiSlice/Article/updateArticleSlice';
+import deleteArticleSlice from './apiSlice/Article/deleteArticleSlice';
+import getArticleDetailsSlice from './apiSlice/Article/getArticleDetailsSlice';
 
 export const store = configureStore({
     reducer:{
@@ -113,7 +121,19 @@ export const store = configureStore({
         updateArticleCategorySlice: updateArticleCategorySlice,
 
         // Article 
+        createArticle: createArticleSlice,
         getArticle: getArticleSlice,
+        updateArticle: updateArticleSlice,
+        deleteArticle: deleteArticleSlice,
+        getArticleDetails: getArticleDetailsSlice,
+
+
+        // Patient
+        createPatient: createPatientSlice,
+        updatePatient: updatePatientSlice, 
+        deletePatient: deletePatientSlice,
+        getPatient: getPatientSlice,
+
 
     }
 })

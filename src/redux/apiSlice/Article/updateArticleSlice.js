@@ -5,21 +5,22 @@ import { baseURL } from "../../api/baseApi";
 const initialState = {
     error: false,
     success: false,
-    loading: false
+    loading: false,
 };
 
 
-export const deletePatient = createAsyncThunk(
-    'deletePatient',
-    async (id, thunkApi) => {
+export const updateArticle = createAsyncThunk(
+    'updateArticle',
+    async (value, thunkApi) => {
+        const {id, data} = value;
         try{
-            const response = await baseURL.delete(`/user/delete-patient/${id}`, {
+            const response = await baseURL.patch(`/article/${id}`, data, {
                 headers: {
-                    "Content-Type": "application/json",
-                    authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+                    "Content-Type": "multipart/form-data",
+                    authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
                 }
             });
-            return response?.data?.message;
+            return response?.data;
         }catch(error){
             const message = error?.response?.data?.message;
             return thunkApi.rejectWithValue(message);
@@ -30,20 +31,20 @@ export const deletePatient = createAsyncThunk(
 
 
 
-export const deletePatientSlice = createSlice({
-    name: 'deletePatient',
+export const updateArticleSlice = createSlice({
+    name: 'updateArticle',
     initialState,
     reducers: {},
     extraReducers: (builder) =>{
-        builder.addCase(deletePatient.pending, (state)=> {
+        builder.addCase(updateArticle.pending, (state)=> {
             state.loading= true;
         }),
-        builder.addCase(deletePatient.fulfilled, (state)=> {
+        builder.addCase(updateArticle.fulfilled, (state)=> {
             state.error= false;
             state.success= true;
             state.loading= false;
         }),
-        builder.addCase(deletePatient.rejected, (state)=> {
+        builder.addCase(updateArticle.rejected, (state)=> {
             state.error= true;
             state.success= false;
             state.loading= false;
@@ -51,4 +52,4 @@ export const deletePatientSlice = createSlice({
     }
 })
 
-export default deletePatientSlice.reducer
+export default updateArticleSlice.reducer

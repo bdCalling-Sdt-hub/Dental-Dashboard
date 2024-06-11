@@ -5,9 +5,15 @@ import Swal from 'sweetalert2';
 import { Empty, Pagination } from 'antd';
 import { Link } from 'react-router-dom';
 import { ImageConfig } from '../../redux/api/baseApi';
+import { useDispatch } from 'react-redux';
+import { deleteArticle } from '../../redux/apiSlice/Article/deleteArticleSlice';
 
-const ArticleTable = ({data, name, paginaton}) => {
-    const handleDelete=()=>{
+const ArticleTable = ({data, name, pagination}) => {
+    const dispatch = useDispatch();
+
+    const handleDelete=(id)=>{
+
+
         Swal.fire({
             title: "Are Your Sure ?",
             html: `Do you want to  delete This Article ? <br> Only Super admin can delete Article`,
@@ -17,6 +23,19 @@ const ArticleTable = ({data, name, paginaton}) => {
             }
         }).then((result) => {
             if (result.isConfirmed) {
+                dispatch(deleteArticle(id)).then((response)=>{
+                    if(response.type === "deleteArticle/fulfilled"){
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: response?.payload,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(()=>{
+                            // form.
+                        })
+                    }
+                })
                 console.log(result)
             }
         });
@@ -76,13 +95,13 @@ const ArticleTable = ({data, name, paginaton}) => {
 
                                 <td>
                                     <div className="flex items-center gap-2 h-[60px]">
-                                        <Link to={`/edit-article-blog/${name}`}>
+                                        <Link to={`/edit-article-blog/${item?._id}`}>
                                             <div onClick={()=>localStorage.setItem("article", JSON.stringify(item))} className="flex  cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
                                                 <RiEdit2Line size={18} color="#B6C0C8" />
                                             </div>
                                         </Link>
 
-                                        <div onClick={handleDelete} className="flex cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
+                                        <div onClick={()=>handleDelete(item._id)} className="flex cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
                                             <RiDeleteBin6Line size={18} color="#B6C0C8" />
                                         </div>
                                     </div>

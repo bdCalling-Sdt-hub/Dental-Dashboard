@@ -7,7 +7,7 @@ const initialState = {
     success: false,
     loading: false,
     articles: [],
-    paginaton: {}
+    pagination: {}
 };
 
 
@@ -45,14 +45,14 @@ export const getArticleSlice = createSlice({
             state.success= true;
             state.loading= false;
             state.articles= action.payload.data;
-            state.paginaton= action.payload.paginaton;
+            state.pagination= action.payload.paginaton;
         }),
         builder.addCase(getArticle.rejected, (state)=> {
             state.error= true;
             state.success= false;
             state.loading= false;
             state.articles= [];
-            state.paginaton= {};
+            state.pagination= {};
         })
     }
 })

@@ -1,25 +1,33 @@
 /* eslint-disable react/prop-types */
 import { Modal } from "antd"
 import { IoClose } from "react-icons/io5";
-import person2 from "../../assets/person2.png";
+import { useEffect, useState } from "react";
+import { ImageConfig } from "../../redux/api/baseApi";
 
 
 const UserDetailsModal = ({open, setOpen}) => {
+    const [imageUrl, setImageUrl] = useState(null)
+
+    useEffect(()=>{
+        if(open){
+            setImageUrl(`${ImageConfig}${open?.image}`)
+        }
+    }, [open])
     return (
         <>
             <Modal
                 centered 
                 title={false}
                 open={open} 
-                onOk={()=>setOpen(false)} 
-                onCancel={()=>setOpen(false)} 
+                onOk={()=>setOpen(null)} 
+                onCancel={()=>setOpen(null)} 
                 footer={false}
                 closeIcon={false}
                 width={519}
             >
                 <div className="">
                     <header className="w-full relative h-[238px] flex items-center justify-center bg-[#12354E] rounded-lg">
-                        <img src={person2} style={{width: 144, height: 144, borderRadius: "100%", border: "2px solid white"}} alt="" />
+                        <img src={imageUrl} style={{width: 144, height: 144, borderRadius: "100%", border: "2px solid white"}} alt="" />
                         <IoClose onClick={()=>setOpen(false)} className="cursor-pointer absolute top-4 right-4" size={25} color="white" />
                     </header>
 

@@ -6,8 +6,9 @@ import MetaTag from '../../components/MetaTag';
 import { Button, Form, Input, Select } from 'antd';
 import { RiImageAddLine } from 'react-icons/ri';
 const { Option } = Select;
-import { useState, useRef, } from 'react';
+import { useState, useRef, useEffect, } from 'react';
 import JoditEditor from 'jodit-react';
+import { useDispatch, useSelector } from 'react-redux';
 
 const EditArticalBlog = () => {
     const { id } = useParams();
@@ -18,6 +19,15 @@ const EditArticalBlog = () => {
     const [imageList, setimageList] = useState([]);
     const [imageURL, setImageURL] = useState();
     const [imageURLList, setImageURLList] = useState([]);
+    const dispatch = useDispatch()
+    const {details} = useSelector(state=>state.getArticleDetails)
+    const [form] = Form.useForm()
+
+    useEffect(()=>{
+        if(details){
+            form.setFieldsValue()
+        }
+    }, [form, details])
 
     const handleChange = (e)=>{
         const file = e.target.files[0];
@@ -45,7 +55,7 @@ const EditArticalBlog = () => {
                 <Heading title={`Edit Article`} style={""} />
             </div>
 
-            <Form>
+            <Form >
                 <div className='flex gap-[60px]'>
 
                     {/* name and category input container */}

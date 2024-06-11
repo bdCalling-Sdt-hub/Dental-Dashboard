@@ -1,11 +1,47 @@
 /* eslint-disable react/prop-types */
 import { Button, Form, Input, Modal, Select } from "antd"
 import { IoClose } from "react-icons/io5";
-import person2 from "../../assets/person2.png";
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { ImageConfig } from "../../redux/api/baseApi";
+import { updatePatient } from "../../redux/apiSlice/Patient/updatePatientSlice.js"
+import Swal from 'sweetalert2';
 const { Option } = Select;
 
 
 const PatientEditModal = ({editModal, setEditModal}) => {
+    const dispatch = useDispatch();
+    const [form] = Form.useForm();
+    const [imageUrl, setImageUrl] = useState(null)
+
+    useEffect(()=>{
+        if(editModal){
+            form.setFieldsValue(editModal);
+            setImageUrl(`${ImageConfig}${editModal?.image}`)
+        }
+    }, [form, editModal])
+
+    const handleSubmit=(values)=>{
+        const formData = new FormData();
+
+        Object.key(values).forEach(element => {
+            formData.append(element, values[element])
+        });
+        
+        dispatch(updatePatient({id: editModal?._id, data: formData})).then((response)=>{
+            if(response.type === "updatePatient/fulfilled"){
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: response?.payload,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(()=>{
+                    // form.
+                })
+            }
+        })
+    }
     return (
         <>
             <Modal
@@ -20,11 +56,11 @@ const PatientEditModal = ({editModal, setEditModal}) => {
             >
                 <div className="">
                     <header className="w-full relative h-[238px] flex items-center justify-center bg-[#12354E] rounded-lg">
-                        <img src={person2} style={{width: 144, height: 144, borderRadius: "100%", border: "2px solid white"}} alt="" />
+                        <img src={imageUrl} style={{width: 144, height: 144, borderRadius: "100%", border: "2px solid white"}} alt="" />
                         <IoClose onClick={()=>setEditModal(false)} className="cursor-pointer absolute top-4 right-4" size={25} color="white" />
                     </header>
 
-                    <Form className="grid grid-cols-12 gap-6 mt-6 px-2">
+                    <Form className="grid grid-cols-12 gap-6 mt-6 px-2" form={form} onFinish={handleSubmit}>
                         <div className="col-span-6">
                             <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Name</label>
                             <Form.Item
