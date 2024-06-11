@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseURL } from "@/Config";
+import { baseURL } from "../../api/baseApi";
 
 
 const initialState = {
@@ -13,13 +13,13 @@ export const createSmartChecker = createAsyncThunk(
     'createSmartChecker',
     async (value, thunkApi) => {
         try{
-            const response = await baseURL.get(`/rules/terms-and-conditions`, {
+            const response = await baseURL.post(`/smart-check/create-smart-check`, value, {
                 headers: {
-                    "Content-Type": "application/json",
-                    authorization: `Bearer ${localStorage.getItem('token')}`,
+                    "Content-Type": "multipart/form-data",
+                    authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
                 }
             });
-            return response?.data?.data;
+            return response?.data?.message;
         }catch(error){
             const message = error?.response?.data?.message;
             return thunkApi.rejectWithValue(message);

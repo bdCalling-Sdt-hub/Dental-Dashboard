@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseURL } from "@/Config";
+import { baseURL } from "../../api/baseApi";
 
 
 const initialState = {
@@ -11,16 +11,17 @@ const initialState = {
 
 export const deleteOffer = createAsyncThunk(
     'deleteOffer',
-    async (value, thunkApi) => {
+    async (id, thunkApi) => {
         try{
-            const response = await baseURL.delete(`/rules/terms-and-conditions`, {
+            const response = await baseURL.delete(`/offer/${id}`, {
                 headers: {
                     "Content-Type": "application/json",
-                    authorization: `Bearer ${localStorage.getItem('token')}`,
+                    authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
                 }
             });
-            return response?.data?.data;
+            return response?.data?.message;
         }catch(error){
+            console.log(error)
             const message = error?.response?.data?.message;
             return thunkApi.rejectWithValue(message);
         }

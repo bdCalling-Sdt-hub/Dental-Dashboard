@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Heading from '../../components/Heading';
 import MetaTag from '../../components/MetaTag';
@@ -7,43 +7,19 @@ import ArticleTable from '../../components/Article/ArticleTable';
 import { Button, Input } from 'antd';
 import { HiOutlinePlusSm } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
-import  article1 from "../../assets/article1.png"
-import  article2 from "../../assets/article2.png"
-import  article3 from "../../assets/article3.png"
-import  article4 from "../../assets/article4.png"
-import  article5 from "../../assets/article5.png"
-import  article6 from "../../assets/article6.png"
+import { useDispatch, useSelector } from 'react-redux';
+import { getArticle } from "../../redux/apiSlice/Article/getArticleSlice"
 
 const ArticleDetails = () => {
     const { name } = useParams();
     const navigate = useNavigate();
     const [keyword, setKeyword] = useState("")
+    const dispatch = useDispatch();
+    const { articles, paginaton } = useSelector(state=> state.getArticle)
 
-    const data = [
-        {
-            name: "Checkups",
-            image: article1
-        },
-        {
-            name: "Invisalign",
-            image: article2
-        },
-        {
-            name: "Smile Design",
-            image: article3
-        },
-        {
-            name: "Orthodontics",
-            image: article4
-        },{
-            name: "Hygienist",
-            image: article5
-        },
-        {
-            name: "Composite Bonding",
-            image: article6
-        },
-    ]
+    useEffect(()=>{
+        dispatch(getArticle(name))
+    }, [dispatch, name])
 
     return (
         <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-auto">
@@ -94,7 +70,7 @@ const ArticleDetails = () => {
 
             {/* article table */}
             <div>
-                <ArticleTable data={data} name={name} />
+                <ArticleTable paginaton={paginaton} data={articles} name={name} />
             </div>
         </div>
     )

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseURL } from "@/Config";
+import { baseURL } from "../../api/baseApi";
 
 
 const initialState = {
@@ -12,15 +12,15 @@ const initialState = {
 
 export const getAbout = createAsyncThunk(
     'getAbout',
-    async (value, thunkApi) => {
+    async (_, thunkApi) => {
         try{
-            const response = await baseURL.post(`/user/profile-update`, value, {
+            const response = await baseURL.get(`/rule/about`, {
                 headers: {
-                    "Content-Type": "multipart/form-data",
+                    "Content-Type": "application/json",
                     authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                 }
             });
-            return response?.data;
+            return response?.data?.data;
         }catch(error){
             const message = error?.response?.data?.message;
             return thunkApi.rejectWithValue(message);
@@ -43,12 +43,13 @@ export const getAboutSlice = createSlice({
             state.error= false;
             state.success= true;
             state.loading= false;
-            state.about= action.payload;
+            state.about=action.payload;
         }),
         builder.addCase(getAbout.rejected, (state)=> {
             state.error= true;
             state.success= false;
             state.loading= false;
+            state.about= {};
         })
     }
 })

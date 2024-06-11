@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseURL } from "@/Config";
+import { baseURL } from "../../api/baseApi";
 
 
 const initialState = {
@@ -13,14 +13,16 @@ export const updateProfile = createAsyncThunk(
     'updateProfile',
     async (value, thunkApi) => {
         try{
-            const response = await baseURL.patch(`/user/profile-update`, value, {
+            const response = await baseURL.patch(`/patient-profile-update`, value, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                 }
             });
+            
             return response?.data;
         }catch(error){
+            console.log(error)
             const message = error?.response?.data?.message;
             return thunkApi.rejectWithValue(message);
         }
@@ -38,7 +40,7 @@ export const updateProfileSlice = createSlice({
         builder.addCase(updateProfile.pending, (state)=> {
             state.loading= true;
         }),
-        builder.addCase(updateProfile.fulfilled, (state, action)=> {
+        builder.addCase(updateProfile.fulfilled, (state)=> {
             state.error= false;
             state.success= true;
             state.loading= false;

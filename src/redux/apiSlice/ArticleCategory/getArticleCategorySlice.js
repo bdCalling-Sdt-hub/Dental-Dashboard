@@ -5,23 +5,23 @@ import { baseURL } from "../../api/baseApi";
 const initialState = {
     error: false,
     success: false,
-    loading: false
+    loading: false,
+    articleCategory: []
 };
 
 
-export const createFaq = createAsyncThunk(
-    'createFaq',
+export const getArticleCategory = createAsyncThunk(
+    'getArticleCategory',
     async (value, thunkApi) => {
         try{
-            const response = await baseURL.post(`/faq/create-faq`, {...value}, {
+            const response = await baseURL.get(`/article-category`, {
                 headers: {
                     "Content-Type": "application/json",
                     authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
                 }
             });
-            return response?.data?.message;
+            return response?.data?.data;
         }catch(error){
-            console.log(error)
             const message = error?.response?.data?.message;
             return thunkApi.rejectWithValue(message);
         }
@@ -31,25 +31,27 @@ export const createFaq = createAsyncThunk(
 
 
 
-export const createFaqSlice = createSlice({
-    name: 'createFaq',
+export const getArticleCategorySlice = createSlice({
+    name: 'getArticleCategory',
     initialState,
     reducers: {},
     extraReducers: (builder) =>{
-        builder.addCase(createFaq.pending, (state)=> {
+        builder.addCase(getArticleCategory.pending, (state)=> {
             state.loading= true;
         }),
-        builder.addCase(createFaq.fulfilled, (state)=> {
+        builder.addCase(getArticleCategory.fulfilled, (state, action)=> {
             state.error= false;
             state.success= true;
             state.loading= false;
+            state.articleCategory= action.payload;
         }),
-        builder.addCase(createFaq.rejected, (state)=> {
+        builder.addCase(getArticleCategory.rejected, (state)=> {
             state.error= true;
             state.success= false;
             state.loading= false;
+            state.articleCategory= [];
         })
     }
 })
 
-export default createFaqSlice.reducer
+export default getArticleCategorySlice.reducer

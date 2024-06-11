@@ -1,13 +1,21 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Button, Form, Input, Modal } from 'antd'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { RiImageAddLine } from 'react-icons/ri';
+import { useDispatch, useSelector } from 'react-redux';
+import { createBanner } from "../../redux/apiSlice/Banner/createBannerSlice";
+import { updateBanner } from "../../redux/apiSlice/Banner/updateBannerSlice";
+import Swal from 'sweetalert2';
+import { ImageConfig } from '../../redux/api/baseApi';
 
-const AddBannerModal = ({open, setOpen}) => {
-    
+const BannerModal = ({open, setOpen, value, setValue, setRefresh}) => {
+    const dispatch = useDispatch();
+    const {loading} = useSelector(state=> state.createBanner)
     const [image, setimage] = useState();
     const [imageURL, setImageURL] = useState();
+    const [form] = Form.useForm();
+    form.setFieldsValue()
 
     const handleChange = (e)=>{
         const file = e.target.files[0];
@@ -16,17 +24,66 @@ const AddBannerModal = ({open, setOpen}) => {
         setImageURL(url)
     }
 
+    const handleClose=()=>{
+        setValue(null)
+        form.resetFields()
+        setImageURL(null)
+        setOpen(false)
+    }
+
+    useEffect(()=>{
+        if(value){
+            form.setFieldsValue({ name: value?.bannerTitle})
+            setImageURL(`${ImageConfig}${value?.bannerImage}`)
+        }
+    } ,[form, value])
+
+
     const handleSubmit=(values)=>{
-        console.log(values)
+
+        const formData = new FormData();
+        formData.append("data", JSON.stringify({ bannerTitle: values?.name}))
+        formData.append("bannerImage", image)
+
+        if(value){
+            dispatch(updateBanner({ id: value?._id,  data: formData})).then((response)=>{
+                if(response.type === "updateBanner/fulfilled"){
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: response?.payload,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(()=>{
+                        handleClose()
+                        setRefresh("done")
+                    })
+                }
+            })
+        }else{
+            dispatch(createBanner(formData)).then((response)=>{
+                if(response.type === "createBanner/fulfilled"){
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: response?.payload,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(()=>{
+                        handleClose()
+                        setRefresh("done")
+                    })
+                }
+            })
+        }
     }
 
     return (
         <Modal
             title={<p className='text-[#262727] poppins-medium text-[20px] pl-4 leading-[30px]'>Add Banner</p>}
             centered
-            open={open} 
-            onOk={()=>setOpen(false)} 
-            onCancel={()=>setOpen(false)} 
+            open={open || value} 
+            onCancel={handleClose} 
             footer={false}
             closeIcon={true}
             width={900}
@@ -35,11 +92,29 @@ const AddBannerModal = ({open, setOpen}) => {
                 layout="vertical"
                 onFinish={handleSubmit}
                 className='p-4'
+                form={form}
             >
                 
 
                 <Form.Item
-                    name={"banner"}
+                    name={"name"}
+                    label={<p className="text-[#415D71] text-sm leading-5 poppins-semibold">Name</p>}
+                >
+                    <Input
+                        placeholder="Enter Name"
+                        style={{
+                            width: "100%",
+                            height: 48,
+                            border: "1px solid #E7EBED",
+                            outline: "none",
+                            borderRadius: 8
+                        }}
+                        className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
+                    />
+                </Form.Item>
+
+
+                <Form.Item
                     label={<p className="text-[#415D71] text-sm leading-5 poppins-semibold">Banner Image</p>}
                 >
                     <Input
@@ -74,23 +149,6 @@ const AddBannerModal = ({open, setOpen}) => {
                     </label>
                 </Form.Item>
 
-                <Form.Item
-                    name={"name"}
-                    label={<p className="text-[#415D71] text-sm leading-5 poppins-semibold">Name</p>}
-                >
-                    <Input
-                        placeholder="Enter Name"
-                        style={{
-                            width: "100%",
-                            height: 48,
-                            border: "1px solid #E7EBED",
-                            outline: "none",
-                            borderRadius: 8
-                        }}
-                        className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
-                    />
-                </Form.Item>
-
                 <Form.Item style={{width: "100%", display: "flex", marginBottom: 0, alignItems: "center", justifyContent: "center"}}>
                     <Button
                         htmlType='submit'
@@ -106,7 +164,7 @@ const AddBannerModal = ({open, setOpen}) => {
                         }}
                         className='roboto-medium-italic text-[14px] leading-[17px]'
                     >
-                        Save & Change
+                        {loading ? "Loading..." : "Save & Change"}
                     </Button>
                 </Form.Item>
             </Form>
@@ -114,4 +172,4 @@ const AddBannerModal = ({open, setOpen}) => {
     )
 }
 
-export default AddBannerModal
+export default BannerModal

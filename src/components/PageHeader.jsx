@@ -31,7 +31,7 @@ const PageHeader = ({title, buttonName, keyword, setKeyword, setOpen}) => {
                         onClick={() => setOpen(true)}
                         style={{
                             background: "#12354E",
-                            width: 134,
+                            width: "fit-content",
                             height: 40,
                             border: "none",
                             outline: "none",

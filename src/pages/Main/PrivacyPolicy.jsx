@@ -4,20 +4,48 @@ import { Button } from 'antd'
 import JoditEditor from 'jodit-react'
 import { useRef, useState } from 'react'
 import Swal from 'sweetalert2'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { getPrivacyPolicy } from '../../redux/apiSlice/PrivacyAndPolicy/getPrivacyPolicySlice';
+import { updatePrivacyPolicy } from '../../redux/apiSlice/PrivacyAndPolicy/updatePrivacySlice';
+
+
 
 const PrivacyPolicy = () => {
     const editor = useRef(null);
     const [content, setContent] = useState();
+    const dispatch = useDispatch();
+    const {privacy} = useSelector(state=> state.getPrivacyPolicy);
+    const {loading} = useSelector(state=> state.updatePrivacyPolicy);
+
+    useEffect(()=>{
+        if(privacy){
+            setContent(privacy?.content)
+        }
+    }, [privacy])
+
+    useEffect(()=>{
+        dispatch(getPrivacyPolicy())
+    }, [dispatch])
 
     const handleSubmit=()=>{
-        Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Privacy Policy Updated  Successfully",
-            showConfirmButton: false,
-            timer: 1500
+        dispatch(updatePrivacyPolicy({content: content})).then((response)=>{
+            if(response?.type === "updatePrivacyPolicy/fulfilled"){
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: response?.payload,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(()=>{
+                    dispatch(getPrivacyPolicy())
+                })
+            }
         })
     }
+
+
+
     return (
         <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-auto">
             <MetaTag title={"Privacy Policy"} />
@@ -29,10 +57,7 @@ const PrivacyPolicy = () => {
                 <JoditEditor
                     ref={editor}
                     value={content}
-                    onChange={newContent => setContent(newContent)} 
-                    config={{
-                        height: 350
-                    }}
+                    onChange={newContent => setContent(newContent)}
                 />
             </div>
 
@@ -51,7 +76,7 @@ const PrivacyPolicy = () => {
                     }}
                     className='roboto-regular text-[14px] leading-[17px] flex items-center justify-center'
                 >
-                    Save & Change
+                    {loading ? "Loading..." : "Save & Change"}
                 </Button>
             </div>
         </div>

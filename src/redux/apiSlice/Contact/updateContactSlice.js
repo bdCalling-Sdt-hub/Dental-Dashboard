@@ -9,11 +9,12 @@ const initialState = {
 };
 
 
-export const createFaq = createAsyncThunk(
-    'createFaq',
+export const updateContact = createAsyncThunk(
+    'updateContact',
     async (value, thunkApi) => {
+        const {id, data} = value;
         try{
-            const response = await baseURL.post(`/faq/create-faq`, {...value}, {
+            const response = await baseURL.patch(`/contact/${id}`, data, {
                 headers: {
                     "Content-Type": "application/json",
                     authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
@@ -21,7 +22,6 @@ export const createFaq = createAsyncThunk(
             });
             return response?.data?.message;
         }catch(error){
-            console.log(error)
             const message = error?.response?.data?.message;
             return thunkApi.rejectWithValue(message);
         }
@@ -31,20 +31,20 @@ export const createFaq = createAsyncThunk(
 
 
 
-export const createFaqSlice = createSlice({
-    name: 'createFaq',
+export const updateContactSlice = createSlice({
+    name: 'updateContact',
     initialState,
     reducers: {},
     extraReducers: (builder) =>{
-        builder.addCase(createFaq.pending, (state)=> {
+        builder.addCase(updateContact.pending, (state)=> {
             state.loading= true;
         }),
-        builder.addCase(createFaq.fulfilled, (state)=> {
+        builder.addCase(updateContact.fulfilled, (state)=> {
             state.error= false;
             state.success= true;
             state.loading= false;
         }),
-        builder.addCase(createFaq.rejected, (state)=> {
+        builder.addCase(updateContact.rejected, (state)=> {
             state.error= true;
             state.success= false;
             state.loading= false;
@@ -52,4 +52,4 @@ export const createFaqSlice = createSlice({
     }
 })
 
-export default createFaqSlice.reducer
+export default updateContactSlice.reducer

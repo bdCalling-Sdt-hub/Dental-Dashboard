@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseURL } from "../../../Config";
+import { baseURL } from "../../api/baseApi";
 
 
 const initialState = {
@@ -12,10 +12,8 @@ const initialState = {
 export const forgotPassword = createAsyncThunk(
     'forgotPassword',
     async (value, thunkApi) => {
-        console.log(value)
         try{
             const response = await baseURL.post(`/auth/forget-password`, {...value});
-            console.log(response)
             return response?.data?.message;
         }catch(error){
             console.log(error)

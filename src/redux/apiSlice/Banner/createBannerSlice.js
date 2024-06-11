@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseURL } from "@/Config";
+import { baseURL } from "../../api/baseApi";
 
 
 const initialState = {
@@ -9,17 +9,17 @@ const initialState = {
 };
 
 
-export const createTermsAndConditions = createAsyncThunk(
-    'createTermsAndConditions',
+export const createBanner = createAsyncThunk(
+    'createBanner',
     async (value, thunkApi) => {
         try{
-            const response = await baseURL.get(`/rules/terms-and-conditions`, {
+            const response = await baseURL.post(`/banner/create-banner`, value, {
                 headers: {
-                    "Content-Type": "application/json",
-                    authorization: `Bearer ${localStorage.getItem('token')}`,
+                    "Content-Type": "multipart/form-data",
+                    authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
                 }
             });
-            return response?.data?.data;
+            return response?.data?.message;
         }catch(error){
             const message = error?.response?.data?.message;
             return thunkApi.rejectWithValue(message);
@@ -30,20 +30,20 @@ export const createTermsAndConditions = createAsyncThunk(
 
 
 
-export const createTermsAndConditionsSlice = createSlice({
-    name: 'createTermsAndConditions',
+export const createBannerSlice = createSlice({
+    name: 'createBanner',
     initialState,
     reducers: {},
     extraReducers: (builder) =>{
-        builder.addCase(createTermsAndConditions.pending, (state)=> {
+        builder.addCase(createBanner.pending, (state)=> {
             state.loading= true;
         }),
-        builder.addCase(createTermsAndConditions.fulfilled, (state)=> {
+        builder.addCase(createBanner.fulfilled, (state)=> {
             state.error= false;
             state.success= true;
             state.loading= false;
         }),
-        builder.addCase(createTermsAndConditions.rejected, (state)=> {
+        builder.addCase(createBanner.rejected, (state)=> {
             state.error= true;
             state.success= false;
             state.loading= false;
@@ -51,4 +51,4 @@ export const createTermsAndConditionsSlice = createSlice({
     }
 })
 
-export default createTermsAndConditionsSlice.reducer
+export default createBannerSlice.reducer

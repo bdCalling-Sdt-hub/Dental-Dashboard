@@ -3,20 +3,43 @@ import Heading from '../../components/Heading'
 import { Button } from 'antd'
 import JoditEditor from 'jodit-react'
 import { useRef, useState } from 'react'
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { getTermsAndConditions } from '../../redux/apiSlice/TermsAndCondition/getTermsAndConditionsSlice';
+import { updateTermsAndConditions } from '../../redux/apiSlice/TermsAndCondition/updateTermsAndConditionsSlice';
+
 
 const TermsAndConditions = () => {
     const editor = useRef(null);
     const [content, setContent] = useState();
+    const dispatch = useDispatch();
+    const {terms} = useSelector(state=> state.getTermsAndConditions);
+    const {loading} = useSelector(state=> state.updateTermsAndConditions);
+
+    useEffect(()=>{
+        if(terms){
+            setContent(terms?.content)
+        }
+    }, [terms])
+
+    useEffect(()=>{
+        dispatch(getTermsAndConditions())
+    }, [dispatch])
 
     const handleSubmit=()=>{
-        Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Terms And Condition Updated Successfully",
-            showConfirmButton: false,
-            timer: 1500,
-            width: 700
+        dispatch(updateTermsAndConditions({content: content})).then((response)=>{
+            if(response?.type === "updateTermsAndConditions/fulfilled"){
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: response?.payload,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(()=>{
+                    dispatch(getTermsAndConditions())
+                })
+            }
         })
     }
     return (
@@ -30,10 +53,7 @@ const TermsAndConditions = () => {
                 <JoditEditor
                     ref={editor}
                     value={content}
-                    onChange={newContent => setContent(newContent)} 
-                    config={{
-                        height: 350
-                    }}
+                    onChange={newContent => setContent(newContent)}
                 />
             </div>
 
@@ -52,7 +72,7 @@ const TermsAndConditions = () => {
                     }}
                     className='roboto-regular text-[14px] leading-[17px] flex items-center justify-center'
                 >
-                    Save & Change
+                    {loading ? "Loading..." : "Save & Change"}
                 </Button>
             </div>
         </div>

@@ -3,7 +3,7 @@ import Auth from "../layouts/Auth/Auth";
 import Login from "../pages/Auth/Login";
 import ForgotPassword from "../pages/Auth/ForgotPassword";
 import VerifyOtp from "../pages/Auth/VerifyOtp";
-import UpdatePassword from "../pages/Auth/UpdatePassword";
+import ResetPassword from "../pages/Auth/ResetPassword";
 import Main from "../layouts/Main/Main";
 import Home from "../pages/Main/Home";
 import PatientList from "../pages/Main/PatientList";
@@ -22,7 +22,7 @@ import PrivacyPolicy from "../pages/Main/PrivacyPolicy";
 import TermsAndConditions from "../pages/Main/TermsAndConditions";
 import FAQ from "../pages/Main/FAQ";
 import SmartChecker from "../pages/Main/SmartChecker";
-import OfferSlider from "../pages/Main/OfferSlider";
+import Offer from "../pages/Main/Offer";
 import Banner from "../pages/Main/Banner";
 import NotFound from "../pages/Main/NotFound";
 import Profile from "../pages/Main/Profile";
@@ -103,7 +103,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "offer-slider",
-                element: <OfferSlider/>
+                element: <Offer/>
             },
             {
                 path: "banner",
@@ -140,12 +140,12 @@ const router = createBrowserRouter([
                 element: <ForgotPassword/>
             },
             {
-                path: "verify-otp",
+                path: "verify-otp/:email",
                 element: <VerifyOtp/>
             },
             {
                 path: "update-password",
-                element: <UpdatePassword/>
+                element: <ResetPassword/>
             },
         ]
     }

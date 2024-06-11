@@ -1,8 +1,14 @@
 import { Badge } from 'antd';
+import { useContext } from 'react';
 import { IoIosNotificationsOutline } from 'react-icons/io';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../../provider/User';
+import { ImageConfig } from '../../redux/api/baseApi';
 
 const Header = () => {
+    const {user} = useContext(UserContext);
+
+    const src = user?.admin?.profile?.startsWith("https") ? user?.admin?.profile : `${ImageConfig}/${user?.admin?.profile}`
     return (
         <div className='bg-white flex items-end justify-end gap-6 py-3 pr-10'>
             <div className='w-10 h-10 shadow-lg rounded-full bg-white p-2'>
@@ -15,10 +21,8 @@ const Header = () => {
 
             <Link to={"/profile"}>
                 <div className='flex items-center gap-[10px]' >
-                    <div className='w-10 h-10 rounded-full bg-[#E0E0E0] p-2 border-[#12354E] border-[2px]'>
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="" />
-                    </div>
-                    <p className='text-[16px] font-medium leading-6 text-[#575757]'>Nadir Hossain</p>
+                    <img className='border-[#12354E] border-[3px]' src={src} style={{width: 40, height: 40, borderRadius: "100%"}} alt="" />
+                    <p className='text-[16px] font-medium leading-6 text-[#575757]'>{user?.admin?.name}</p>
                 </div>
             </Link>
         </div>

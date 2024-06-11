@@ -2,21 +2,41 @@
 /* eslint-disable react/prop-types */
 import { Button, Form, Input, Modal } from 'antd';
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-
+import {createAdmin} from "../../redux/apiSlice/Admin/createAdminSlice"
 const MakeAdminModal = ({open, setOpen, setRefresh}) => {
+    const dispatch = useDispatch();
+    const {loading} = useSelector(state=> state?.createAdmin);
+    const [form] = Form.useForm();
 
-    const handleMakeAdmin=async()=>{
-        Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Created Make Admin Successfully",
-            showConfirmButton: false,
-            timer: 1500
-        }).then(()=>{
-            setOpen(false);
-            setRefresh("done");
+    form.setFieldsValue();
+
+    const handleMakeAdmin=(values)=>{
+        dispatch(createAdmin(values)).then((response)=>{
+            if(response.type === "createAdmin/fulfilled"){
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: response?.payload,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(()=>{
+                    setOpen(false);
+                    setRefresh("done");
+                    form.resetFields();
+                })
+            }else{
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: response?.payload,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
         })
+        
 
     }
     return (
@@ -25,24 +45,24 @@ const MakeAdminModal = ({open, setOpen, setRefresh}) => {
                 centered
                 open={open}
                 onOk={false}
-                onCancel={() => setOpen(false)}
+                onCancel={() => ( form.resetFields() ,setOpen(false))}
                 width={500}
                 footer={false}
                 title={<p className='text-[#262727] pl-4 poppins-medium text-[20px] leading-[30px]'>Make Admin</p>}
             >
                 <div className='p-4'>
-                    {/* <h1 style={{marginBottom: "12px"}}>Make Admin</h1> */}
-                    <Form onSubmit={handleMakeAdmin} initialValues={{userType: "ADMIN"}}>
 
-                        <label className="text-[#6A6D7C] text-base leading-6 poppins-regular" htmlFor="" style={{marginBottom: 8, display: "block"}}>Full Name</label>
+                    <Form onFinish={handleMakeAdmin} form={form} layout='vertical'>
+
                         <Form.Item
-                            name={"full_name"}
+                            name={"name"}
                             rules={[
                                 {
                                     required: true,
                                     message: "Enter User Name"
                                 }
                             ]}
+                            label={<label className="text-[#6A6D7C] block text-base leading-6 poppins-regular" htmlFor="">Full Name</label>}
                         >
                             <Input
                                 placeholder="Enter User Name"
@@ -58,7 +78,6 @@ const MakeAdminModal = ({open, setOpen, setRefresh}) => {
                         </Form.Item>
 
 
-                        <label className="text-[#6A6D7C] text-base leading-6 poppins-regular" htmlFor="" style={{marginBottom: 8, display: "block"}}>Email</label>
                         <Form.Item
                             name={"email"}
                             rules={[
@@ -67,6 +86,7 @@ const MakeAdminModal = ({open, setOpen, setRefresh}) => {
                                     message: "Enter User Email"
                                 }
                             ]}
+                            label={<label className="text-[#6A6D7C] block text-base leading-6 poppins-regular" htmlFor="">Email</label>}
                         >
                             <Input
                                 placeholder="Enter User Email"
@@ -82,7 +102,6 @@ const MakeAdminModal = ({open, setOpen, setRefresh}) => {
                         </Form.Item>
 
 
-                        <label className="text-[#6A6D7C] text-base leading-6 poppins-regular" htmlFor="" style={{marginBottom: 8, display: "block"}}>Password</label>
                         <Form.Item
                             name={"password"}
                             rules={[
@@ -91,6 +110,7 @@ const MakeAdminModal = ({open, setOpen, setRefresh}) => {
                                     message: "Enter User Password"
                                 }
                             ]}
+                            label={<label className="text-[#6A6D7C] block text-base leading-6 poppins-regular" htmlFor="">Password</label>}
                         >
                             <Input.Password
                                 placeholder="Enter User Password"
@@ -106,29 +126,6 @@ const MakeAdminModal = ({open, setOpen, setRefresh}) => {
                         </Form.Item>
 
 
-                        <label className="text-[#6A6D7C] text-base leading-6 poppins-regular" htmlFor="" style={{marginBottom: 8, display: "block"}}>User Type</label>
-                        <Form.Item
-                            name={"userType"}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Enter User Type"
-                                }
-                            ]}
-                        >
-                            <Input
-                                placeholder="Enter User Type"
-                                style={{
-                                    width: "100%",
-                                    height: 48,
-                                    border: "1px solid #E7EBED",
-                                    outline: "none",
-                                    borderRadius: 8
-                                }}
-                                readOnly
-                                className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
-                            />
-                        </Form.Item>
 
                         <Form.Item
                             style={{display: "flex", marginBottom: 0, alignItems: "center", justifyContent: "center"}}
@@ -146,7 +143,7 @@ const MakeAdminModal = ({open, setOpen, setRefresh}) => {
                                 }}
                                 className='roboto-regular text-[14px] leading-[17px] flex items-center justify-center'
                             >
-                                Submit
+                                {loading ? "Loading" : "Submit"}
                             </Button>
                         </Form.Item>
                     </Form>

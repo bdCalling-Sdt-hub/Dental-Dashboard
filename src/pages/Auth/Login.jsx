@@ -1,11 +1,42 @@
+/* eslint-disable no-unused-vars */
 import { Button, Checkbox, Form, Input } from 'antd';
 import { useState } from 'react';
 import Heading from "../../components/Heading";
+import { login } from "../../redux/apiSlice/Authentication/loginSlice"
+import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [checked, setChecked] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+
     const handleSubmit=(values)=>{
-        console.log("Received Values", values)
+        dispatch(login(values)).then((res)=>{
+            if(res?.type === "login/fulfilled"){
+                localStorage.setItem("token", JSON.stringify(res?.payload))
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Logged In Successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(()=>{
+                    navigate("/")
+                    window.location.reload();
+                })
+            }else{
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: res?.payload,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        })
     }
     return (
         <div>
@@ -60,15 +91,15 @@ const Login = () => {
 
                 <div className="flex items-center justify-between mb-10">
                     <Form.Item name="remember" noStyle>
-                        <Checkbox onChange={(e)=>setChecked(e.target.checked)} className='poppins-regular text-base leading-6' style={{color: "#6A6D7C"}}>Remember me</Checkbox>
+                        <Checkbox checked={checked} onChange={(e)=>setChecked(e.target.checked)} className='poppins-regular text-base leading-6' style={{color: "#6A6D7C"}}>Remember me</Checkbox>
                     </Form.Item> 
-                    <a
-                        className="poppins-medium text-base leading-6"
+                    <p
+                        className="poppins-medium text-base leading-6 cursor-pointer"
                         style={{ color: "#F16365" }}
-                        href="/auth/forgot-password"
+                        onClick={()=>navigate("/auth/forgot-password")}
                     >
                         Forgot password
-                    </a>
+                    </p>
                 </div>
 
                 <Form.Item style={{display: "flex", alignItems: "center", justifyContent: "center"}}>

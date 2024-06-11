@@ -1,29 +1,28 @@
-import MetaTag from '../../components/MetaTag'
-import Heading from '../../components/Heading'
-import { useState } from 'react';
-import SmartCheckerTableList from '../../components/SmartCheckerTableList';
-import { Button } from 'antd';
-import { HiOutlinePlusSm } from 'react-icons/hi';
-import SmartCheckerModal from '../../components/Modal/SmartCheckerModal';
+/* eslint-disable no-unused-vars */
+import { useState } from "react"
+import MetaTag from "../../components/MetaTag"
+import OfferTableList from "../../components/OfferTableList"
+import OfferModal from "../../components/Modal/OfferModal"
+import { HiOutlinePlusSm } from "react-icons/hi"
+import { Button } from "antd"
+import Heading from "../../components/Heading"
 
-const SmartChecker = () => {
+
+const Offer = () => {
     const [open, setOpen] = useState(false);
     const [refresh, setRefresh] = useState("");
-    const [value, setValue] = useState(null)
+    const [value, setValue] = useState(null);
     if(refresh){
         setTimeout(()=>{
             setRefresh("")
         }, 1500)
     }
-    
     return (
-        <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-y-scroll">
-
-            {/* helmet */}
-            <MetaTag title={"Smart Checker"}/>
+        <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-auto"> 
+            <MetaTag title={"Offer Slider"} />
 
             <div className='flex items-center justify-between mb-6'>
-                <Heading title={"Smart Checker"} style={""} />
+                <Heading title={"Offer Slider"} style={""} />
                 <Button
                     onClick={()=>setOpen(true)} 
                     style={{
@@ -38,16 +37,17 @@ const SmartChecker = () => {
                     className='roboto-regular text-[14px] leading-[17px] flex items-center justify-center'
                     icon={<HiOutlinePlusSm color="#FCFCFC" size={20} />}
                 >
-                    Add Smart Checker
+                    Create Offer
                 </Button>
             </div>
 
 
-            <SmartCheckerTableList setValue={setValue}  refresh={refresh}/>
-            <SmartCheckerModal value={value} setValue={setValue} setRefresh={setRefresh} setOpen={setOpen} open={open} />
+            <OfferTableList refresh={refresh} setValue={setValue} />
+
+            <OfferModal open={open} setRefresh={setRefresh} value={value} setValue={setValue} setOpen={setOpen} />
 
         </div>
     )
 }
 
-export default SmartChecker
+export default Offer

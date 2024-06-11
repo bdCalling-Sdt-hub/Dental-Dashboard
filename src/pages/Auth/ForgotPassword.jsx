@@ -1,13 +1,32 @@
+/* eslint-disable no-unused-vars */
 import { Button, Form, Input } from 'antd';
 import Heading from '../../components/Heading';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { forgotPassword } from "../../redux/apiSlice/Authentication/forgotPasswordSlice"
+import Swal from 'sweetalert2';
 
 const ForgotPassword = () => {
+    const dispatch = useDispatch()
+    const {loading} = useSelector(state=> state?.forgotPassword)
     const navigate = useNavigate();
     const handleSubmit=(values)=>{
-        console.log("Received Values", values);
-        navigate("/auth/verify-otp")
+        dispatch(forgotPassword(values)).then((response)=>{
+            console.log(response)
+            if(response?.type === "forgotPassword/fulfilled"){
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: response?.payload,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then((response)=>{
+                    navigate(`/auth/verify-otp/${values?.email}`)
+                })
+            }
+        })
     }
+    
     return (
         <div>
             <Heading title={"Forgot Password"} style="mb-6" />
@@ -49,7 +68,7 @@ const ForgotPassword = () => {
                         }}
                         className='roboto-medium-italic text-[14px] leading-[17px]'
                     >
-                        Send code
+                        { loading ? "Loading" : "Send code"}
                     </Button>
                 </Form.Item>
             </Form>

@@ -1,25 +1,46 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import Swal from "sweetalert2";
-import Slider from "../../assets/offer_slider.png"
-import OfferSliderEditModal from "../Modal/OfferSliderEditModal";
+import { ImageConfig } from '../redux/api/baseApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { getOffers } from "../redux/apiSlice/Offer/getOfferSlice";
+import { deleteOffer } from "../redux/apiSlice/Offer/deleteOfferSlice";
 
 
-const OfferSliderTableList = ({ keyword }) => {
-    const [open, setOpen] = useState(false);
-    const handleDelete=()=>{
+const OfferTableList = ({ refresh, setValue }) => {
+    const dispatch = useDispatch();
+    const {offers} = useSelector(state=> state.getOffers);
+
+    useEffect(()=>{
+        dispatch(getOffers())
+    }, [dispatch, refresh]);
+
+
+    const handleDelete=(id)=>{
         Swal.fire({
-            title: "Are Your Sure !",
-            html: `Do you want to  delete Slider?`,
+            title: "Are Your Sure?",
+            html: `Do you want to  delete This Offer`,
             confirmButtonText: 'Confirm',
             customClass: {
               confirmButton: 'custom-send-button',
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log(result)
+                dispatch(deleteOffer(id)).then((response)=>{
+                    if(response.type === "deleteOffer/fulfilled"){
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: response?.payload,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(()=>{
+                            dispatch(getOffers())
+                        })
+                    }
+                })
             }
         });
     }
@@ -29,7 +50,7 @@ const OfferSliderTableList = ({ keyword }) => {
                 <thead>
                     <tr className="text-left w-full bg-[#E7EBED] custom-table-list">
                         {
-                            ["S.ID ", "Slider.", "Article Name", "Actions"].map((item, index)=>{
+                            ["S.ID ", "Offer Image", "Offer Name", "Actions"].map((item, index)=>{
                                 return (
                                     <th 
                                         key={index} 
@@ -49,24 +70,25 @@ const OfferSliderTableList = ({ keyword }) => {
 
                 <tbody>
                     {
-                        [...Array(2)].map((item, index)=>
+                        offers?.map((offer, index)=>
                         <React.Fragment key={index}>
+                            <div className="mt-2"></div>
                             <tr className={`${(index + 1) % 2 === 0 ? 'bg-[#FCF8F9]' : 'bg-white'} w-full`}>
                                 <td>#123{index}</td>
                                 <td>
                                     <div className="h-[60px]">
-                                        <img src={Slider} alt="" />
+                                        <img style={{height : 60, width: 200}} src={`${ImageConfig}${offer?.offerImage}`} alt="" />
                                     </div>
                                 </td>
-                                <td className="text-[#707070] h-[60px]  roboto-regular text-base ">2{index+1}% Offer</td>
+                                <td className="text-[#707070] h-[60px]  roboto-regular text-base ">{offer?.offerTitle}</td>
 
                                 <td>
                                     <div className="flex items-center gap-2 h-[60px]">
-                                        <div onClick={()=>setOpen(true)} className="flex  cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
+                                        <div onClick={()=>setValue(offer)}  className="flex  cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
                                             <RiEdit2Line size={18} color="#B6C0C8" />
                                         </div>
 
-                                        <div onClick={handleDelete} className="flex cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
+                                        <div onClick={()=>handleDelete(offer?._id)} className="flex cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
                                             <RiDeleteBin6Line size={18} color="#B6C0C8" />
                                         </div>
                                     </div>
@@ -77,11 +99,8 @@ const OfferSliderTableList = ({ keyword }) => {
                     }
                 </tbody>
             </table>
-
-
-            <OfferSliderEditModal open={open} setOpen={setOpen} />
         </div>
     )
 }
 
-export default OfferSliderTableList
+export default OfferTableList

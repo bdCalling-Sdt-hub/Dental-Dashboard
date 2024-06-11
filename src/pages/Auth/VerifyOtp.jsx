@@ -1,9 +1,15 @@
 import Heading from '../../components/Heading';
 import { Button, Form, Input } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { verifyOtp } from "../../redux/apiSlice/Authentication/verifyOtpSlice"
+import { useDispatch } from 'react-redux';
+import { forgotPassword } from '../../redux/apiSlice/Authentication/forgotPasswordSlice';
+import Swal from 'sweetalert2';
 
 const VerifyOtp = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch()
+    const { email } = useParams();
 
     const onChange = (text) => {
         console.log('onChange:', text);
@@ -14,15 +20,48 @@ const VerifyOtp = () => {
     };
 
     const handleSubmit=(values)=>{
-        console.log("Received Values", values);
-        navigate("/auth/update-password")
+        const data = {
+            email: email,
+            otp: values?.otp
+        }
+        dispatch(verifyOtp(data)).then((response)=>{
+            if(response?.type === "verifyOtp/fulfilled"){
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "OTP Verified Successfully",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    width: 550,
+                }).then(()=>{
+                    localStorage.setItem("rToken", response?.payload)
+                    navigate(`/auth/update-password`)
+                })
+            }
+        })
+    }
+
+
+    const handleResentEmail=()=>{
+        dispatch(forgotPassword({email: email})).then((response)=>{
+            if(response?.type === "forgotPassword/fulfilled"){
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: response?.payload,
+                    showConfirmButton: false,
+                    timer: 1500,
+                    width: 550,
+                })
+            }
+        })
     }
 
     return (
         <div>
-            <Heading title={"Verify OTP"}  style="mb-6" />
-            <p className='poppins-regular text-base leading-6' style={{width: "380px", color: "#929394",  margin: "0 auto 30px auto"}}>
-                We sent a reset link to <span style={{color: "#545454"}}> contact@dscode...com </span>
+            <Heading title={"Verify OTP"}  style="mb-6 text-center" />
+            <p className='poppins-regular text-base leading-6' style={{width: "360px", color: "#929394",  margin: "0 auto 30px auto"}}>
+                We sent a reset link to <span style={{color: "#545454"}}> {email?.slice(0, 2)+ "..@gmail.com"} </span>
                 enter 6 digit code that mentioned in the email
             </p>
             <Form onFinish={handleSubmit}>
@@ -37,7 +76,7 @@ const VerifyOtp = () => {
                     name={"otp"}
                 >
                     <Input.OTP 
-                        length={5} 
+                        length={4} 
                         {...sharedProps} 
                     />
                 </Form.Item>
@@ -60,6 +99,8 @@ const VerifyOtp = () => {
                         Verity Code
                     </Button>
                 </Form.Item>
+
+                <p onClick={handleResentEmail} className='poppins-regular text-[16px] leading-6 text-center'>You have not received the email?  <span className='text-[#7CC84E] cursor-pointer' >Resend</span> </p>
             </Form>
         </div>
     )

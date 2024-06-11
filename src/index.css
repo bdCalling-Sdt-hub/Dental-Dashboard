@@ -133,3 +133,7 @@ h1, h2, h3, h4, h5, h6, tr, td, th, span, p, li, ul{
 .ant-menu-item .ant-menu-item-only-child:hover{
     background: red !important;
 }
+
+.jodit-workplace {
+    height: 400px !important;
+}

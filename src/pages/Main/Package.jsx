@@ -1,26 +1,34 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import MetaTag from '../../components/MetaTag'
 import { Button, Form, Input, Modal } from 'antd'
 import { FaCircleCheck } from "react-icons/fa6";
 import Swal from 'sweetalert2';
 import { CiCircleMinus } from 'react-icons/ci';
 import { GoPlusCircle } from "react-icons/go";
+import { getPackage } from "../../redux/apiSlice/Package/getPackageSlice"
+import { useDispatch, useSelector } from 'react-redux';
 
 const Package = () => {
+    const dispatch = useDispatch();
+    const { packages } = useSelector(state=> state.getPackage)
+    console.log(packages)
+    const [form] = Form.useForm()
+
+    useEffect(()=>{
+        dispatch(getPackage());
+    }, [dispatch])
+
+    useEffect(()=>{
+        if(packages){
+            form.setFieldsValue({packageName: packages?.packageName, packageDetails: packages?.packageDetails })
+        }
+    }, [form, packages])
+
     const [open, setOpen] = useState(false);
     const [keyword, setKeyword] = useState("")
-    const [data, setData] = useState([
-        "Complimentary Dental Examinations", 
-        "Complimentary Hygienist Cleans", 
-        "Complimentary Dental X-rays", 
-        "Complimentary 3D in-mouth scans", 
-        "Priority Appointments",
-        "Discounted Routine Dental Treatments",
-        "Free Private Prescriptions",
-        "Free Referrals",
-        "Fee Skin Consultations",
-        "Cancer screening"
-    ])
+    
+
+    console.log(form.getFieldsValue())
 
     const handleSubmit=(values)=>{
         console.log("Recieved Values", values)
@@ -33,10 +41,7 @@ const Package = () => {
         })
     }
 
-    const initialValues = {
-        name: "Membership Package",
-        feature : data
-    }
+    
     return (
         <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-y-scroll">
 
@@ -46,11 +51,11 @@ const Package = () => {
 
             <Form
                 onFinish={handleSubmit}
-                initialValues={initialValues}
+                form={form}
             >
                 <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Name</label>
                 <Form.Item
-                    name={"name"}
+                    name={"packageName"}
                 >
                     <Input
                         placeholder="Enter Package Name"
@@ -69,10 +74,10 @@ const Package = () => {
                     <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Package Details</label>
                     
                     <Form.Item
-                        name={"feature"}
+                        
                         style={{ border: "1px solid #E7EBED", borderRadius: 8, padding: " 16px 24px "}}
                     >
-                        <Form.List name="feature">
+                        <Form.List name={"packageDetails"}>
                                     {
                                         (fields, { add, remove }) => (
                                             <>

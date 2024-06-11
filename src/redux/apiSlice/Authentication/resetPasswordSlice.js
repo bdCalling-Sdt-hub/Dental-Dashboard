@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseURL } from "../../../Config";
+import { baseURL } from "../../api/baseApi";
 
 
 const initialState = {
@@ -40,7 +40,7 @@ export const resetPasswordSlice = createSlice({
         builder.addCase(resetPassword.pending, (state)=> {
             state.loading= true;
         }),
-        builder.addCase(resetPassword.fulfilled, (state, action)=> {
+        builder.addCase(resetPassword.fulfilled, (state)=> {
             state.error= false;
             state.success= true;
             state.loading= false;

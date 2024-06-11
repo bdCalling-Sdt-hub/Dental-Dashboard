@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import { RiDeleteBin6Line, RiEdit2Line } from 'react-icons/ri';
 import Swal from 'sweetalert2';
-import { Pagination } from 'antd';
+import { Empty, Pagination } from 'antd';
 import { Link } from 'react-router-dom';
+import { ImageConfig } from '../../redux/api/baseApi';
 
-const ArticleTable = ({data, name}) => {
+const ArticleTable = ({data, name, paginaton}) => {
     const handleDelete=()=>{
         Swal.fire({
             title: "Are Your Sure ?",
@@ -20,9 +21,20 @@ const ArticleTable = ({data, name}) => {
             }
         });
     }
+
+    const [page, setPage] = useState(new URLSearchParams(window.location.search).get('page') || 1);
+    const handlePageChange = (page) => {
+        setPage(page);
+        const params = new URLSearchParams(window.location.search);
+        params.set('page', page);
+        window.history.pushState(null, "", `?${params.toString()}`);
+    };
+
     return (
         <div>
-            <table className="w-full table">
+            <table
+                className={`w-full table ${data?.length === 0 ? "hidden" : "block"}`}
+            >
                 <thead>
                     <tr className="text-left w-full bg-[#E7EBED] custom-table-list">
                         {
@@ -32,9 +44,9 @@ const ArticleTable = ({data, name}) => {
                                         key={index} 
                                         className={`text-[#575757] poppins-medium text-[18px] leading-7`}
                                         style={{
-                                            display: name !== "Patient care" && item === "Patient Category" ? "none" : "table-cell"
+                                            display: name !== "Patient Care" && item === "Patient Category" ? "none" : "table-cell"
                                         }}
-                                        colSpan={name !== "Patient care" && item === "Patient Category" ? 0 : 1}
+                                        colSpan={name !== "Patient Care" && item === "Patient Category" ? 0 : 1}
                                     >
                                         {item}
                                     </th>
@@ -51,15 +63,15 @@ const ArticleTable = ({data, name}) => {
                             <tr className={`${(index + 1) % 2 === 0 ? 'bg-[#FCF8F9]' : 'bg-white'} w-full`}>
                                 <td>#123{index}</td>
                                 <td >
-                                    <div className="h-[60px]">
-                                        <img  src={item?.image} alt="" />
+                                    <div className="h-[60px] flex items-center justify-between">
+                                        <img style={{height: 50, width: 80}}  src={`${ImageConfig}${item?.articleSlider[0]}`} alt="" />
                                     </div>
                                 </td>
 
-                                <td className="text-[#707070] h-[60px]  roboto-regular text-base ">{item?.name}</td>
+                                <td className="text-[#707070] h-[60px]  roboto-regular text-base ">{item?.articleName}</td>
                                 {
 
-                                    name === "Patient care" && <td className="text-[#707070] h-[60px]  roboto-regular text-base ">Gum</td>
+                                    name === "Patient Care" && <td className="text-[#707070] h-[60px]  roboto-regular text-base ">{item?.articleCategory}</td>
                                 }
 
                                 <td>
@@ -82,10 +94,17 @@ const ArticleTable = ({data, name}) => {
                 </tbody>
             </table>
 
-            <div className="flex items-center justify-center relative mt-6">
-                <Pagination 
-                    defaultCurrent={1} 
-                    total={50}
+            <div className={`${data?.length > 0 ? "hidden" : "flex"} items-center justify-center w-full h-[50vh]`   }>
+                <div className='w-fit h-fit'>
+                    <Empty/>
+                </div>
+            </div>
+
+            <div className={`${data?.length === 0 ? "hidden" : "flex"} items-center justify-center relative mt-6 `}>
+                <Pagination  
+                    total={paginaton?.total}
+                    defaultCurrent={parseInt(page)} 
+                    onChange={handlePageChange} 
                     showTotal={(total, range) => 
                         <span className="text-[#607888] roboto-regular text-base leading-[18px] absolute top-[25%] left-0">
                             {`Showing ${range[0]}-${range[1]} of ${total} items`}

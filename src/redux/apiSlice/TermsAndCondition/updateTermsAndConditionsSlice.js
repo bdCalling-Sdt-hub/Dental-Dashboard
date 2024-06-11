@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseURL } from "@/Config";
+import { baseURL } from "../../api/baseApi";
 
 
 const initialState = {
@@ -13,13 +13,13 @@ export const updateTermsAndConditions = createAsyncThunk(
     'updateTermsAndConditions',
     async (value, thunkApi) => {
         try{
-            const response = await baseURL.get(`/rules/terms-and-conditions`, {
+            const response = await baseURL.patch(`/rule/terms-and-conditions`, value, {
                 headers: {
                     "Content-Type": "application/json",
-                    authorization: `Bearer ${localStorage.getItem('token')}`,
+                    authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
                 }
             });
-            return response?.data?.data;
+            return response?.data?.message;
         }catch(error){
             const message = error?.response?.data?.message;
             return thunkApi.rejectWithValue(message);
@@ -38,17 +38,15 @@ export const updateTermsAndConditionsSlice = createSlice({
         builder.addCase(updateTermsAndConditions.pending, (state)=> {
             state.loading= true;
         }),
-        builder.addCase(updateTermsAndConditions.fulfilled, (state, action)=> {
+        builder.addCase(updateTermsAndConditions.fulfilled, (state)=> {
             state.error= false;
             state.success= true;
             state.loading= false;
-            state.terms= action.payload
         }),
         builder.addCase(updateTermsAndConditions.rejected, (state)=> {
             state.error= true;
             state.success= false;
             state.loading= false;
-            state.terms= {}
         })
     }
 })

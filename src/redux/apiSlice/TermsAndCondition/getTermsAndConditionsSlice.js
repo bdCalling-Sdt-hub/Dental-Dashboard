@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseURL } from "@/Config";
+import { baseURL } from "../../api/baseApi";
 
 
 const initialState = {
@@ -12,12 +12,12 @@ const initialState = {
 
 export const getTermsAndConditions = createAsyncThunk(
     'getTermsAndConditions',
-    async (value, thunkApi) => {
+    async (_, thunkApi) => {
         try{
-            const response = await baseURL.get(`/rules/terms-and-conditions`, {
+            const response = await baseURL.get(`/rule/terms-and-conditions`, {
                 headers: {
                     "Content-Type": "application/json",
-                    authorization: `Bearer ${localStorage.getItem('token')}`,
+                    authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
                 }
             });
             return response?.data?.data;

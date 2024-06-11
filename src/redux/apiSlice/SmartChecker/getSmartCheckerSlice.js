@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseURL } from "@/Config";
+import { baseURL } from "../../api/baseApi";
 
 
 const initialState = {
@@ -10,14 +10,14 @@ const initialState = {
 };
 
 
-export const updateSmartChecker = createAsyncThunk(
-    'updateSmartChecker',
+export const getSmartChecker = createAsyncThunk(
+    'getSmartChecker',
     async (value, thunkApi) => {
         try{
-            const response = await baseURL.get(`/rules/terms-and-conditions`, {
+            const response = await baseURL.get(`/smart-check`, {
                 headers: {
                     "Content-Type": "application/json",
-                    authorization: `Bearer ${localStorage.getItem('token')}`,
+                    authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
                 }
             });
             return response?.data?.data;
@@ -31,21 +31,21 @@ export const updateSmartChecker = createAsyncThunk(
 
 
 
-export const updateSmartCheckerSlice = createSlice({
-    name: 'updateSmartChecker',
+export const getSmartCheckerSlice = createSlice({
+    name: 'getSmartChecker',
     initialState,
     reducers: {},
     extraReducers: (builder) =>{
-        builder.addCase(updateSmartChecker.pending, (state)=> {
+        builder.addCase(getSmartChecker.pending, (state)=> {
             state.loading= true;
         }),
-        builder.addCase(updateSmartChecker.fulfilled, (state, action)=> {
+        builder.addCase(getSmartChecker.fulfilled, (state, action)=> {
             state.error= false;
             state.success= true;
             state.loading= false;
             state.smartCheckers= action.payload
         }),
-        builder.addCase(updateSmartChecker.rejected, (state)=> {
+        builder.addCase(getSmartChecker.rejected, (state)=> {
             state.error= true;
             state.success= false;
             state.loading= false;
@@ -54,4 +54,4 @@ export const updateSmartCheckerSlice = createSlice({
     }
 })
 
-export default updateSmartCheckerSlice.reducer
+export default getSmartCheckerSlice.reducer

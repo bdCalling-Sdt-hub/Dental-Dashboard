@@ -130,8 +130,8 @@ const Sidebar = () => {
     ]
 
     const handleLogOut = ()=>{
-        navigate("/")
-        window.location.reload();
+        navigate("/auth/login")
+        localStorage.removeItem("token")
     }
     return (
         <div className=''>

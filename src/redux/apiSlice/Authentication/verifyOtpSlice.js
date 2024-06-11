@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseURL } from "../../../Config";
+import { baseURL } from "../../api/baseApi";
 
 
 const initialState = {
@@ -12,10 +12,8 @@ const initialState = {
 export const verifyOtp = createAsyncThunk(
     'verifyOtp',
     async (value, thunkApi) => {
-        console.log(value)
         try{
-            const response = await baseURL.post(`/auth/otp-verify`, {email: value.email, code: value?.otp})
-            localStorage.setItem("rToken", response?.data?.data)
+            const response = await baseURL.post(`/auth/verify-otp`, {...value});
             return response?.data?.data;
         }catch(error){
             console.log(error)
@@ -36,7 +34,7 @@ export const verifyOtpSlice = createSlice({
         builder.addCase(verifyOtp.pending, (state)=> {
             state.loading= true;
         }),
-        builder.addCase(verifyOtp.fulfilled, (state, action)=> {
+        builder.addCase(verifyOtp.fulfilled, (state)=> {
             state.error= false;
             state.success= true;
             state.loading= false;

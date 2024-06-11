@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseURL } from "@/Config";
+import { baseURL } from "../../api/baseApi";
 
 
 const initialState = {
@@ -12,15 +12,15 @@ const initialState = {
 
 export const getAdmin = createAsyncThunk(
     'getAdmin',
-    async (value, thunkApi) => {
+    async (_, thunkApi) => {
         try{
-            const response = await baseURL.get(`/user/profile-update`, value, {
+            const response = await baseURL.get(`/user/admin`, {
                 headers: {
-                    "Content-Type": "multipart/form-data",
+                    "Content-Type": "application/json",
                     authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                 }
             });
-            return response?.data;
+            return response?.data?.data;
         }catch(error){
             const message = error?.response?.data?.message;
             return thunkApi.rejectWithValue(message);

@@ -1,22 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseURL } from "@/Config";
+import { baseURL } from "../../api/baseApi";
 
 
 const initialState = {
     error: false,
     success: false,
     loading: false,
+    privacy: {}
 };
 
 
-export const createPrivacyPolicy = createAsyncThunk(
-    'createPrivacyPolicy',
-    async (value, thunkApi) => {
+export const getPrivacyPolicy = createAsyncThunk(
+    'getPrivacyPolicy',
+    async (_, thunkApi) => {
         try{
-            const response = await baseURL.get(`/rules/privacy-policy`, {
+            const response = await baseURL.get(`/rule/privacy-policy`, {
                 headers: {
                     "Content-Type": "application/json",
-                    authorization: `Bearer ${localStorage.getItem('token')}`,
+                    authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
                 }
             });
             return response?.data?.data;
@@ -30,25 +31,27 @@ export const createPrivacyPolicy = createAsyncThunk(
 
 
 
-export const createPrivacyPolicySlice = createSlice({
-    name: 'createPrivacyPolicy',
+export const getPrivacyPolicySlice = createSlice({
+    name: 'getPrivacyPolicy',
     initialState,
     reducers: {},
     extraReducers: (builder) =>{
-        builder.addCase(createPrivacyPolicy.pending, (state)=> {
+        builder.addCase(getPrivacyPolicy.pending, (state)=> {
             state.loading= true;
         }),
-        builder.addCase(createPrivacyPolicy.fulfilled, (state)=> {
+        builder.addCase(getPrivacyPolicy.fulfilled, (state, action)=> {
             state.error= false;
             state.success= true;
             state.loading= false;
+            state.privacy= action.payload
         }),
-        builder.addCase(createPrivacyPolicy.rejected, (state)=> {
+        builder.addCase(getPrivacyPolicy.rejected, (state)=> {
             state.error= true;
             state.success= false;
             state.loading= false;
+            state.privacy= {}
         })
     }
 })
 
-export default createPrivacyPolicySlice.reducer
+export default getPrivacyPolicySlice.reducer

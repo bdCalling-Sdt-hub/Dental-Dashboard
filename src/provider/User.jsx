@@ -1,6 +1,7 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from 'react';
-// import { getProfile } from '@/redux/apiSlice/Profile/getProfileSlice';
+import { getProfile } from '../redux/apiSlice/Profile/getProfileSlice';
 import { useDispatch, useSelector } from 'react-redux';
 export  const UserContext = React.createContext(null);
 
@@ -9,11 +10,11 @@ export const useUser= ()=>{
 }
 
 export const UserProvider = (props)=>{
-    // const {profile} = useSelector(state=> state.getProfile);
+    const { profile } = useSelector(state=> state.getProfile);
     const [user, setUser] = useState(null);
     const dispatch = useDispatch();
 
-    /* useEffect(()=>{
+    useEffect(()=>{
         dispatch(getProfile())
     }, [dispatch]);
 
@@ -21,7 +22,7 @@ export const UserProvider = (props)=>{
         if(profile){
             setUser(profile);
         }
-    }, [profile]); */
+    }, [profile])
 
 
     return(

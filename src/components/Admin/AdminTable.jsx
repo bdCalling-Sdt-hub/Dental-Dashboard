@@ -1,10 +1,23 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useEffect } from 'react'
 import { RiDeleteBin6Line } from 'react-icons/ri';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
+import { getAdmin } from "../../redux/apiSlice/Admin/getAdminSlice";
+import { deleteAdmin } from "../../redux/apiSlice/Admin/deleteAdminSlice";
 
-const AdminTable = () => {
-    const handleDelete=()=>{
+const AdminTable = ( {refresh} ) => {
+    const dispatch = useDispatch();
+    const { admins } = useSelector(state=>state.getAdmin);
+
+    useEffect(()=>{
+        dispatch(getAdmin())
+    }, [dispatch, refresh])
+
+
+
+    const handleDelete=(id)=>{
         Swal.fire({
             title: "Are Your Sure ?",
             html: `Do you want to  delete Admin profile ? <br> Only Super admin can delete Admin profile`,
@@ -14,7 +27,19 @@ const AdminTable = () => {
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log(result)
+                dispatch(deleteAdmin(id)).then((response)=>{
+                    if(response?.type === "deleteAdmin/fulfilled"){
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: response?.payload,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(()=>{
+                            dispatch(getAdmin())
+                        })
+                    }
+                })
             }
         });
     }
@@ -37,18 +62,18 @@ const AdminTable = () => {
 
                 <tbody>
                     {
-                        [...Array(9)].map((item, index)=>
+                        admins?.map((admin, index)=>
                         <React.Fragment key={index}>
                             <tr className={`${(index + 1) % 2 === 0 ? 'bg-[#FCF8F9]' : 'bg-white'} w-full`}>
                                 <td>#123{index}</td>
-                                <td>Nadir Hossain{index + 1}</td>
+                                <td>{admin?.admin?.name}</td>
 
-                                <td className="text-[#707070] h-[60px]  roboto-regular text-base ">nadirhossain{index+1}@gmail.com</td>
-                                <td className="text-[#707070] h-[60px]  roboto-regular text-base ">ADMIN</td>
+                                <td className="text-[#707070] h-[60px]  roboto-regular text-base ">{admin?.email}</td>
+                                <td className="text-[#707070] h-[60px]  roboto-regular text-base ">{admin?.admin?.role}</td>
 
                                 <td>
                                     <div className="flex items-center  h-[60px]">
-                                        <div onClick={handleDelete} className="flex cursor-pointer items-center border w-10 h-10 rounded-[6px] border-[#E6E5F1] justify-center">
+                                        <div onClick={()=>handleDelete(admin?._id)} className="flex cursor-pointer items-center border w-10 h-10 rounded-[6px] border-[#E6E5F1] justify-center">
                                             <RiDeleteBin6Line size={22} color="#B6C0C8" />
                                         </div>
                                     </div>

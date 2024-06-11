@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-refresh/only-export-components */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaPlus } from 'react-icons/fa6';
 import { FaTrash } from "react-icons/fa6";
 import { FaRegQuestionCircle } from "react-icons/fa";
@@ -9,12 +9,43 @@ import Heading from '../../components/Heading';
 import MetaTag from '../../components/MetaTag';
 import { HiOutlinePlusSm } from 'react-icons/hi';
 import Swal from 'sweetalert2';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFaq } from "../../redux/apiSlice/Faq/getFaqSlice";
+import { deleteFaq } from "../../redux/apiSlice/Faq/deleteFaqSlice";
+import { createFaq } from "../../redux/apiSlice/Faq/createFaqSlice";
 
 const FAQ = () => {
+    const dispatch = useDispatch();
+    const {faqs} = useSelector(state=> state.getFaq)
     const [open, setOpen] = useState(false);
-    const handleSubmit=async()=>{}
+    const [form] = Form.useForm();
+    const {loading} = useSelector(state=> state.createFaq)
 
-    const handleDelete=()=>{
+    form.setFieldsValue();
+
+    useEffect(()=>{
+        dispatch(getFaq())
+    }, [dispatch])
+
+    const handleSubmit=(values)=>{
+        dispatch(createFaq(values)).then((response)=>{
+            if(response.type === "createFaq/fulfilled"){
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: response?.payload,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(()=>{
+                    dispatch(getFaq());
+                    form.resetFields();
+                    setOpen(false)
+                })
+            }
+        })
+    }
+
+    const handleDelete=(id)=>{
         Swal.fire({
             title: "Are Your Sure ?",
             html: `Do you want to  delete your FAQ ?`,
@@ -24,7 +55,19 @@ const FAQ = () => {
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log(result)
+                dispatch(deleteFaq(id)).then((response)=>{
+                    if(response?.type === "deleteFaq/fulfilled"){
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: response?.payload,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(()=>{
+                            dispatch(getFaq())
+                        })
+                    }
+                })
             }
         });
     }
@@ -54,7 +97,7 @@ const FAQ = () => {
 
             <div>
                 {
-                    [...Array(3)].map((item, index)=>{
+                    faqs?.map((faq, index)=>{
                         return(
                             <div key={index} className='mb-6 flex gap-6'>
                                 <FaRegQuestionCircle size={28} color='#12354E' />
@@ -64,7 +107,7 @@ const FAQ = () => {
                                         className='p-4 rounded-lg text-[#707070] leading-6 text-[16px] font-medium mb-4'
                                         style={{boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px'}}
                                     >
-                                        <p className='text-[#575757] text-base leading-6 poppins-medium '>What is an affiliate e-commerce website?</p>
+                                        <p className='text-[#575757] text-base leading-6 poppins-medium '> {faq?.question}?</p>
                                     </div>
 
                                     {/* answer */}
@@ -72,10 +115,10 @@ const FAQ = () => {
                                         className='p-4 rounded-lg text-[#707070] text-base leading-6 poppins-regular  '
                                         style={{boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px'}}
                                     >
-                                        {"convallis. Praesent felis, placerat Ut ac quis dui volutpat vitae elementum quis adipiscing malesuada tempor non ipsum non, nec vitae amet, Donec tincidunt efficitur. in In ipsum Cras turpis viverra laoreet ullamcorper placerat diam sed leo. faucibus vitae eget vitae vehicula, luctus id Lorem fringilla tempor faucibus ipsum Vestibulum tincidunt ullamcorper elit diam turpis placerat vitae Nunc vehicula, ex faucibus venenatis at, maximus commodo urna. Nam ex quis sit non vehicula, massa urna at "}
+                                        {faq?.answer}
                                     </div>
                                 </div>
-                                <div onClick={handleDelete} className='w-10 cursor-pointer h-10 border border-[#E6E5F1] rounded-lg flex items-center justify-center'>
+                                <div onClick={()=>handleDelete(faq?._id)} className='w-10 cursor-pointer h-10 border border-[#E6E5F1] rounded-lg flex items-center justify-center'>
                                     <FaTrash  size={20} color='#B6C0C8' />
                                 </div>
                             </div>
@@ -88,19 +131,20 @@ const FAQ = () => {
                 centered 
                 title={<p className='text-[#262727] poppins-medium pl-4 text-[20px] leading-[30px]'>Create FAQ</p>}
                 open={open} 
-                onCancel={()=>setOpen(false)}
+                onCancel={()=>(form.resetFields(), setOpen(false))}
                 footer={false}
             >
-                <Form onFinish={handleSubmit} className='p-4'>
-                    <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Question</label>
+                <Form layout='vertical' onFinish={handleSubmit} className='p-4'>
+                    
                     <Form.Item 
-                        name="questions"
+                        name="question"
                         rules={[
                             {
                                 required: true,
                                 message: "Please enter Question!"
                             }
                         ]}
+                        label={<label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Question</label>}
                     >
                         <Input 
                             style={{
@@ -118,7 +162,6 @@ const FAQ = () => {
                     </Form.Item>
 
 
-                    <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Answer</label>
                     <Form.Item 
                         name="answer"
                         rules={[
@@ -127,6 +170,7 @@ const FAQ = () => {
                                 message: "Please enter Answer!"
                             }
                         ]}
+                        label={<label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Answer</label>}
                     >
                         <Input.TextArea
                             style={{
@@ -161,7 +205,7 @@ const FAQ = () => {
                             }}
                             className='roboto-medium-italic text-[14px] leading-[17px]'
                         >
-                            Submit
+                            {loading ? "Loading..." : "Submit"}
                         </Button>
                     </Form.Item>
                 </Form>

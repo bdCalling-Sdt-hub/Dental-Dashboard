@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseURL } from "../../../Config";
+import { baseURL } from "../../api/baseApi";
 
 
 const initialState = {
@@ -13,12 +13,7 @@ export const login = createAsyncThunk(
     'login',
     async (value, thunkApi) => {
         try{
-            const response = await baseURL.post(`/auth/login`, {...value}, {
-                headers: {
-                    "Content-Type": "application/json",
-                    authorization: `Bearer ${localStorage.getItem('token')}`,
-                }
-            });
+            const response = await baseURL.post(`/auth/login`, {...value});
             return response?.data?.data;
         }catch(error){
             const message = error?.response?.data?.message;
@@ -38,7 +33,7 @@ export const loginSlice = createSlice({
         builder.addCase(login.pending, (state)=> {
             state.loading= true;
         }),
-        builder.addCase(login.fulfilled, (state, action)=> {
+        builder.addCase(login.fulfilled, (state)=> {
             state.error= false;
             state.success= true;
             state.loading= false;

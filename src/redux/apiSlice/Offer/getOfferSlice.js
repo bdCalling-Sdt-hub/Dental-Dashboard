@@ -1,23 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseURL } from "@/Config";
+import { baseURL } from "../../api/baseApi";
 
 
 const initialState = {
     error: false,
     success: false,
     loading: false,
-    banners: []
+    offers: []
 };
 
 
-export const getBanner = createAsyncThunk(
-    'getBanner',
+export const getOffers = createAsyncThunk(
+    'getOffers',
     async (value, thunkApi) => {
         try{
-            const response = await baseURL.get(`/rules/terms-and-conditions`, {
+            const response = await baseURL.get(`/offer`, {
                 headers: {
                     "Content-Type": "application/json",
-                    authorization: `Bearer ${localStorage.getItem('token')}`,
+                    authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
                 }
             });
             return response?.data?.data;
@@ -31,27 +31,27 @@ export const getBanner = createAsyncThunk(
 
 
 
-export const getBannerSlice = createSlice({
-    name: 'getBanner',
+export const getOffersSlice = createSlice({
+    name: 'getOffers',
     initialState,
     reducers: {},
     extraReducers: (builder) =>{
-        builder.addCase(getBanner.pending, (state)=> {
+        builder.addCase(getOffers.pending, (state)=> {
             state.loading= true;
         }),
-        builder.addCase(getBanner.fulfilled, (state,action)=> {
+        builder.addCase(getOffers.fulfilled, (state,action)=> {
             state.error= false;
             state.success= true;
             state.loading= false;
-            state.banners= action.payload;
+            state.offers= action.payload;
         }),
-        builder.addCase(getBanner.rejected, (state)=> {
+        builder.addCase(getOffers.rejected, (state)=> {
             state.error= true;
             state.success= false;
             state.loading= false;
-            state.banners= [];
+            state.offers= [];
         })
     }
 })
 
-export default getBannerSlice.reducer
+export default getOffersSlice.reducer

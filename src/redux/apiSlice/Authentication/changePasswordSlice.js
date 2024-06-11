@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseURL } from "../../../Config";
+import { baseURL } from "../../api/baseApi";
 
 
 const initialState = {
@@ -12,13 +12,15 @@ const initialState = {
 export const changePassword = createAsyncThunk(
     'changePassword',
     async (value, thunkApi) => {
-        console.log(value)
         try{
-            const response = await baseURL.post(`/auth/change-password`, {...value});
-            console.log(response)
+            const response = await baseURL.post(`/auth/change-password`, {...value}, {
+                headers: {
+                    "Content-Type": "application/json",
+                    authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
+                }
+            });
             return response?.data?.message;
         }catch(error){
-            console.log(error)
             const message = error?.response?.data?.message;
             return thunkApi.rejectWithValue(message);
         }
