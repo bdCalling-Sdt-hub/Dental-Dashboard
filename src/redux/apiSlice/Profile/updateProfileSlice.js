@@ -13,14 +13,14 @@ export const updateProfile = createAsyncThunk(
     'updateProfile',
     async (value, thunkApi) => {
         try{
-            const response = await baseURL.patch(`/patient-profile-update`, value, {
+            const response = await baseURL.patch(`/admin/profile-update`, value, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                 }
             });
             
-            return response?.data;
+            return response?.data?.message;
         }catch(error){
             console.log(error)
             const message = error?.response?.data?.message;

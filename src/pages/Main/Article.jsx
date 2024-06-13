@@ -15,7 +15,7 @@ const Article = () => {
     const [open, setOpen] = useState(null);
     const dispatch = useDispatch();
     const { articleCategory } = useSelector(state=> state?.getArticleCategory);
-    const [image, setimage] = useState();
+    const [image, setImage] = useState();
     const [imageURL, setImageURL] = useState(null);
 
     useEffect(()=>{
@@ -24,7 +24,7 @@ const Article = () => {
 
     const handleChange = (e)=>{
         const file = e.target.files[0];
-        setimage(file);
+        setImage(file);
         const url = URL.createObjectURL(file);
         setImageURL(url)
     }
@@ -107,7 +107,7 @@ const Article = () => {
                         <label 
                             htmlFor="img"
                             style={{
-                                backgroundImage: `url(${imageURL})`,
+                                backgroundImage: `url(${imageURL ? imageURL : `${ImageConfig}${open?.articleCategoryImage}`})`,
                                 backgroundSize: "cover",
                                 backgroundPosition: "center" 
                             }}

@@ -16,10 +16,18 @@ const ArticleDetails = () => {
     const [keyword, setKeyword] = useState("")
     const dispatch = useDispatch();
     const { articles, pagination } = useSelector(state=> state.getArticle)
+    const [page, setPage] = useState(new URLSearchParams(window.location.search).get('page') || 1);
+    const [refresh, setRefresh] = useState("")
+
+    if(refresh){
+        setTimeout(()=>{
+            setRefresh("")
+        }, 1500)
+    }
 
     useEffect(()=>{
-        dispatch(getArticle(name))
-    }, [dispatch, name])
+        dispatch(getArticle({name, keyword}))
+    }, [dispatch, name, refresh, keyword])
 
     return (
         <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-auto">
@@ -70,7 +78,7 @@ const ArticleDetails = () => {
 
             {/* article table */}
             <div>
-                <ArticleTable pagination={pagination} data={articles} name={name} />
+                <ArticleTable page={page} setPage={setPage} setRefresh={setRefresh} pagination={pagination} data={articles} name={name} />
             </div>
         </div>
     )

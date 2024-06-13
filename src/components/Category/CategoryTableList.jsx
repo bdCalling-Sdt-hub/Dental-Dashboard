@@ -8,13 +8,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCategory } from '../../redux/apiSlice/Category/getCategorySlice';
 import { deleteCategory } from '../../redux/apiSlice/Category/deleteCategorySlice';
 
-const CategoryTableList = ({refresh, setValue }) => {
+const CategoryTableList = ({refresh, keyword, setValue }) => {
     const dispatch = useDispatch()
     const {categories} = useSelector(state=> state.getCategory);
 
+
     useEffect(()=>{
-        dispatch(getCategory())
-    }, [dispatch, refresh])
+        dispatch(getCategory(keyword))
+    }, [dispatch, refresh, keyword])
 
     const [open, setOpen] = useState(false);
 

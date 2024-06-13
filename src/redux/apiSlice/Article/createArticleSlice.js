@@ -13,14 +13,15 @@ export const createArticle = createAsyncThunk(
     'createArticle',
     async (value, thunkApi) => {
         try{
-            const response = await baseURL.get(`/article/create-article`, value, {
+            const response = await baseURL.post(`/article/create-article`, value, {
                 headers: {
                     "Content-Type": "multipart/form-data",
-                    authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
+                    authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                 }
             });
-            return response?.data;
+            return response?.data?.message;
         }catch(error){
+            console.log(error)
             const message = error?.response?.data?.message;
             return thunkApi.rejectWithValue(message);
         }

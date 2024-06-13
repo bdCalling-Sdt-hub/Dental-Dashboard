@@ -16,7 +16,7 @@ export const updatePatient = createAsyncThunk(
         try{
             const response = await baseURL.patch(`/user/create-patient/${id}`, data, {
                 headers: {
-                    "Content-Type": "multipart/form-data",
+                    "Content-Type": "application/json",
                     authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                 }
             });

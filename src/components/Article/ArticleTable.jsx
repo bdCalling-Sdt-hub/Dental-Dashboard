@@ -8,7 +8,7 @@ import { ImageConfig } from '../../redux/api/baseApi';
 import { useDispatch } from 'react-redux';
 import { deleteArticle } from '../../redux/apiSlice/Article/deleteArticleSlice';
 
-const ArticleTable = ({data, name, pagination}) => {
+const ArticleTable = ({data, name, page, setPage, setRefresh, pagination}) => {
     const dispatch = useDispatch();
 
     const handleDelete=(id)=>{
@@ -32,7 +32,7 @@ const ArticleTable = ({data, name, pagination}) => {
                             showConfirmButton: false,
                             timer: 1500
                         }).then(()=>{
-                            // form.
+                            setRefresh("done")
                         })
                     }
                 })
@@ -41,7 +41,7 @@ const ArticleTable = ({data, name, pagination}) => {
         });
     }
 
-    const [page, setPage] = useState(new URLSearchParams(window.location.search).get('page') || 1);
+    
     const handlePageChange = (page) => {
         setPage(page);
         const params = new URLSearchParams(window.location.search);
@@ -95,7 +95,7 @@ const ArticleTable = ({data, name, pagination}) => {
 
                                 <td>
                                     <div className="flex items-center gap-2 h-[60px]">
-                                        <Link to={`/edit-article-blog/${item?._id}`}>
+                                        <Link to={`/create-article/${name}?id=${item?._id}`}>
                                             <div onClick={()=>localStorage.setItem("article", JSON.stringify(item))} className="flex  cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
                                                 <RiEdit2Line size={18} color="#B6C0C8" />
                                             </div>
@@ -121,7 +121,7 @@ const ArticleTable = ({data, name, pagination}) => {
 
             <div className={`${data?.length === 0 ? "hidden" : "flex"} items-center justify-center relative mt-6 `}>
                 <Pagination  
-                    total={paginaton?.total}
+                    total={pagination?.total}
                     defaultCurrent={parseInt(page)} 
                     onChange={handlePageChange} 
                     showTotal={(total, range) => 

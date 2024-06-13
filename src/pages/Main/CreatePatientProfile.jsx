@@ -1,33 +1,29 @@
 /* eslint-disable no-unused-vars */
 import { Button, Form, Input, Select } from "antd";
-import { useState } from "react";
-import { RiImageAddLine } from "react-icons/ri";
+import { useEffect, useState } from "react";
 import { FaRandom } from "react-icons/fa";
 import Swal from "sweetalert2";
 import MetaTag from "../../components/MetaTag"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createPatient } from "../../redux/apiSlice/Patient/createPatientSlice";
+import { getCategory } from "../../redux/apiSlice/Category/getCategorySlice";
 const { Option } = Select;
 
 
 const CreatePatientProfile = () => {
-    const [image, setimage] = useState();
-    const [imageURL, setImageURL] = useState();
     const dispatch = useDispatch();
-    const [randomPin, setRandomPin] = useState("")
+    const [randomPin, setRandomPin] = useState(null)
     const [randomPinState, setRandomPinState] = useState("");
     const [randomPasswordState, setRandomPasswordState] = useState("");
-    const [randomPassword, setRandomPassword] = useState("");
+    const [randomPassword, setRandomPassword] = useState(null);
     const [form] = Form.useForm();
+    const { categories } = useSelector(state=> state.getCategory)
+
+    useEffect(()=>{
+        dispatch(getCategory())
+    },[dispatch])
 
     form.setFieldsValue()
-
-    const handleChange = (e)=>{
-        const file = e.target.files[0];
-        setimage(file);
-        const url = URL.createObjectURL(file);
-        setImageURL(url)
-    }
 
     if(randomPinState){
         setTimeout(()=>{
@@ -40,130 +36,95 @@ const CreatePatientProfile = () => {
             setRandomPasswordState(false)
         }, 1000)
     }
-    const handleGenaratePin=()=>{
+    const handleGeneratedPin=()=>{
         const randomNumber = Math.floor(Math.random() * 900000) + 100000;
         setRandomPinState(true);
         setRandomPin(randomNumber)
+        form.setFieldsValue({ password: randomNumber.toString() });
     }
-    const handleGenaratePassword=()=>{
+    const handleGeneratePassword=()=>{
         const randomNumber = Math.floor(Math.random() * 900000) + 100000;
         setRandomPasswordState(true);
         setRandomPassword(randomNumber)
+        form.setFieldsValue({ pin: randomNumber.toString() });
     }
 
     const handleSubmit=(values)=>{
-        console.log(values)
-        const formData = new FormData();
-
-        form.append("image", image)
-
-        Object.keys(values).forEach((key)=>{
-            formData.append(key, values[key])
-        })
-
-        dispatch(createPatient(formData)).then((response)=>{
+        dispatch(createPatient(values)).then((response)=>{
             if(response.type === "createPatient/fulfilled"){
                 Swal.fire({
-                    position: "center",
-                    icon: "error",
-                    title: response?.payload,
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then(()=>{
-                    // form.
-                })
+                    title: "Congratulations!",
+                    html: `
+                        <div className="patient-profile">
+                        Your patient profile is ready now 
+                        <br> 
+                        S.NO: #12339
+                        <br> 
+                        Patient name: ${values?.name}
+                        <br> 
+                        Email: ${values?.email}
+                        <br>
+                        <br>
+                        <h1>Send profile details at your patient email</h1>
+                    </div>
+                    `,
+                    confirmButtonText:'Send Email',
+                    customClass: {
+                        confirmButton: 'custom-send-button',
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: response?.payload,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(()=>{
+                            form.resetFields();
+                            setRandomPassword(null)
+                            setRandomPin(null)
+                        })
+                    }
+                }); 
             }
         })
-
-
-        /* Swal.fire({
-            title: "Congratulations!",
-            html: `
-                <div className="patient-profile">
-                Your patient profile is ready now 
-                <br> 
-                S.NO: #12339
-                <br> 
-                Patient name: Patient Mahfud
-                <br> 
-                Email: Mahfud@gmail.com
-                <br>
-                <br>
-                <h1>Send profile details at your patient email</h1>
-            </div>
-            `,
-            confirmButtonText: 'Send Email',
-            customClass: {
-                confirmButton: 'custom-send-button',
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                console.log(result)
-            }
-        }); */
     }
 
     return (
         <div className="bg-white shadow-lg rounded-lg p-6">
             <MetaTag title={"Create Patient Profile"}/>
             <h1 className={`text-[#12354E] text-base leading-8 poppins-semibold text-left mb-5 `}>Create Patient Profile</h1>
-            <div>
-                <input onChange={handleChange} type="file" id="img" style={{display: "none"}} />
-                <label 
-                    htmlFor="img"
-                    style={{
-                        backgroundImage: `url(${imageURL})`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center" 
-                    }}
-                    className={`
-                        w-[170px] 
-                        h-[139px]
-                        cursor-pointer  
-                        border border-[#929394]  border-dashed
-                        flex 
-                        flex-col items-center justify-center 
-                        rounded-lg 
-                    `}
+
+
+            <Form form={form} layout="vertical" className="grid grid-cols-12 gap-6 mt-6" onFinish={handleSubmit}>
+                    
+                <Form.Item
+                    style={{marginBottom: 0}}
+                    name={"name"}
+                    rules={[
+                        {
+                            required: true,
+                            message: "Enter Patiant Name"
+                        }
+                    ]}
+                    className="col-span-6"
+                    label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold" >Name</label>}
                 >
-                    <RiImageAddLine color='#607888' size={38} /> 
-                    <h3 className="text-[#12354E] text-[14px] leading-5 poppins-light ">Browse Photo</h3>
-                </label>
-            </div>
-
-
-            <Form layout="vertical" className="grid grid-cols-12 gap-6 mt-6" onFinish={handleSubmit}>
-                <div className="col-span-6">
+                    <Input
+                        placeholder="Enter Patient Name"
+                        style={{
+                            width: "100%",
+                            height: 48,
+                            border: "1px solid #E7EBED",
+                            outline: "none",
+                            borderRadius: 8
+                        }}
+                        className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
+                    />
+                </Form.Item>
                     
-                    <Form.Item
-                        style={{marginBottom: 0}}
-                        name={"name"}
-                        rules={[
-                            {
-                                required: true,
-                                message: "Enter Patiant Name"
-                            }
-                        ]}
-                        className="col-span-6"
-                        label={<label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Name</label>}
-                    >
-                        <Input
-                            placeholder="Enter Patient Name"
-                            style={{
-                                width: "100%",
-                                height: 48,
-                                border: "1px solid #E7EBED",
-                                outline: "none",
-                                borderRadius: 8
-                            }}
-                            className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
-                        />
-                    </Form.Item>
-                </div>
-
-                <div className="col-span-6">
-                    
-                    <Form.Item
+                <Form.Item
                         className="col-span-6"
                         style={{marginBottom: 0}}
                         name={"category"}
@@ -173,7 +134,7 @@ const CreatePatientProfile = () => {
                                 message: "Enter Patient Category"
                             }
                         ]}
-                        label={<label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Patient Category</label>}
+                        label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold"  >Patient Category</label>}
                     >
                         <Select
                             style={{
@@ -186,15 +147,17 @@ const CreatePatientProfile = () => {
                             className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
                             defaultValue={"Gum"}
                         >
-                            <Option value="gum">Gum</Option>
-                            <Option value="cavities">Cavities</Option>
+                            {
+                                categories?.map((category, index)=>{
+                                    return(
+                                        <Option key={index} value={category?.categoryName}  >{category?.categoryName}</Option>
+                                    )
+                                })
+                            }
                         </Select>
-                    </Form.Item>
-                </div>
-
-                <div className="col-span-6">
+                </Form.Item>
                     
-                    <Form.Item
+                <Form.Item
                         style={{marginBottom: 0}}
                         name={"email"}
                         rules={[
@@ -217,13 +180,9 @@ const CreatePatientProfile = () => {
                             }}
                             className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
                         />
-                    </Form.Item>
-                </div>
-
-
-                <div className="col-span-6">
+                </Form.Item>
                     
-                    <Form.Item
+                <Form.Item
                         style={{marginBottom: 0}}
                         name={"contactNo"}
                         rules={[
@@ -233,7 +192,7 @@ const CreatePatientProfile = () => {
                             }
                         ]}
                         className="col-span-6"
-                        label={<label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Contact No</label>}
+                        label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold"  >Contact No</label>}
                     >
                         <Input
                             placeholder="Enter Patient Contact No."
@@ -246,12 +205,9 @@ const CreatePatientProfile = () => {
                             }}
                             className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
                         />
-                    </Form.Item>
-                </div>
-
-                <div className="col-span-6">
+                </Form.Item>
                     
-                    <Form.Item
+                <Form.Item
                         style={{marginBottom: 0}}
                         name={"dateOfBirth"}
                         rules={[
@@ -261,7 +217,7 @@ const CreatePatientProfile = () => {
                             }
                         ]}
                         className="col-span-6"
-                        label={<label htmlFor="" style={{marginBottom: 8, display: "block"}}>Date of Birth</label>}
+                        label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold"  >Date of Birth</label>}
                     >
                         <Input
                             placeholder="Enter Patient Date Of Birth"
@@ -274,12 +230,9 @@ const CreatePatientProfile = () => {
                             }}
                             className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
                         />
-                    </Form.Item>
-                </div>
-
-                <div className="col-span-6">
+                </Form.Item>
                     
-                    <Form.Item
+                <Form.Item
                         style={{marginBottom: 0}}
                         name={"age"}
                         className="col-span-6"
@@ -289,9 +242,11 @@ const CreatePatientProfile = () => {
                                 message: "Enter Patient Age"
                             }
                         ]}
-                        label={<label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Age</label>}
+                        getValueFromEvent={(e)=>Number(e.target.value)}
+                        label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold" >Age</label>}
                     >
                         <Input
+                            type="number"
                             placeholder="Enter Patient Age"
                             style={{
                                 width: "100%",
@@ -302,12 +257,9 @@ const CreatePatientProfile = () => {
                             }}
                             className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
                         />
-                    </Form.Item>
-                </div>
-
-                <div className="col-span-6">
+                </Form.Item>
                     
-                    <Form.Item
+                <Form.Item
                         style={{marginBottom: 0}}
                         name={"gender"}
                         rules={[
@@ -317,7 +269,7 @@ const CreatePatientProfile = () => {
                             }
                         ]}
                         className="col-span-6"
-                        label={<label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Gender</label>}
+                        label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold"  >Gender</label>}
                     >
                         <Select
                             style={{
@@ -333,18 +285,15 @@ const CreatePatientProfile = () => {
                             <Option value="male">Male</Option>
                             <Option value="female">Female</Option>
                         </Select>
-                    </Form.Item>
-                </div>
-
-                <div className="col-span-6">
+                </Form.Item>
                    
-                    <Form.Item
+                <Form.Item
                         style={{marginBottom: 0}}
                         name={"plan"}
                         rules={[
                             {
                                 required: true,
-                                message: "Enter Patiant Plan"
+                                message: "Enter Patient Plan"
                             }
                         ]}
                         className="col-span-6"
@@ -361,18 +310,18 @@ const CreatePatientProfile = () => {
                             }}
                             className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
                         />
-                    </Form.Item>
-                </div>
+                </Form.Item>
 
-                <div className="col-span-6">
-                    
-                    <div className="flex items-center justify-between gap-6">
-                        <Form.Item
-                            style={{marginBottom: 0, width: "100%"}}
-                            name={"pin"}
-                            getValueFromEvent={(e)=>e.target.value}
-                            label={<label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Random Pin number</label>}
-                        >
+                <Form.Item
+                        style={{
+                            marginBottom: 0,
+                            width: "100%"
+                        }}
+                        name={"pin"}
+                        className="col-span-6"
+                        label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold" >Random Pin number</label>}
+                >
+                        <div className="w-full flex items-center  gap-6">
                             <Input
                                 type={`${randomPinState ? "text" : "password"}`}
                                 placeholder="Enter Patient Random Pin"
@@ -386,49 +335,53 @@ const CreatePatientProfile = () => {
                                 value={randomPin}
                                 className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
                             />
-                        </Form.Item>
-                        <Button
-                            onClick={handleGenaratePin}
-                            style={{
-                                width: "60%",
-                                height: 48,
-                                border: "1px solid #E7EBED",
-                                outline: "none",
-                                borderRadius: 8,
-                                color: "#12354E",
-                            }}
-                            className="roboto-medium text-sm leading-4 flex items-center justify-center gap-4"
-                        >
-                            Random Pin
-                            <FaRandom size={18} color="#12354E" />
-                        </Button>
-                    </div>
-                </div>
-
-                <div className="col-span-6">
-                    <div className="flex items-center justify-between gap-6">
-                        <Form.Item
-                            style={{marginBottom: 0, width: "100%"}}
-                            name={"password"}
-                            getValueFromEvent={(e)=>e.target.value}
-                            label={ <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Random Password</label>}
-                        >
-                            <Input
-                                placeholder="Enter Patient Random Password"
-                                type={`${randomPasswordState ? "text" : "password"}`}
+                            <Button
+                                onClick={handleGeneratedPin}
                                 style={{
                                     width: "100%",
                                     height: 48,
                                     border: "1px solid #E7EBED",
                                     outline: "none",
-                                    borderRadius: 8
+                                    borderRadius: 8,
+                                    color: "#12354E",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    gap: "4px"
                                 }}
-                                value={randomPassword}
-                                className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
-                            />
-                        </Form.Item>
+                                className="roboto-medium text-sm leading-4"
+                            >
+                                Random Pin
+                                <FaRandom size={18} color="#12354E" />
+                            </Button>
+                        </div>
+                </Form.Item>
+
+                <Form.Item
+                    style={{
+                        marginBottom: 0,
+                        width: "100%"
+                    }}
+                    className="col-span-6"
+                    name={"password"}
+                    label={ <label className="text-[#415D71] block text-sm leading-5 poppins-semibold" htmlFor="">Random Password</label>}
+                >
+                    <div className="w-full flex items-center  gap-6">
+                        <Input
+                            placeholder="Enter Patient Random Password"
+                            type={`${randomPasswordState ? "text" : "password"}`}
+                            style={{
+                                width: "100%",
+                                height: 48,
+                                border: "1px solid #E7EBED",
+                                outline: "none",
+                                borderRadius: 8
+                            }}
+                            value={randomPassword}
+                            className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
+                        />
                         <Button
-                            onClick={handleGenaratePassword}
+                            onClick={handleGeneratePassword}
                             style={{
                                 width: "60%",
                                 height: 48,
@@ -436,14 +389,14 @@ const CreatePatientProfile = () => {
                                 outline: "none",
                                 borderRadius: 8,
                                 color: "#12354E",
-                            }}
-                            className="roboto-medium text-sm leading-4 flex items-center justify-center gap-4"
-                        >
+                                }}
+                                className="roboto-medium text-sm leading-4 flex items-center justify-center gap-4"
+                                >
                             Random Password
                             <FaRandom size={18} color="#12354E" />
                         </Button>
                     </div>
-                </div>
+                </Form.Item>
                 
                 <Form.Item className="col-span-12" style={{display: "flex", width: "100%", marginBottom: 0, alignItems: "center", justifyContent: "center"}}>
                     <Button

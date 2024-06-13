@@ -40,7 +40,7 @@ const Login = () => {
     }
     return (
         <div>
-            <Heading title={"Login to Account"} style="mb-6" />
+            <Heading title={"Login to Account"} style="mb-6 text-center" />
             <p className='text-[#607888] text-sm leading-[21px] poppins-regular text-center'>Please enter your email and password to continue</p>
 
             <Form onFinish={handleSubmit} className='mt-6'>

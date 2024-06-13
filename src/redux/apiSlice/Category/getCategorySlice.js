@@ -12,9 +12,12 @@ const initialState = {
 
 export const getCategory = createAsyncThunk(
     'getCategory',
-    async (value, thunkApi) => {
+    async (search, thunkApi) => {
         try{
-            const response = await baseURL.get(`/category`, {
+            const params = new URLSearchParams();
+            if (search) params.append('search', search);
+
+            const response = await baseURL.get(`/category?${params.toString()}`, {
                 headers: {
                     "Content-Type": "application/json",
                     authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,

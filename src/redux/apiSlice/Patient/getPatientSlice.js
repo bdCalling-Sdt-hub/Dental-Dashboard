@@ -20,7 +20,6 @@ export const getPatient = createAsyncThunk(
 
             if (page) params.append('page', page);
             if (search) params.append('search', search);
-            if (search) params.append('search', search);
             if (category) params.append('category', category);
 
             const response = await baseURL.get(`/user/patient?${params.toString()}`, {

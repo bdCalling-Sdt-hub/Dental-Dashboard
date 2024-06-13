@@ -14,12 +14,14 @@ const Chat = () => {
         window.history.pushState(null, "", `?${params.toString()}`);
 
     }
+
+    
     return (
         <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-hidden">
 
             {/* helmet */}
-            <MetaTag title={"Patient Msssage"}/>
-            <h1 className={`text-[#12354E] text-base leading-8 poppins-semibold text-left mb-5 `}>Patient Msssage</h1>
+            <MetaTag title={"Patient Message"}/>
+            <h1 className={`text-[#12354E] text-base leading-8 poppins-semibold text-left mb-5 `}>Patient Message</h1>
 
             {/* message read and unread section */}
 
@@ -35,7 +37,7 @@ const Chat = () => {
                         pb-[4px] 
                     `}
                 >
-                    All Msssage
+                    All Message
                 </h1>
                 <h1 
                     onClick={()=>handleTab("unread")} 

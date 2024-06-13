@@ -5,13 +5,14 @@ import { FaCircleCheck } from "react-icons/fa6";
 import Swal from 'sweetalert2';
 import { CiCircleMinus } from 'react-icons/ci';
 import { GoPlusCircle } from "react-icons/go";
-import { getPackage } from "../../redux/apiSlice/Package/getPackageSlice"
+import { getPackage } from "../../redux/apiSlice/Package/getPackageSlice";
+import { updatePackage } from "../../redux/apiSlice/Package/updatePackageSlice";
 import { useDispatch, useSelector } from 'react-redux';
 
 const Package = () => {
     const dispatch = useDispatch();
     const { packages } = useSelector(state=> state.getPackage)
-    console.log(packages)
+    const {loading}  = useSelector(state=> state.updatePackage);
     const [form] = Form.useForm()
 
     useEffect(()=>{
@@ -24,21 +25,30 @@ const Package = () => {
         }
     }, [form, packages])
 
-    const [open, setOpen] = useState(false);
-    const [keyword, setKeyword] = useState("")
-    
-
-    console.log(form.getFieldsValue())
-
     const handleSubmit=(values)=>{
-        console.log("Recieved Values", values)
-        Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Updated Profile Successfully",
-            showConfirmButton: false,
-            timer: 1500
+
+        dispatch(updatePackage({id: packages?._id, data:values})).then((response)=>{
+            if(response.type === "updatePackage/fulfilled"){
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: response?.payload,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(()=>{
+                    dispatch(getPackage());
+                })
+            }else{
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: response?.payload,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
         })
+        
     }
 
     
@@ -164,52 +174,10 @@ const Package = () => {
                         }}
                         className='roboto-medium-italic text-[14px] leading-[17px]'
                     >
-                        Confirm Package
+                         {loading ? "Loading..." : "Confirm Package"}
                     </Button>
                 </Form.Item>
             </Form>
-
-            <Modal
-                title="Add Feature"
-                centered
-                open={open} 
-                onOk={()=>setOpen(false)} 
-                onCancel={()=>setOpen(false)} 
-                footer={false}
-                closeIcon={false}
-                width={519}
-            >
-                <Input
-                    placeholder="Enter Package Feature"
-                    style={{
-                        width: "100%",
-                        height: 48,
-                        border: "1px solid #E7EBED",
-                        outline: "none",
-                        borderRadius: 8
-                    }}
-                    onChange={(e)=>setKeyword(e.target.value)}
-                    className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
-                />
-
-                <Button
-                    onClick={()=>( (setData([...data, keyword])), setOpen(false))}
-                    style={{
-                        background: "#12354E",
-                        width: "100%",
-                        height: 48,
-                        border: "1px solid #E0E0E0",
-                        outline: "none",
-                        margin: "0 auto",
-                        color: "white",
-                        borderRadius: 8,
-                        marginTop: 24
-                    }}
-                    className='roboto-medium-italic text-[14px] leading-[17px]'
-                >
-                    Add
-                </Button>
-            </Modal>
             
         </div>
     )

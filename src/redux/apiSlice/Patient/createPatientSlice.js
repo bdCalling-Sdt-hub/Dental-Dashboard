@@ -13,13 +13,14 @@ export const createPatient = createAsyncThunk(
     'createPatient',
     async (value, thunkApi) => {
         try{
-            const response = await baseURL.post(`/user/create-patient`, value, {
+            const response = await baseURL.post(`/user/create-patient`, {...value}, {
                 headers: {
-                    "Content-Type": "multipart/form-data",
+                    "Content-Type": "application/json",
                     authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                 }
             });
-            return response?.data;
+            console.log(response)
+            return response?.data.message;
         }catch(error){
             const message = error?.response?.data?.message;
             return thunkApi.rejectWithValue(message);

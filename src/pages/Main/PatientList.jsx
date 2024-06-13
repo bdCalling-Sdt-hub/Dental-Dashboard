@@ -1,8 +1,5 @@
-import person from "../../assets/person.png";
-import PatientEditModal from "../../components/Modal/PatientEditModal";
 import PatientDetailsModal from "../../components/Modal/PatientDetailsModal";
 import { MdOutlineArrowOutward } from "react-icons/md";
-import { RiEdit2Line } from "react-icons/ri";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Swal from "sweetalert2";
 import React, { useEffect, useState } from "react";
@@ -15,17 +12,18 @@ import { getPatient } from "../../redux/apiSlice/Patient/getPatientSlice";
 import { getCategory } from "../../redux/apiSlice/Category/getCategorySlice";
 import { IoClose } from "react-icons/io5";
 import { deletePatient } from "../../redux/apiSlice/Patient/deletePatientSlice";
+import { ImageConfig } from "../../redux/api/baseApi";
 
 const { Option } = Select;
 
 const PatientList = () => {
     const [detailsModal, setDetailsModal] = useState(null);
-    const [editModal, setEditModal] = useState(null);
     const dispatch = useDispatch();
     const {patients, pagination} = useSelector(state=>state.getPatient);
     const [keyword, setKeyword] = useState(null)
     const [page, setPage] = useState(new URLSearchParams(window.location.search).get('page') || 1);
     const {categories} = useSelector(state=> state.getCategory);
+    const [selectedCategory, setSelectedCategory] = useState(null)
 
     const handlePageChange = (page) => {
         setPage(page);
@@ -39,8 +37,8 @@ const PatientList = () => {
     }, [dispatch])
 
     useEffect(()=>{
-        dispatch(getPatient(keyword, page))
-    }, [dispatch, keyword, page]) 
+        dispatch(getPatient({ search: keyword, page, category : selectedCategory}))
+    }, [dispatch, keyword, selectedCategory, page]) 
 
 
     // delete patient function
@@ -70,6 +68,8 @@ const PatientList = () => {
             }
         });
     }
+
+    // const src = patient?.profile?.startsWith("https") ?  patient?.profile : `${ImageConfig}${patient?.profile}`
 
     return (
         <div>
@@ -104,6 +104,7 @@ const PatientList = () => {
                         }}
                         className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
                         defaultValue={"Gum"}
+                        onChange={(e)=>setSelectedCategory(e)}
                     >
                         {
                             categories?.map((category, index)=>{
@@ -138,14 +139,14 @@ const PatientList = () => {
                                 <td>{index + 1}</td>
                                 <td >
                                     <div className="flex items-center h-[60px]  justify-start gap-2">
-                                        <img  src={person} alt="" />
-                                        <p className="text-[#707070] roboto-regular text-base leading-[21px] ">Nadir</p>
+                                        <img  style={{width: 40, height: 40}} src={`${patient?.patient?.profile?.startsWith("https") ?  patient?.patient?.profile : `${ImageConfig}${patient?.patient?.profile}` }`} alt="" />
+                                        <p className="text-[#707070] roboto-regular text-base leading-[21px] ">{patient?.patient?.name}</p>
                                     </div>
                                 </td>
 
-                                <td className="text-[#707070] h-[60px]  roboto-regular text-base "> mahmud@gmail.com</td>
-                                <td className="text-[#707070] h-[60px]  roboto-regular text-base "> +919355574544</td>
-                                <td className="text-[#707070] h-[60px]  roboto-regular text-base "> Cavities</td>
+                                <td className="text-[#707070] h-[60px]  roboto-regular text-base ">{patient?.email}</td>
+                                <td className="text-[#707070] h-[60px]  roboto-regular text-base ">{patient?.patient?.contactNo}</td>
+                                <td className="text-[#707070] h-[60px]  roboto-regular text-base "> {patient?.patient?.category}</td>
 
                                 <td >
                                     <div className="flex items-center gap-2 h-[60px]">
@@ -153,11 +154,7 @@ const PatientList = () => {
                                             <MdOutlineArrowOutward size={18} color="#B6C0C8" />
                                         </div>
 
-                                        <div onClick={()=>setEditModal(patient)} className="flex  cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
-                                            <RiEdit2Line size={18} color="#B6C0C8" />
-                                        </div>
-
-                                        <div onClick={handleDelete} className="flex cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
+                                        <div onClick={()=>handleDelete(patient?._id)} className="flex cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
                                             <RiDeleteBin6Line size={18} color="#B6C0C8" />
                                         </div>
                                     </div>
@@ -173,8 +170,8 @@ const PatientList = () => {
             {/* pagination */}
             <div className="flex items-center justify-center relative">
                 <Pagination 
-                    defaultCurrent={1} 
-                    total={50}
+                    defaultCurrent={parseInt(page)} 
+                    total={pagination?.total}
                     onChange={handlePageChange}
                     showTotal={(total, range) => 
                         <span className="text-[#607888] roboto-regular text-base leading-[18px] absolute top-[25%] left-0">
@@ -183,8 +180,6 @@ const PatientList = () => {
                     }
                 />
             </div>
-
-            <PatientEditModal editModal={editModal} setEditModal={setEditModal} />
             <PatientDetailsModal open={detailsModal} setOpen={setDetailsModal} />
         </div>
     )

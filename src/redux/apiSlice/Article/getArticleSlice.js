@@ -14,8 +14,12 @@ const initialState = {
 export const getArticle = createAsyncThunk(
     'getArticle',
     async (value, thunkApi) => {
+        const {name, keyword} = value;
         try{
-            const response = await baseURL.get(`/article/category/${value}`, {
+            const params = new URLSearchParams();
+            if (keyword) params.append('search', keyword);
+            
+            const response = await baseURL.get(`/article/category/${name}?${params.toString()}`, {
                 headers: {
                     "Content-Type": "application/json",
                     authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,

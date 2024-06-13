@@ -48,6 +48,8 @@ import createArticleSlice from './apiSlice/Article/createArticleSlice';
 import updateArticleSlice from './apiSlice/Article/updateArticleSlice';
 import deleteArticleSlice from './apiSlice/Article/deleteArticleSlice';
 import getArticleDetailsSlice from './apiSlice/Article/getArticleDetailsSlice';
+import updatePackageSlice from './apiSlice/Package/updatePackageSlice';
+import getPatientChatSlice from './apiSlice/Chat/getPatientChatSlice';
 
 export const store = configureStore({
     reducer:{
@@ -115,6 +117,7 @@ export const store = configureStore({
 
         // package
         getPackage: getPackageSlice,
+        updatePackage: updatePackageSlice,
 
         // article Category
         getArticleCategory: getArticleCategorySlice,
@@ -134,6 +137,8 @@ export const store = configureStore({
         deletePatient: deletePatientSlice,
         getPatient: getPatientSlice,
 
+        //  chat
+        getPatientChat: getPatientChatSlice,
 
     }
 })

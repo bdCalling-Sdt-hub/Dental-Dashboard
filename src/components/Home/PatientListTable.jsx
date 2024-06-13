@@ -1,18 +1,23 @@
 import { Link } from "react-router-dom"
 import Heading from "../Heading"
-import React, { useState } from "react";
-import person from "../../assets/person.png";
+import React, { useEffect, useState } from "react";
 import { MdOutlineArrowOutward } from "react-icons/md";
-import { RiEdit2Line } from "react-icons/ri";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Swal from "sweetalert2";
-import PatientEditModal from "../Modal/PatientEditModal";
 import PatientDetailsModal from "../Modal/PatientDetailsModal";
+import { useDispatch, useSelector } from "react-redux";
+import { getPatient } from "../../redux/apiSlice/Patient/getPatientSlice";
+import { ImageConfig } from "../../redux/api/baseApi";
 
 
 const PatientListTable = () => {
     const [detailsModal, setDetailsModal] = useState(false);
-    const [editModal, setEditModal] = useState(false);
+    const {patients} = useSelector(state=>state.getPatient);
+    const dispatch = useDispatch()
+
+    useEffect(()=>{
+        dispatch(getPatient({}))
+    }, [dispatch]) 
 
     const handleDelete=()=>{
         Swal.fire({
@@ -50,48 +55,40 @@ const PatientListTable = () => {
 
                 <tbody>
                     {
-                        [...Array(5)].map((item, index)=>
-                        <React.Fragment key={index}>
-                            <tr className={`${(index + 1) % 2 === 0 ? 'bg-[#FCF8F9]' : 'bg-white'}`}>
-                                <td>{index + 1}</td>
-                                <td >
-                                    <div className="flex items-center h-[60px]  justify-start gap-2">
-                                        <img  src={person} alt="" />
-                                        <p className="text-[#707070] roboto-regular text-base leading-[21px] ">Nadir</p>
-                                    </div>
-                                </td>
-
-                                <td className="text-[#707070] h-[60px]  roboto-regular text-base "> mahmud@gmail.com</td>
-                                <td className="text-[#707070] h-[60px]  roboto-regular text-base "> +919355574544</td>
-                                <td className="text-[#707070] h-[60px]  roboto-regular text-base "> Cavities</td>
-
-                                <td >
-                                    <div className="flex items-center gap-2 h-[60px]">
-                                        <div onClick={()=>setDetailsModal(true)} className="flex cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
-                                            <MdOutlineArrowOutward size={18} color="#B6C0C8" />
+                        patients?.slice(0, 5).map((patient, index)=>
+                            <React.Fragment key={index}>
+                                <tr className={`${(index + 1) % 2 === 0 ? 'bg-[#FCF8F9]' : 'bg-white'}`}>
+                                    <td>{index + 1}</td>
+                                    <td >
+                                        <div className="flex items-center h-[60px]  justify-start gap-2">
+                                            <img  style={{width: 40, height: 40}} src={`${patient?.patient?.profile?.startsWith("https") ?  patient?.patient?.profile : `${ImageConfig}${patient?.patient?.profile}` }`} alt="" />
+                                            <p className="text-[#707070] roboto-regular text-base leading-[21px] ">{patient?.patient?.name}</p>
                                         </div>
+                                    </td>
 
-                                        <div onClick={()=>setEditModal(true)} className="flex  cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
-                                            <RiEdit2Line size={18} color="#B6C0C8" />
-                                        </div>
+                                    <td className="text-[#707070] h-[60px]  roboto-regular text-base ">{patient?.email}</td>
+                                    <td className="text-[#707070] h-[60px]  roboto-regular text-base ">{patient?.patient?.contactNo}</td>
+                                    <td className="text-[#707070] h-[60px]  roboto-regular text-base "> {patient?.patient?.category}</td>
 
-                                        <div onClick={handleDelete} className="flex cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
-                                            <RiDeleteBin6Line size={18} color="#B6C0C8" />
+                                    <td >
+                                        <div className="flex items-center gap-2 h-[60px]">
+                                            <div onClick={()=>setDetailsModal(patient)} className="flex cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
+                                                <MdOutlineArrowOutward size={18} color="#B6C0C8" />
+                                            </div>
+
+                                            <div onClick={handleDelete} className="flex cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
+                                                <RiDeleteBin6Line size={18} color="#B6C0C8" />
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </React.Fragment>
+                                    </td>
+                                </tr>
+                            </React.Fragment>
                         )
                     }
                 </tbody>
             </table>
 
-            <PatientEditModal editModal={editModal} setEditModal={setEditModal} />
             <PatientDetailsModal open={detailsModal} setOpen={setDetailsModal} />
-
-            
-
         </>
     )
 }

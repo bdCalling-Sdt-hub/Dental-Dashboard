@@ -7,6 +7,7 @@ import { UserContext } from '../../provider/User';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProfile } from "../../redux/apiSlice/Profile/updateProfileSlice";
 import { changePassword } from "../../redux/apiSlice/Authentication/changePasswordSlice";
+import { getProfileSlice } from "../../redux/apiSlice/Profile/getProfileSlice";
 import Swal from 'sweetalert2';
 import { ImageConfig } from '../../redux/api/baseApi';
 const {Option} = Select
@@ -59,7 +60,25 @@ const Profile = () => {
         })
 
         dispatch(updateProfile(formData)).then((response)=>{
-            console.log(response)
+            if (response?.type === "updateProfile/fulfilled") {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: response?.payload,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(()=>{
+                    dispatch(getProfileSlice())
+                })
+            } else {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: response?.payload,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
         })
     }
 
@@ -123,7 +142,7 @@ const Profile = () => {
 
                 <div className='bg-[#F9F9F9] flex items-center justify-center rounded-lg p-6'>
                     <input type="file" onChange={handleChange} id='img' style={{display : "none"}} />
-                    <div className="w-[198px]">
+                    <div className="w-[250px]">
                         <div className='relative w-fit mx-auto'>
                             <img 
                                 style={{width: 120, height: 120, borderRadius: "100%", margin: "0 auto"}} 
@@ -145,7 +164,7 @@ const Profile = () => {
                             </label>
                         </div>
 
-                        <p className='mt-4 text-center text-[#262727] text-[32px] leading-[48px] poppins-medium '>Asad Admin</p>
+                        <p className='mt-4 text-center text-[#262727] text-[32px] leading-[48px] poppins-medium '>{user?.admin?.name}</p>
                     </div>
                 </div>
 

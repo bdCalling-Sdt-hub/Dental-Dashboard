@@ -20,7 +20,6 @@ export const getPackage = createAsyncThunk(
                     authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                 }
             });
-            console.log(response)
             return response?.data?.data;
         }catch(error){
             const message = error?.response?.data?.message;
