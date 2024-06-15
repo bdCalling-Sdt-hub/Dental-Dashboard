@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, } from "antd";
-import Heading from "../Heading"
+import { Dropdown } from "antd";
+import Heading from "../Heading";
 
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
@@ -49,25 +49,26 @@ const data = [
     amt: 2100,
   },
 ];
+
 const PatientChart = () => {
     const [year, setYear] = useState(new URLSearchParams(window.location.search).get('year') || 2024);
 
     const items = [
         {
             label: 2023,
-            key: "2023",
+            key: 2023,
         },
         {
             label: 2024,
-            key: "2024",
+            key: 2024,
         },
         {
             label: 2025,
-            key: "2025",
+            key: 2025,
         },
         {
             label: 2026,
-            key: "2026",
+            key: 2026,
         }
     ];
 
@@ -77,11 +78,12 @@ const PatientChart = () => {
         params.set('year', key);
         window.history.pushState(null, "", `?${params.toString()}`);
     };
+
     return (
         <div className='p-4' style={{ width: '100%', height: '312px' }}>
             <div className='flex items-center justify-between mb-1'>
                 <Heading title="Patient Overview" style="mb-0" />
-                <Dropdown  menu={{ items, onClick }}>
+                <Dropdown menu={{ items, onClick }}>
                     <p style={{ 
                         cursor: "pointer", 
                         color:'#717171', 
@@ -109,8 +111,8 @@ const PatientChart = () => {
                         }}
                     >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
+                    <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+                    <YAxis tick={{ fontSize: 12 }} />
                     <Tooltip />
                     <Area type="monotone" dataKey="uv" stroke="#12354E" fill="#E2BCC1" />
                     </AreaChart>
@@ -120,4 +122,4 @@ const PatientChart = () => {
     )
 }
 
-export default PatientChart
+export default PatientChart;

@@ -50,6 +50,8 @@ import deleteArticleSlice from './apiSlice/Article/deleteArticleSlice';
 import getArticleDetailsSlice from './apiSlice/Article/getArticleDetailsSlice';
 import updatePackageSlice from './apiSlice/Package/updatePackageSlice';
 import getPatientChatSlice from './apiSlice/Chat/getPatientChatSlice';
+import getMessageSlice from './apiSlice/Chat/getMessageSlice';
+import sendMessageSlice from './apiSlice/Chat/sendMessageSlice';
 
 export const store = configureStore({
     reducer:{
@@ -139,6 +141,8 @@ export const store = configureStore({
 
         //  chat
         getPatientChat: getPatientChatSlice,
+        getMessages: getMessageSlice,
+        sendMessage: sendMessageSlice,
 
     }
 })
