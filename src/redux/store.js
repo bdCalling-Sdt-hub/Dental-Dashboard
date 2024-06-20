@@ -52,6 +52,10 @@ import updatePackageSlice from './apiSlice/Package/updatePackageSlice';
 import getPatientChatSlice from './apiSlice/Chat/getPatientChatSlice';
 import getMessageSlice from './apiSlice/Chat/getMessageSlice';
 import sendMessageSlice from './apiSlice/Chat/sendMessageSlice';
+import getPatientOverviewSlice from './apiSlice/Home/getPatientOverviewSlice';
+import sendMailSlice from './apiSlice/Patient/sendMailSlice';
+import getNotificationSlice from './apiSlice/Notifications/getNotificationSlice';
+import readNotificationSlice from './apiSlice/Notifications/readNotificationSlice';
 
 export const store = configureStore({
     reducer:{
@@ -138,11 +142,17 @@ export const store = configureStore({
         updatePatient: updatePatientSlice, 
         deletePatient: deletePatientSlice,
         getPatient: getPatientSlice,
+        sendMail: sendMailSlice,
 
         //  chat
         getPatientChat: getPatientChatSlice,
         getMessages: getMessageSlice,
         sendMessage: sendMessageSlice,
+
+        // home 
+        getOverview : getPatientOverviewSlice,
+        getNotifications: getNotificationSlice,
+        readNotification: readNotificationSlice,
 
     }
 })

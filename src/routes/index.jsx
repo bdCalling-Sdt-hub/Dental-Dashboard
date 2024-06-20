@@ -27,11 +27,12 @@ import Banner from "../pages/Main/Banner";
 import NotFound from "../pages/Main/NotFound";
 import Profile from "../pages/Main/Profile";
 import Notification from "../pages/Main/Notification";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Main/>,
+        element: <PrivateRoute> <Main/> </PrivateRoute>  ,
         children: [
             {
                 path: "/",

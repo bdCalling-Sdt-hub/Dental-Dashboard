@@ -9,18 +9,20 @@ const initialState = {
 };
 
 
-export const readNotification = createAsyncThunk(
-    'readNotification',
-    async (id, thunkApi) => {
+export const sendMail = createAsyncThunk(
+    'sendMail',
+    async (value, thunkApi) => {
         try{
-            const response = await baseURL.patch(`/notifications/${id}`, {}, {
+            const response = await baseURL.post(`/user/send-mail`, {...value}, {
                 headers: {
                     "Content-Type": "application/json",
                     authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                 }
             });
-            return response?.data?.data;
+            console.log(response)
+            return response?.data.message;
         }catch(error){
+            console.log(error)
             const message = error?.response?.data?.message;
             return thunkApi.rejectWithValue(message);
         }
@@ -30,20 +32,20 @@ export const readNotification = createAsyncThunk(
 
 
 
-export const readNotificationSlice = createSlice({
-    name: 'readNotification',
+export const createPatientSlice = createSlice({
+    name: 'sendMail',
     initialState,
     reducers: {},
     extraReducers: (builder) =>{
-        builder.addCase(readNotification.pending, (state)=> {
+        builder.addCase(sendMail.pending, (state)=> {
             state.loading= true;
         }),
-        builder.addCase(readNotification.fulfilled, (state)=> {
+        builder.addCase(sendMail.fulfilled, (state)=> {
             state.error= false;
             state.success= true;
             state.loading= false;
         }),
-        builder.addCase(readNotification.rejected, (state)=> {
+        builder.addCase(sendMail.rejected, (state)=> {
             state.error= true;
             state.success= false;
             state.loading= false;
@@ -51,4 +53,4 @@ export const readNotificationSlice = createSlice({
     }
 })
 
-export default readNotificationSlice.reducer
+export default createPatientSlice.reducer

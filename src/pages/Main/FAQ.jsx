@@ -119,7 +119,7 @@ const FAQ = () => {
                                     </div>
                                 </div>
                                 <div onClick={()=>handleDelete(faq?._id)} className='w-10 cursor-pointer h-10 border border-[#E6E5F1] rounded-lg flex items-center justify-center'>
-                                    <FaTrash  size={20} color='#B6C0C8' />
+                                    <FaTrash  size={20} color='red' />
                                 </div>
                             </div>
                         )

@@ -8,6 +8,7 @@ import PatientDetailsModal from "../Modal/PatientDetailsModal";
 import { useDispatch, useSelector } from "react-redux";
 import { getPatient } from "../../redux/apiSlice/Patient/getPatientSlice";
 import { ImageConfig } from "../../redux/api/baseApi";
+import { deletePatient } from "../../redux/apiSlice/Patient/deletePatientSlice";
 
 
 const PatientListTable = () => {
@@ -19,17 +20,38 @@ const PatientListTable = () => {
         dispatch(getPatient({}))
     }, [dispatch]) 
 
-    const handleDelete=()=>{
+    // delete patient function
+    const handleDelete=(id)=>{
         Swal.fire({
             title: "Are Your Sure ?",
-            html: `Do you want to  delete your patients profile ? <br> Only Super admin can delete patients profile.`,
+            html: `Do you want to  delete Patient?`,
             confirmButtonText: 'Confirm',
             customClass: {
               confirmButton: 'custom-send-button',
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log(result)
+                dispatch(deletePatient(id)).then((response)=>{
+                    if(response.type === "deletePatient/fulfilled"){
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: response?.payload,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(()=>{
+                            dispatch(getPatient({}))
+                        })
+                    }else{
+                        Swal.fire({
+                            position: "center",
+                            icon: "error",
+                            title: response?.payload,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                })
             }
         });
     }
@@ -55,7 +77,7 @@ const PatientListTable = () => {
 
                 <tbody>
                     {
-                        patients?.slice(0, 5).map((patient, index)=>
+                        patients?.slice(0, 4).map((patient, index)=>
                             <React.Fragment key={index}>
                                 <tr className={`${(index + 1) % 2 === 0 ? 'bg-[#FCF8F9]' : 'bg-white'}`}>
                                     <td>{index + 1}</td>
@@ -76,7 +98,7 @@ const PatientListTable = () => {
                                                 <MdOutlineArrowOutward size={18} color="#B6C0C8" />
                                             </div>
 
-                                            <div onClick={handleDelete} className="flex cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
+                                            <div onClick={()=>handleDelete(patient?._id)} className="flex cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
                                                 <RiDeleteBin6Line size={18} color="#B6C0C8" />
                                             </div>
                                         </div>

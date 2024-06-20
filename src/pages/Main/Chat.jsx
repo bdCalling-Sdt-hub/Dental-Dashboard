@@ -35,7 +35,7 @@ const Chat = () => {
 
     useEffect(()=>{
         if(messages?.length > 0){
-            setMessageList([...messages])
+            setMessageList([...messages]);
         }
     }, [messages])
 
@@ -88,6 +88,8 @@ const Chat = () => {
         const url = URL.createObjectURL(file);
         setImageURL(url)
     }
+
+
     
     return (
         <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-hidden">
@@ -98,51 +100,19 @@ const Chat = () => {
 
             {/* message read and unread section */}
 
-            <div className='flex items-center gap-6'>
-                <h1 
-                    onClick={()=>handleTab("inbox")} 
-                    className={`
-                        text-[#12354E] w-fit  
-                        cursor-pointer text-base leading-8 
-                         
-                        ${tab === "inbox" ? "poppins-semibold border-[#E2BCC1] " :  "poppins-regular border-transparent "}
-                        border-b-[2px] 
-                        pb-[4px] 
-                    `}
-                >
-                    All Message
-                </h1>
-                <h1 
-                    onClick={()=>handleTab("unread")} 
-                    className={`
-                        text-[#12354E] w-fit  
-                        cursor-pointer text-base leading-8 
-                         
-                        ${tab === "unread" ? "poppins-semibold border-[#E2BCC1] " :  "poppins-regular border-transparent "}
-                        border-b-[2px] 
-                        pb-[4px] 
-                    `}
-                >
-                    Unread
-                </h1>
-            </div>
+            
 
             {/* message container */}
 
-            <div className='grid grid-cols-12 gap-6 mt-4 h-[69vh] '>
+            <div className='grid grid-cols-12 gap-6 mt-4 h-[76vh] '>
 
-                <div className="col-span-5 w-full bg-[#FCFCFC]  rounded-lg p-4 overflow-y-scroll scroll-bar" style={{boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px"}}>
-                    {
-                        tab === "inbox"
-                        ?
-                        <Inbox setPartner={setPartner} setPartnerId={setPartnerId} />
-                        :
-                        <Unread />
-                    }
+                <div className="col-span-3 w-full bg-[#FCFCFC]  rounded-lg p-4 overflow-y-scroll scroll-bar" style={{boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px"}}>
+                    
+                    <Inbox setPartner={setPartner} setPartnerId={setPartnerId} />
                 </div>
 
                 
-                <div className='col-span-7 relative h-[700px] bg-[#FCF8F9]' style={{boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px"}}>
+                <div className='col-span-9 relative h-[76vh]  bg-[#FCF8F9]' style={{boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px"}}>
                     {partnerId ? (
                         <div className='flex flex-col h-full'>
 

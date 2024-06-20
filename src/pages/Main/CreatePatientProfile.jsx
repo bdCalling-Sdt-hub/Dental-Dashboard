@@ -7,6 +7,7 @@ import MetaTag from "../../components/MetaTag"
 import { useDispatch, useSelector } from "react-redux";
 import { createPatient } from "../../redux/apiSlice/Patient/createPatientSlice";
 import { getCategory } from "../../redux/apiSlice/Category/getCategorySlice";
+import { sendMail } from "../../redux/apiSlice/Patient/sendMailSlice";
 const { Option } = Select;
 
 
@@ -74,17 +75,37 @@ const CreatePatientProfile = () => {
                     }
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire({
-                            position: "center",
-                            icon: "success",
-                            title: response?.payload,
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then(()=>{
-                            form.resetFields();
-                            setRandomPassword(null)
-                            setRandomPin(null)
+                        const data = {
+                            name: values?.name,
+                            email: values?.email,
+                            password: values?.password,
+                            pin: values?.pin
+
+                        }
+                        dispatch(sendMail(data)).then((response)=>{
+                            if(response.type === "sendMail/fulfilled"){
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "success",
+                                    title: response?.payload,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then(()=>{
+                                    form.resetFields();
+                                    setRandomPassword(null)
+                                    setRandomPin(null)
+                                })
+                            }else{
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "error",
+                                    title: response?.payload,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
                         })
+                        
                     }
                 }); 
             }
@@ -145,7 +166,7 @@ const CreatePatientProfile = () => {
                                 borderRadius: 8
                             }}
                             className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
-                            defaultValue={"Gum"}
+                            placeholder="Select Patient Category"
                         >
                             {
                                 categories?.map((category, index)=>{
@@ -280,7 +301,7 @@ const CreatePatientProfile = () => {
                                 borderRadius: 8
                             }}
                             className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
-                            defaultValue={"Male"}
+                            placeholder="Select Patient Gender"
                         >
                             <Option value="male">Male</Option>
                             <Option value="female">Female</Option>

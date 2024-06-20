@@ -7,7 +7,7 @@ import { UserContext } from '../../provider/User';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProfile } from "../../redux/apiSlice/Profile/updateProfileSlice";
 import { changePassword } from "../../redux/apiSlice/Authentication/changePasswordSlice";
-import { getProfileSlice } from "../../redux/apiSlice/Profile/getProfileSlice";
+import { getProfile } from "../../redux/apiSlice/Profile/getProfileSlice";
 import Swal from 'sweetalert2';
 import { ImageConfig } from '../../redux/api/baseApi';
 const {Option} = Select
@@ -68,7 +68,7 @@ const Profile = () => {
                     showConfirmButton: false,
                     timer: 1500
                 }).then(()=>{
-                    dispatch(getProfileSlice())
+                    dispatch(getProfile())
                 })
             } else {
                 Swal.fire({

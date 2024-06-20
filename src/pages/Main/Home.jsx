@@ -1,19 +1,29 @@
 import { FaUsers } from 'react-icons/fa'
 import PatientChart from '../../components/Home/PatientChart'
 import PatientListTable from '../../components/Home/PatientListTable'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { getPatientOverview } from '../../redux/apiSlice/Home/getPatientOverviewSlice'
 
 const Home = () => {
+    const dispatch = useDispatch();
+    const {overview} = useSelector(state=> state?.getOverview)
+
+    useEffect(()=>{
+        dispatch(getPatientOverview())
+    }, [dispatch]);
+
     const item = [
         {
             id: 1,
             name: "Total Patient List",
-            total: 520,
+            total: overview?.usersOverview?.totalPatient,
             icon: <FaUsers size={40} color='#594A05' />
         },
         {
             id: 1,
             name: "Monthly Progress",
-            total: 620,
+            total: overview?.usersOverview?.percentage,
             icon: <FaUsers size={40} color='#594A05' />
         }
     ]
@@ -69,7 +79,7 @@ const Home = () => {
 
             {/* User overview by chart */}
             <div className='my-6 shadow-lg border rounded-lg'>
-                <PatientChart/>
+                <PatientChart data={overview?.yearlyUserOverview} />
             </div>
 
             <div className='shadow-lg border rounded-lg p-1'>

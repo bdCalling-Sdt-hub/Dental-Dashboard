@@ -11,11 +11,14 @@ import { MdCategory } from "react-icons/md";
 import { BsDatabaseFillGear } from "react-icons/bs";
 import { FiPlusSquare } from "react-icons/fi";
 import { RiListSettingsFill } from "react-icons/ri";
+import { useContext } from "react";
+import { UserContext } from '../../provider/User';
 
 const { SubMenu } = Menu;
 
 const Sidebar = () => {
     const navigate = useNavigate();
+    const {user} = useContext(UserContext);
 
     const menuItems = [
         {
@@ -129,10 +132,14 @@ const Sidebar = () => {
         }
     ]
 
+    
+
     const handleLogOut = ()=>{
         navigate("/auth/login")
         localStorage.removeItem("token")
     }
+
+
     return (
         <div className=''>
             
@@ -185,10 +192,16 @@ const Sidebar = () => {
                             style={{
                                 color: "#415D71",
                                 fontSize: "16px",
-                                marginBottom: "10px"
+                                marginBottom: "10px",
+                                display: user?.role === "admin" && item.path === "/make-admin"  ? "none" : "block"
                             }}
                         >
-                            <Link to={item.path} className="poppins-regular text-[14px] leading-[21px]">{item.title}</Link>
+                            <Link 
+                                to={item.path} 
+                                className="poppins-regular text-[14px] leading-[21px]"
+                            >
+                                {item.title}
+                            </Link>
                         </Menu.Item>
                     )
                 }

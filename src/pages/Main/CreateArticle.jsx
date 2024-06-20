@@ -12,6 +12,7 @@ import { getArticleDetails } from '../../redux/apiSlice/Article/getArticleDetail
 import Swal from 'sweetalert2';
 import { ImageConfig } from '../../redux/api/baseApi';
 import { updateArticle } from '../../redux/apiSlice/Article/updateArticleSlice';
+import { BiTrash } from 'react-icons/bi';
 
 const CreateArticle = () => {
     const { name } = useParams();
@@ -22,26 +23,33 @@ const CreateArticle = () => {
     const [imageList, setImageList] = useState([]);
     const [imageURL, setImageURL] = useState(null);
     const [imageURLList, setImageURLList] = useState([]);
+    const [imageToDelete, setImageToDelete] = useState([])
+    console.log("imageToDelete", imageToDelete)
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const location = useLocation();
     const query = new URLSearchParams(location.search);
     const id = query.get('id');
-    const { details } = useSelector(state=> state.getArticleDetails)
+    const { details } = useSelector(state=> state.getArticleDetails);
+    
 
     useEffect(()=>{
-        dispatch(getArticleDetails(id))
+        if(id){
+            dispatch(getArticleDetails(id))
+        }
     },[dispatch, id]);
 
 
     useEffect(() => {
-        if (details) {
+        if (details && id) {
             form.setFieldsValue(details);
-            setImageURLList(details?.articleSlider)
+            if(details?.articleSlider){
+                setImageURLList(details?.articleSlider)
+            }
             setImageURL(`${ImageConfig}${details?.buttonImage}`)
             setContent(details?.articleDetails)
         }
-    }, [form, details]);
+    }, [form, details, id]);
 
     const handleChange = (e) => {
         const file = e.target.files[0];
@@ -58,12 +66,20 @@ const CreateArticle = () => {
         setImageURLList([...imageURLList, url]);
     };
 
+    const handleRemove=(id)=>{
+        const data = imageURLList.filter((item, index)=> item !== id);
+        setImageURLList(data);
+        setImageToDelete([...imageToDelete, id])
+      }
+    
+
     const handleSubmit = (values) => {
         const data = {
             articleName: values?.articleName,
             patientCategory: values?.patientCategory,
             articleCategory: name,
-            articleDetails: content
+            articleDetails: content,
+            imageToDelete: imageToDelete
         };
 
         const formData = new FormData();
@@ -77,12 +93,20 @@ const CreateArticle = () => {
             formData.append("articleSlider", img);
         }
 
-        if(details){
+        if(details && Object.keys(details).length > 0){
             dispatch(updateArticle({ id: details?._id, data: formData })).then((response) => {
                 if (response.type === "updateArticle/fulfilled") {
                     Swal.fire({
                         position: "center",
                         icon: "success",
+                        title: response?.payload,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }else{
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
                         title: response?.payload,
                         showConfirmButton: false,
                         timer: 1500
@@ -103,6 +127,8 @@ const CreateArticle = () => {
                         setImageURLList([]);
                         setImageList([]);
                         setImage(null)
+                        setImageURL(null)
+                        setContent(null)
                     });
                 }
             });
@@ -111,12 +137,18 @@ const CreateArticle = () => {
         
     };
 
+    const handleNavigate=()=>{
+        navigate(`/article-details/${name}`)
+        form.resetFields()
+        setImageURLList([])
+    }
+
     return (
         <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-auto">
             <MetaTag title={`${id ? "Edit Article" : "Create Article"}`} />
             <div className='flex items-center gap-3 mb-6'>
                 <div
-                    onClick={() => navigate(`/article-details/${name}`)}
+                    onClick={handleNavigate}
                     className="w-10 h-10 cursor-pointer rounded-lg border shadow-md flex items-center justify-center"
                 >
                     <GoArrowLeft size={24} color='#12354E' />
@@ -166,6 +198,7 @@ const CreateArticle = () => {
                                     outline: "none",
                                     borderRadius: 8
                                 }}
+                                disabled={true}
                                 className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
                                 defaultValue={name}
                             >
@@ -209,12 +242,18 @@ const CreateArticle = () => {
                         {
                             imageURLList && imageURLList?.map((item, index) => {
                                 return (
-                                    <img 
-                                        key={index} 
-                                        src={item?.startsWith("/images") ? `${ImageConfig}${item}` : item } 
-                                        style={{ width: 162, height: 102, borderRadius: 8 }} 
-                                        alt=""
-                                    />
+                                    <div key={index} className='relative'>
+                                        <img 
+                                            src={item?.startsWith("/images") ? `${ImageConfig}${item}` : item } 
+                                            style={{ width: 162, height: 162, borderRadius: 8 }} 
+                                            alt=""
+                                        />
+                                        <BiTrash 
+                                            onClick={()=>handleRemove(item)}  
+                                            size={24} color="red" 
+                                            className="absolute right-2 top-2 cursor-pointer"
+                                        />
+                                    </div>
                                 )
                             })
                         }

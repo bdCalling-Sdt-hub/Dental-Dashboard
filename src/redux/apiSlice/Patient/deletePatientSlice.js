@@ -13,7 +13,7 @@ export const deletePatient = createAsyncThunk(
     'deletePatient',
     async (id, thunkApi) => {
         try{
-            const response = await baseURL.delete(`/user/delete-patient/${id}`, {
+            const response = await baseURL.patch(`/user/delete/${id}`, {}, {
                 headers: {
                     "Content-Type": "application/json",
                     authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,

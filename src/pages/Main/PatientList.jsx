@@ -61,7 +61,15 @@ const PatientList = () => {
                             showConfirmButton: false,
                             timer: 1500
                         }).then(()=>{
-                            dispatch(getPatient(keyword, page))
+                            dispatch(getPatient({}))
+                        })
+                    }else{
+                        Swal.fire({
+                            position: "center",
+                            icon: "error",
+                            title: response?.payload,
+                            showConfirmButton: false,
+                            timer: 1500
                         })
                     }
                 })
@@ -103,7 +111,7 @@ const PatientList = () => {
                             borderRadius: 8
                         }}
                         className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
-                        defaultValue={"Gum"}
+                        placeholder="Select Category"
                         onChange={(e)=>setSelectedCategory(e)}
                     >
                         {
