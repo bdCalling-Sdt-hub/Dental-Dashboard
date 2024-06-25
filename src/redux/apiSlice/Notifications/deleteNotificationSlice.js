@@ -9,11 +9,11 @@ const initialState = {
 };
 
 
-export const readNotification = createAsyncThunk(
-    'readNotification',
-    async (_, thunkApi) => {
+export const deleteNotification = createAsyncThunk(
+    'deleteNotification',
+    async (id, thunkApi) => {
         try{
-            const response = await baseURL.patch(`/notifications/read-notifications`, {}, {
+            const response = await baseURL.delete(`/notifications/${id}`, {
                 headers: {
                     "Content-Type": "application/json",
                     authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
@@ -30,20 +30,20 @@ export const readNotification = createAsyncThunk(
 
 
 
-export const readNotificationSlice = createSlice({
-    name: 'readNotification',
+export const deleteNotificationSlice = createSlice({
+    name: 'deleteNotification',
     initialState,
     reducers: {},
     extraReducers: (builder) =>{
-        builder.addCase(readNotification.pending, (state)=> {
+        builder.addCase(deleteNotification.pending, (state)=> {
             state.loading= true;
         }),
-        builder.addCase(readNotification.fulfilled, (state)=> {
+        builder.addCase(deleteNotification.fulfilled, (state)=> {
             state.error= false;
             state.success= true;
             state.loading= false;
         }),
-        builder.addCase(readNotification.rejected, (state)=> {
+        builder.addCase(deleteNotification.rejected, (state)=> {
             state.error= true;
             state.success= false;
             state.loading= false;
@@ -51,4 +51,4 @@ export const readNotificationSlice = createSlice({
     }
 })
 
-export default readNotificationSlice.reducer
+export default deleteNotificationSlice.reducer

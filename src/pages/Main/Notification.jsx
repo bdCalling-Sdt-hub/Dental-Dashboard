@@ -7,6 +7,8 @@ import Heading from '../../components/Heading';
 import { useDispatch, useSelector } from 'react-redux';
 import { getNotifications } from "../../redux/apiSlice/Notifications/getNotificationSlice"
 import moment from 'moment';
+import { readNotification } from '../../redux/apiSlice/Notifications/readNotificationSlice';
+import { deleteNotification } from '../../redux/apiSlice/Notifications/deleteNotificationSlice';
 
 const Notification = () => {
     const [page, setPage] = useState(new URLSearchParams(window.location.search).get('page') || 1);
@@ -20,19 +22,13 @@ const Notification = () => {
         window.history.pushState(null, "", `?${params.toString()}`);
     };
 
-    
-    
-    
-
-    
-
     useEffect(()=>{
-        dispatch(getNotifications())
-    }, [dispatch])
+        dispatch(getNotifications(page))
+    }, [dispatch, page])
 
     
 
-    const handleDelete=()=>{
+    const handleDelete=(id)=>{
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -40,17 +36,36 @@ const Notification = () => {
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "Yes"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
+                dispatch(deleteNotification(id)).then((response)=>{
+                    if(response.type === "deleteNotification/fulfilled"){
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Notification Has been Deleted",
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(()=>{
+                            dispatch(getNotifications(page))
+                        })
+                    }
+                })
+                
             }
         });
     }
+
+    useEffect(()=>{
+        dispatch(readNotification()).then((response)=>{
+            if(response.type === "readNotification/fulfilled"){
+                dispatch(getNotifications(page))
+            }
+        })
+    }, [dispatch, page])
+    
+
     return (
         <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-auto">
             <MetaTag title={"Notification"} />
@@ -75,12 +90,12 @@ const Notification = () => {
                                     notifications?.map((item, index)=>{
                                         return (
                                             <React.Fragment key={index} >
-                                                <tr className='border-b-[1px] border-[#E0E0E0] h-[50px]'>
+                                                <tr  className={`border-b-[1px] border-[#E0E0E0] h-[50px] ${ item?.read === false ? "bg-[#FCF8F9]" : null} `}>
                                                     {/* <td className='pl-4 poppins-regular text-base leading-[21px] py-4'>{"Lulu"}</td> */}
                                                     <td className='text-[#707070] poppins-regular text-base leading-[21px]'>{item?.message}</td>
                                                     <td className='text-[#707070] poppins-regular text-base leading-[21px]'>{moment(item?.createdAt).format('LT')}</td>
                                                     <td >
-                                                        <PiTrash onClick={handleDelete} size={20} color='red' className='cursor-pointer' />
+                                                        <PiTrash onClick={()=>handleDelete(item._id)} size={20} color='red' className='cursor-pointer' />
                                                     </td>
                                                 </tr>
                                             </React.Fragment>

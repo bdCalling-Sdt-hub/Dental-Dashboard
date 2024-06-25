@@ -143,7 +143,7 @@ const Profile = () => {
                 <div className='bg-[#F9F9F9] flex items-center justify-center rounded-lg p-6'>
                     <input type="file" onChange={handleChange} id='img' style={{display : "none"}} />
                     <div className="w-[250px]">
-                        <div className='relative w-fit mx-auto'>
+                        <div className='relative w-fit mx-auto' >
                             <img 
                                 style={{width: 120, height: 120, borderRadius: "100%", margin: "0 auto"}} 
                                 src={`${imgURL ? imgURL : "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"}`}
@@ -151,12 +151,13 @@ const Profile = () => {
                             />
                             <label 
                                 htmlFor="img" 
+                                style={{display : tab === "profile" ? "flex" : "none"}}
                                 className='
                                     absolute top-1/2 -right-2 
                                     bg-white 
                                     rounded-full 
                                     w-6 h-6 
-                                    flex items-center justify-center 
+                                     items-center justify-center 
                                     cursor-pointer
                                 '
                             >
@@ -350,6 +351,7 @@ const Profile = () => {
                                             }
                                         ]}
                                         label={<p className="text-[#415D71] text-sm leading-5 poppins-semibold">New Password</p>}
+                                        style={{ marginBottom: newPassError ? 0 : null }}
                                     >
                                         <Input.Password 
                                             style={{
@@ -376,6 +378,7 @@ const Profile = () => {
                                                 message: "Please Enter Confirm Password!"
                                             }
                                         ]}
+                                        style={{ marginBottom: conPassError ? 0 : null }}
                                     >
                                         <Input.Password 
                                             style={{

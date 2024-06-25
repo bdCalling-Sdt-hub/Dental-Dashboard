@@ -137,3 +137,12 @@ h1, h2, h3, h4, h5, h6, tr, td, th, span, p, li, ul{
 .jodit-workplace {
     height: 400px !important;
 }
+
+/* sweat alert button css */
+button:where(.swal2-styled){
+    box-shadow: none !important;
+}
+  
+.swal2-confirm, .swal2-cancel{
+    width: fit-content !important;
+}

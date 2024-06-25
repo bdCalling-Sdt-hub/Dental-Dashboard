@@ -14,9 +14,9 @@ const initialState = {
 
 export const getNotifications = createAsyncThunk(
     'getNotifications',
-    async (_, thunkApi) => {
+    async (page, thunkApi) => {
         try{
-            const response = await baseURL.get(`/notifications`, {
+            const response = await baseURL.get(`/notifications?page=${page}`, {
                 headers: {
                     "Content-Type": "application/json",
                     authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,

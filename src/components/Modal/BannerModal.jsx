@@ -12,14 +12,14 @@ import { ImageConfig } from '../../redux/api/baseApi';
 const BannerModal = ({open, setOpen, value, setValue, setRefresh}) => {
     const dispatch = useDispatch();
     const {loading} = useSelector(state=> state.createBanner)
-    const [image, setimage] = useState();
+    const [image, setImage] = useState();
     const [imageURL, setImageURL] = useState();
     const [form] = Form.useForm();
     form.setFieldsValue()
 
     const handleChange = (e)=>{
         const file = e.target.files[0];
-        setimage(file);
+        setImage(file);
         const url = URL.createObjectURL(file);
         setImageURL(url)
     }

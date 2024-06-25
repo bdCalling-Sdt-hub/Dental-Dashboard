@@ -1,37 +1,32 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import MetaTag from '../../components/MetaTag';
-import Person from "../../assets/person3.png";
-import Inbox from '../../components/Chat/Inbox';
-import Unread from '../../components/Chat/Unread';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMessages } from '../../redux/apiSlice/Chat/getMessageSlice';
 import { ImageConfig } from '../../redux/api/baseApi';
 import moment from 'moment';
-import { GoArrowUpRight } from 'react-icons/go';
+import { GoArrowUpRight, GoSearch } from 'react-icons/go';
 import { UserContext } from '../../provider/User';
 import { sendMessage } from '../../redux/apiSlice/Chat/sendMessageSlice';
 import { CiImageOn } from "react-icons/ci";
+import { getPatientChat } from '../../redux/apiSlice/Chat/getPatientChatSlice';
+import { Input } from 'antd';
 
 const Chat = () => {
-    const [tab, setTab] = useState(new URLSearchParams(window.location.search).get('tab') || "inbox");
+    const dispatch = useDispatch();
     const [partnerId, setPartnerId] = useState("");
     const scrollRef = useRef();
     const [keyword, setKeyword] = useState("");
-    const {socket, user} = useContext(UserContext);
+    const {socket} = useContext(UserContext);
     const [image, setImage] = useState(null)
     const [imageURL, setImageURL] = useState(null)
     const [messageList, setMessageList] = useState([])
     const [partner, setPartner] = useState();
-
-    const handleTab=(value)=>{
-        setTab(value)
-        const params = new URLSearchParams(window.location.search);
-        params.set('tag', value);
-        window.history.pushState(null, "", `?${params.toString()}`);
-    }
-
-    const dispatch = useDispatch();
     const {messages} = useSelector(state=> state?.getMessages);
+    const {patients} = useSelector(state=> state?.getPatientChat);
+
+    useEffect(()=>{
+        dispatch(getPatientChat());
+    }, [dispatch])
 
     useEffect(()=>{
         if(messages?.length > 0){
@@ -89,6 +84,11 @@ const Chat = () => {
         setImageURL(url)
     }
 
+    const handlePartner=(patient)=>{
+        setPartner(patient);
+        setPartnerId(patient?._id);
+    }
+
 
     
     return (
@@ -107,8 +107,43 @@ const Chat = () => {
             <div className='grid grid-cols-12 gap-6 mt-4 h-[76vh] '>
 
                 <div className="col-span-3 w-full bg-[#FCFCFC]  rounded-lg p-4 overflow-y-scroll scroll-bar" style={{boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px"}}>
-                    
-                    <Inbox setPartner={setPartner} setPartnerId={setPartnerId} />
+                    <div>
+                        <Input
+                            prefix={<GoSearch color="#B6C0C8" size={16} />}
+                            placeholder="Enter Search..."
+                            style={{
+                                width: "100%",
+                                height: 40,
+                                border: "1px solid #E7EBED",
+                                outline: "none",
+                                borderRadius: 8
+                            }}
+                            className="poppins-regular text-[#B6C0C8] text-[14px] leading-5"
+                        />
+
+                        <div className='mt-[14px] grid grid-cols-1 gap-1'>
+                            {
+                                patients?.map((patient, index)=>{
+                                    return (
+                                        <div onClick={()=> handlePartner(patient)} key={index} className={`flex cursor-pointer items-center gap-[10px] ${patient?._id === partnerId ? "bg-[#E7EBED]" : "bg-[#FDFDFD]"}  rounded-lg p-2`}>
+                                            <img 
+                                                src={  patient?.participants?.patient?.profile.startsWith("https") ? patient?.participants?.patient?.profile  :    `${ImageConfig}${patient?.participants?.patient?.profile}`} 
+                                                style={{width: 56, height: 56, borderRadius: "100%", border: "2px solid #92A2AE"}} 
+                                                alt=""
+                                            />
+                                            <div className='w-full'>
+                                                <div className='flex items-center justify-between pb-[6px]'>
+                                                    <h1 className='text-[#12354E] poppins-medium  text-sm leading-5'>{patient?.participants?.patient?.name}</h1>
+                                                    <p className='text-[#8B8B8B] poppins-regular  text-sm leading-5'>3:00 PM</p>
+                                                </div>
+                                                <p className='text-[#8B8B8B] poppins-regular  text-sm leading-5'>{patient?.participants?.email}</p>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
                 </div>
 
                 
@@ -134,19 +169,19 @@ const Chat = () => {
                                 {
                                     messageList?.map((message, index)=>{
                                         return (
-                                            <div key={index} className={`flex mb-2  ${ message?.sender === user?.role ? "items-end justify-end" : "items-start justify-start" }`}>
+                                            <div key={index} className={`flex mb-2  ${ message?.sender === "support"   ? "items-end justify-end" : "items-start justify-start" }`}>
                                                 {
                                                     message?.messageType === "image"
                                                     &&
                                                     <div className='bg-[#E5E5E5] rounded-lg p-4'>
                                                         <img style={{width: 201, height: 155, borderRadius: 8}} src={`${ImageConfig}${message?.image}`} alt="" />
-                                                        <p className='text-[#8B8B8B] poppins-regular mt-3 text-sm leading-4 text-right'>20-Apr-2024</p>
+                                                        <p className='text-[#8B8B8B] poppins-regular mt-3 text-sm leading-4 text-right'>{moment(message?.createdAt).format("LT")}</p>
                                                     </div>
                                                 }
                                                 {
                                                     message?.messageType === "text"
                                                     &&
-                                                    <div className={`border rounded-t-lg rounded-bl-lg p-4 w-[50%] ${ message?.sender === user?.role ? "  bg-white" : "bg-[#E5E5E5]" } `}>
+                                                    <div className={`border rounded-t-lg rounded-bl-lg p-4 w-[50%] ${ message?.sender === "support" ? "  bg-white" : "bg-[#E5E5E5]" } `}>
                                                         <p className='text-[#6A6A6A] poppins-regular  text-sm leading-5'>{message?.text}</p>
                                                         <p className='text-[#8B8B8B] poppins-regular  text-sm leading-4 text-right'>{moment(message?.createdAt).format("LT")}</p>
                                                     </div>
@@ -154,7 +189,7 @@ const Chat = () => {
 
                                                 {
                                                     message?.messageType === "both" &&
-                                                    <div  className={`border rounded-t-lg rounded-bl-lg p-4 w-[50%] ${ message?.sender === user?.role ? "  bg-white" : "bg-[#E5E5E5]" }  `}>
+                                                    <div  className={`border rounded-t-lg rounded-bl-lg p-4 w-[50%] ${ message?.sender === "support"  ? "  bg-white" : "bg-[#E5E5E5]" }  `}>
                                                         <img style={{width: 201, height: 155, borderRadius: 8}} src={`${ImageConfig}${message?.image}`} alt="" />
                                                         <p className='text-[#6A6A6A] poppins-regular text-right my-2 text-sm leading-5'>{message?.text}</p>
                                                         <p className='text-[#8B8B8B] poppins-regular  text-sm leading-4 text-right'>{moment(message?.createdAt).format("LT")}</p>

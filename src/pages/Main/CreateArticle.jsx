@@ -13,7 +13,8 @@ import Swal from 'sweetalert2';
 import { ImageConfig } from '../../redux/api/baseApi';
 import { updateArticle } from '../../redux/apiSlice/Article/updateArticleSlice';
 import { BiTrash } from 'react-icons/bi';
-
+import { getCategory } from '../../redux/apiSlice/Category/getCategorySlice';
+const { Option } = Select;
 const CreateArticle = () => {
     const { name } = useParams();
     const navigate = useNavigate();
@@ -24,13 +25,14 @@ const CreateArticle = () => {
     const [imageURL, setImageURL] = useState(null);
     const [imageURLList, setImageURLList] = useState([]);
     const [imageToDelete, setImageToDelete] = useState([])
-    console.log("imageToDelete", imageToDelete)
+    
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const location = useLocation();
     const query = new URLSearchParams(location.search);
     const id = query.get('id');
     const { details } = useSelector(state=> state.getArticleDetails);
+    const {categories} = useSelector(state=> state.getCategory);
     
 
     useEffect(()=>{
@@ -67,7 +69,7 @@ const CreateArticle = () => {
     };
 
     const handleRemove=(id)=>{
-        const data = imageURLList.filter((item, index)=> item !== id);
+        const data = imageURLList.filter((item)=> item !== id);
         setImageURLList(data);
         setImageToDelete([...imageToDelete, id])
       }
@@ -143,6 +145,10 @@ const CreateArticle = () => {
         setImageURLList([])
     }
 
+    useEffect(()=>{
+        dispatch(getCategory())
+    }, [dispatch])
+
     return (
         <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-auto">
             <MetaTag title={`${id ? "Edit Article" : "Create Article"}`} />
@@ -192,16 +198,22 @@ const CreateArticle = () => {
                         >
                             <Select
                                 style={{
-                                    width: "100%",
+                                    width: 250,
                                     height: 48,
                                     border: "1px solid #E7EBED",
                                     outline: "none",
                                     borderRadius: 8
                                 }}
-                                disabled={true}
                                 className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
-                                defaultValue={name}
+                                placeholder="Select Category"
                             >
+                                {
+                                    categories?.map((category, index)=>{
+                                        return(
+                                            <Option key={index} value={category?.categoryName} >{category?.categoryName}</Option>
+                                        )
+                                    })
+                                }
                             </Select>
                         </Form.Item>
                     </div>

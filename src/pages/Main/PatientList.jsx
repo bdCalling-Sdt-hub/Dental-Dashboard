@@ -4,7 +4,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import Swal from "sweetalert2";
 import React, { useEffect, useState } from "react";
 import Heading from "../../components/Heading";
-import { Input, Pagination, Select } from "antd";
+import { Empty, Input, Pagination, Select } from "antd";
 import { GoSearch } from "react-icons/go";
 import MetaTag from "../../components/MetaTag";
 import { useDispatch, useSelector } from "react-redux";
@@ -114,6 +114,7 @@ const PatientList = () => {
                         placeholder="Select Category"
                         onChange={(e)=>setSelectedCategory(e)}
                     >
+                        <Option  value={""} >All</Option>
                         {
                             categories?.map((category, index)=>{
                                 return(
@@ -138,8 +139,12 @@ const PatientList = () => {
                         }
                     </tr>
                 </thead>
+                {
+                    patients?.length > 0
+                    ?
+                
 
-                <tbody>
+                <tbody  >
                     {
                         patients?.map((patient, index)=>
                         <React.Fragment key={index}>
@@ -172,11 +177,19 @@ const PatientList = () => {
                         )
                     }
                 </tbody>
+                :
+                <tbody className="w-full h-[30vh] relative">
+                    <div className="absolute left-1/2 top-1/2 transform -translate-x-[50%] -translate-y-[50%]">
+                        <Empty/>
+                    </div>
+                </tbody>
+                }
+
             </table>
             {/* table container end here */}
 
             {/* pagination */}
-            <div className="flex items-center justify-center relative">
+            <div className={` ${patients?.length > 0 ? "flex" : "hidden"}   items-center justify-center relative`}>
                 <Pagination 
                     defaultCurrent={parseInt(page)} 
                     total={pagination?.total}

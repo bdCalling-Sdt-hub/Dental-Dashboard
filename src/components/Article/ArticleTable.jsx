@@ -90,7 +90,7 @@ const ArticleTable = ({data, name, page, setPage, setRefresh, pagination}) => {
                                 <td className="text-[#707070] h-[60px]  roboto-regular text-base ">{item?.articleName}</td>
                                 {
 
-                                    name === "Patient Care" && <td className="text-[#707070] h-[60px]  roboto-regular text-base ">{item?.articleCategory}</td>
+                                    name === "Patient Care" && <td className="text-[#707070] h-[60px]  roboto-regular text-base ">{item?.patientCategory}</td>
                                 }
 
                                 <td>

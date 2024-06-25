@@ -21,7 +21,7 @@ const FAQ = () => {
     const [form] = Form.useForm();
     const {loading} = useSelector(state=> state.createFaq)
 
-    form.setFieldsValue();
+    form.setFieldsValue({});
 
     useEffect(()=>{
         dispatch(getFaq())
@@ -37,8 +37,8 @@ const FAQ = () => {
                     showConfirmButton: false,
                     timer: 1500
                 }).then(()=>{
-                    dispatch(getFaq());
                     form.resetFields();
+                    dispatch(getFaq());
                     setOpen(false)
                 })
             }
@@ -134,7 +134,7 @@ const FAQ = () => {
                 onCancel={()=>(form.resetFields(), setOpen(false))}
                 footer={false}
             >
-                <Form layout='vertical' onFinish={handleSubmit} className='p-4'>
+                <Form form={form} layout='vertical' onFinish={handleSubmit} className='p-4'>
                     
                     <Form.Item 
                         name="question"

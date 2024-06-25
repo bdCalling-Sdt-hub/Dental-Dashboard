@@ -56,6 +56,7 @@ import getPatientOverviewSlice from './apiSlice/Home/getPatientOverviewSlice';
 import sendMailSlice from './apiSlice/Patient/sendMailSlice';
 import getNotificationSlice from './apiSlice/Notifications/getNotificationSlice';
 import readNotificationSlice from './apiSlice/Notifications/readNotificationSlice';
+import deleteNotificationSlice from './apiSlice/Notifications/deleteNotificationSlice';
 
 export const store = configureStore({
     reducer:{
@@ -153,6 +154,7 @@ export const store = configureStore({
         getOverview : getPatientOverviewSlice,
         getNotifications: getNotificationSlice,
         readNotification: readNotificationSlice,
+        deleteNotification: deleteNotificationSlice,
 
     }
 })

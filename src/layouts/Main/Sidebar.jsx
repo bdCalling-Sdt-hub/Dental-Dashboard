@@ -8,7 +8,7 @@ import Logo from "../../assets/logo.png";
 import { RiUserAddFill } from "react-icons/ri";
 import { IoChatbubbles } from "react-icons/io5";
 import { MdCategory } from "react-icons/md";
-import { BsDatabaseFillGear } from "react-icons/bs";
+import { IoIosHelpCircleOutline } from "react-icons/io";
 import { FiPlusSquare } from "react-icons/fi";
 import { RiListSettingsFill } from "react-icons/ri";
 import { useContext } from "react";
@@ -26,7 +26,6 @@ const Sidebar = () => {
             title: "Dashboard",
             icon: <RxDashboard size={24}  />,
             path: "/"
-        
         },
         {
             id: 2,
@@ -42,45 +41,38 @@ const Sidebar = () => {
         },
         {
             id: 4,
-            title: "Patients Massage",
+            title: "Patients Chat",
             icon: <IoChatbubbles size={24} />,
             path: "/chat"
         },
         {
             id: 5,
+            title: "Patient Category",
+            icon: <MdCategory size={24} />,
+            path: "/category"
+        },
+        {
+            id: 6,
+            title: "Contact",
+            icon: <IoIosHelpCircleOutline size={24} />,
+            path: "/contact"
+        },
+        {
+            id: 7,
             title: "Manage Package",
             icon: <MdCategory size={24} />,
             path: "/package"
         },
         {
-            id: 6,
-            title: "Data Setting",
-            icon: < BsDatabaseFillGear size={24} />,
-            path: "/settings",
-            subMenu: [
-                {
-                    id: 1,
-                    title: "Contact Setting",
-                    path: "/contact"
-                },
-                {
-                    id: 2,
-                    title: "Maintain Patient Category",
-                    path: "/category"
-                },
-
-            ]
-        },
-        {
-            id: 7,
+            id: 8,
             title: "Post Article",
             icon: <FiPlusSquare size={24} />,
             path: "/article"
 
         },
         {
-            id: 8,
-            title: "Interface Setting",
+            id: 9,
+            title: "Settings",
             icon: < RiListSettingsFill size={24} />,
             path: "/settings",
             subMenu: [
@@ -124,7 +116,7 @@ const Sidebar = () => {
         },
         
         {
-            id: 9,
+            id: 10,
             title: "Make Admin",
             icon: <MdOutlineAdminPanelSettings size={24} />,
             path: "/make-admin"
