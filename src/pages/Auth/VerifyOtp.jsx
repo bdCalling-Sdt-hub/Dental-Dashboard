@@ -11,13 +11,7 @@ const VerifyOtp = () => {
     const dispatch = useDispatch()
     const { email } = useParams();
 
-    const onChange = (text) => {
-        console.log('onChange:', text);
-    };
-
-    const sharedProps = {
-        onChange,
-    };
+    
 
     const handleSubmit=(values)=>{
         const data = {
@@ -77,7 +71,6 @@ const VerifyOtp = () => {
                 >
                     <Input.OTP 
                         length={4} 
-                        {...sharedProps} 
                     />
                 </Form.Item>
 

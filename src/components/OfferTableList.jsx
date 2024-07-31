@@ -77,7 +77,7 @@ const OfferTableList = ({ refresh, setValue }) => {
                                 <td>#123{index}</td>
                                 <td>
                                     <div className="h-[60px]">
-                                        <img style={{height : 60, width: 200}} src={`${ImageConfig}${offer?.offerImage}`} alt="" />
+                                        <img style={{height : 80, width: 60}} src={`${ImageConfig}${offer?.offerImage}`} alt="" />
                                     </div>
                                 </td>
                                 <td className="text-[#707070] h-[60px]  roboto-regular text-base ">{offer?.offerTitle}</td>

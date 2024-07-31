@@ -29,6 +29,7 @@ const TermsAndConditions = () => {
 
     const handleSubmit=()=>{
         dispatch(updateTermsAndConditions({content: content})).then((response)=>{
+            console.log(response)
             if(response?.type === "updateTermsAndConditions/fulfilled"){
                 Swal.fire({
                     position: "center",
