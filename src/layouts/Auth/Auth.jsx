@@ -12,11 +12,9 @@ const Auth = () => {
                 width: "100%",
                 height: "100vh",
             }}
-            className="
-                flex items-center justify-end
-            "
+            className="flex items-center justify-end"
         >
-            <div className="w-[681px] h-[600px] rounded-lg bg-[#F9F9F9] mr-[60px] flex items-center justify-center">
+            <div className="w-[600px] h-[600px] rounded-lg bg-[#F9F9F9] mr-[60px] flex items-center justify-center">
                 <div className="w-[481px]">
                     <Outlet />
                 </div>
