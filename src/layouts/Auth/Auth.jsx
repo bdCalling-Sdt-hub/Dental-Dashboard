@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import Banner from "../../assets/banner.png";
+import Banner from "../../assets/banner2.png";
 
 const Auth = () => {
     return (
