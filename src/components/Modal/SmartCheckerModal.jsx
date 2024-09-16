@@ -153,7 +153,8 @@ const SmartCheckerModal = ({open, setOpen, setRefresh, value, setValue}) => {
                         htmlFor="img"
                         style={{
                             backgroundImage: `url(${imageURL})`,
-                            backgroundSize: "cover",
+                            backgroundSize: "contain",
+                            backgroundRepeat: "no-repeat",
                             backgroundPosition: "center" 
                         }}
                         className={`

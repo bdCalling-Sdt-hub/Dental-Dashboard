@@ -31,7 +31,7 @@ const ContactTableList = () => {
                 <thead>
                     <tr className="text-left w-full bg-[#E7EBED] custom-table-list">
                         {
-                            ["S.ID ", "Email", "Contact No.", "Actions"].map((item, index)=>{
+                            ["S.ID ", "Email", "Contact Number", "Actions"].map((item, index)=>{
                                 return (
                                     <th 
                                         key={index} 

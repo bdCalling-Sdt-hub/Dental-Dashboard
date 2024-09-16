@@ -108,8 +108,9 @@ const Article = () => {
                             htmlFor="img"
                             style={{
                                 backgroundImage: `url(${imageURL ? imageURL : `${ImageConfig}${open?.articleCategoryImage}`})`,
-                                backgroundSize: "cover",
-                                backgroundPosition: "center" 
+                                backgroundSize: "contain",
+                                backgroundRepeat: "no-repeat",
+                                backgroundPosition: "center"
                             }}
                             className={`
                                 w-full 

@@ -29,9 +29,7 @@ const Chat = () => {
     }, [dispatch])
 
     useEffect(()=>{
-        if(messages?.length > 0){
-            setMessageList([...messages]);
-        }
+        setMessageList([...messages]);
     }, [messages])
 
     useEffect(()=>{
@@ -199,6 +197,12 @@ const Chat = () => {
                                         )
                                     })
                                 }
+                                <div 
+                                    style={{display: messageList?.length > 0 ? "none" : "flex"}} 
+                                    className='w-full h-full flex items-center justify-center'
+                                >
+                                    <p>Welcome to Smile Club</p>
+                                </div>
                             </div>
 
                             {/* input section */}

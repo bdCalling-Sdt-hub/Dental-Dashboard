@@ -209,14 +209,14 @@ const CreatePatientProfile = () => {
                         rules={[
                             {
                                 required: true,
-                                message: "Enter Patient Contact No."
+                                message: "Enter Contact Number"
                             }
                         ]}
                         className="col-span-6"
-                        label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold"  >Contact No</label>}
+                        label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold"  >Contact Number</label>}
                     >
                         <Input
-                            placeholder="Enter Patient Contact No."
+                            placeholder="Enter Contact Number"
                             style={{
                                 width: "100%",
                                 height: 48,

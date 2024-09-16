@@ -130,7 +130,8 @@ const BannerModal = ({open, setOpen, value, setValue, setRefresh}) => {
                         htmlFor="img"
                         style={{
                             backgroundImage: `url(${imageURL})`,
-                            backgroundSize: "cover",
+                            backgroundSize: "contain",
+                            backgroundRepeat: "no-repeat",
                             backgroundPosition: "center" 
                         }}
                         className={`
