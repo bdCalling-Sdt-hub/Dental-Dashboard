@@ -66,7 +66,16 @@ const Article = () => {
                                     <RiEdit2Line size={24} color="#B6C0C8" />
                                 </div>
                                 <div className='border shadow-lg rounded-lg p-6'>
-                                    <img src={`${ImageConfig}${article?.articleCategoryImage}`}  style={{width: 63, height: 63, margin: "0 auto"}} alt="" />
+                                    <img 
+                                        src={`${ImageConfig}${article?.articleCategoryImage}`}  
+                                        style={{
+                                            width: 63, 
+                                            height: 63, 
+                                            objectFit: "contain",
+                                            margin: "0 auto"
+                                        }} 
+                                        alt="" 
+                                    />
                                     <p className='text-[#415D71] poppins-regular text-center text-sm leading-5 mt-6'>{article?.articleCategoryName}</p>
                                 </div>
                                 <Button

@@ -107,7 +107,7 @@ const FAQ = () => {
                                         className='p-4 rounded-lg text-[#707070] leading-6 text-[16px] font-medium mb-4'
                                         style={{boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px'}}
                                     >
-                                        <p className='text-[#575757] text-base leading-6 poppins-medium '> {faq?.question}?</p>
+                                        <p className='text-[#575757] text-base leading-6 poppins-medium '> {faq?.question}</p>
                                     </div>
 
                                     {/* answer */}

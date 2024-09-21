@@ -52,6 +52,7 @@ const CreatePatientProfile = () => {
 
     const handleSubmit=(values)=>{
         dispatch(createPatient(values)).then((response)=>{
+            console.log(response)
             if(response.type === "createPatient/fulfilled"){
                 Swal.fire({
                     title: "Congratulations!",
@@ -83,6 +84,7 @@ const CreatePatientProfile = () => {
 
                         }
                         dispatch(sendMail(data)).then((response)=>{
+                            
                             if(response.type === "sendMail/fulfilled"){
                                 Swal.fire({
                                     position: "center",
@@ -108,6 +110,14 @@ const CreatePatientProfile = () => {
                         
                     }
                 }); 
+            }else{
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: response?.payload,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             }
         })
     }
@@ -126,14 +136,39 @@ const CreatePatientProfile = () => {
                     rules={[
                         {
                             required: true,
-                            message: "Enter Patiant Name"
+                            message: "Enter Patient Name"
                         }
                     ]}
                     className="col-span-6"
-                    label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold" >Name</label>}
+                    label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold" > Name</label>}
                 >
                     <Input
                         placeholder="Enter Patient Name"
+                        style={{
+                            width: "100%",
+                            height: 48,
+                            border: "1px solid #E7EBED",
+                            outline: "none",
+                            borderRadius: 8
+                        }}
+                        className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
+                    />
+                </Form.Item>
+
+                <Form.Item
+                    style={{marginBottom: 0}}
+                    name={"surname"}
+                    rules={[
+                        {
+                            required: true,
+                            message: "Enter Surname Name"
+                        }
+                    ]}
+                    className="col-span-6"
+                    label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold" >Surname</label>}
+                >
+                    <Input
+                        placeholder="Enter Surname"
                         style={{
                             width: "100%",
                             height: 48,
@@ -279,34 +314,6 @@ const CreatePatientProfile = () => {
                             className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
                         />
                 </Form.Item>
-                    
-                <Form.Item
-                        style={{marginBottom: 0}}
-                        name={"gender"}
-                        rules={[
-                            {
-                                required: true,
-                                message: "Enter Patient Gender"
-                            }
-                        ]}
-                        className="col-span-6"
-                        label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold"  >Gender</label>}
-                    >
-                        <Select
-                            style={{
-                                width: "100%",
-                                height: 48,
-                                border: "1px solid #E7EBED",
-                                outline: "none",
-                                borderRadius: 8
-                            }}
-                            className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
-                            placeholder="Select Patient Gender"
-                        >
-                            <Option value="male">Male</Option>
-                            <Option value="female">Female</Option>
-                        </Select>
-                </Form.Item>
                    
                 <Form.Item
                         style={{marginBottom: 0}}
@@ -318,7 +325,7 @@ const CreatePatientProfile = () => {
                             }
                         ]}
                         className="col-span-6"
-                        label={ <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Plan</label>}
+                        label={ <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Patient Plan</label>}
                     >
                         <Input
                             placeholder="Enter Patient Plan"
@@ -434,7 +441,7 @@ const CreatePatientProfile = () => {
                         }}
                         className='roboto-medium-italic text-[14px] leading-[17px]'
                     >
-                        Sand  & Change
+                        Send  & Change
                     </Button>
                 </Form.Item>
             </Form>

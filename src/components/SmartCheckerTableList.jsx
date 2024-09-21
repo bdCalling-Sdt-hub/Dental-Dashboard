@@ -73,7 +73,15 @@ const SmartCheckerTableList = ({refresh, setValue}) => {
                                 <td>#123{index}</td>
                                 <td>
                                     <div className="h-[60px] py-[2px]">
-                                        <img style={{height: 60, width: 250}} src={`${ImageConfig}${item?.smartCheckImage}`} alt="" />
+                                        <img 
+                                            style={{
+                                                height: 60, 
+                                                width: 250,
+                                                objectFit: "contain"
+                                            }} 
+                                            src={`${ImageConfig}${item?.smartCheckImage}`}
+                                            alt=""
+                                        />
                                     </div>
                                 </td>
                                 <td className="text-[#707070] h-[60px]  roboto-regular text-base ">{item?.smartCheckLink}</td>

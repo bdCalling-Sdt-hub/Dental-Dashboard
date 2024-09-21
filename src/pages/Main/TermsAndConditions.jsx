@@ -45,8 +45,8 @@ const TermsAndConditions = () => {
     }
     return (
         <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-auto">
-            <MetaTag title={"Terms And Condition"} />
-            <Heading title={"Terms And Condition"} style={"text-left mb-6"} />
+            <MetaTag title={"Terms And Conditions"} />
+            <Heading title={"Terms And Conditions"} style={"text-left mb-6"} />
 
 
             {/* editor  */}

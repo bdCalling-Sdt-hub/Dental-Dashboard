@@ -68,8 +68,16 @@ const BannerTableList = ({refresh, setValue}) => {
                             <tr className={`${(index + 1) % 2 === 0 ? 'bg-[#FCF8F9]' : 'bg-white'} w-full`}>
                                 <td>#123{index}</td>
                                 <td>
-                                    <div className="h-[60px]">
-                                        <img style={{height: 60, width: 250}}  src={`${ImageConfig}${banner?.bannerImage}`} alt="" />
+                                    <div className="w-fit h-[60px]">
+                                        <img 
+                                            style={{
+                                                height: 60, 
+                                                width: 250,
+                                                objectFit: "contain"
+                                            }}  
+                                            src={`${ImageConfig}${banner?.bannerImage}`} 
+                                            alt="" 
+                                        />
                                     </div>
                                 </td>
                                 <td className="text-[#707070] h-[60px]  roboto-regular text-base ">{banner?.bannerTitle}</td>

@@ -41,7 +41,6 @@ const Profile = () => {
             const data = {
                 name: user?.admin?.name,
                 contactNo: user?.admin?.contactNo ? user?.admin?.contactNo : "No Data Found",
-                gender: user?.admin?.gender ? user?.admin?.gender : "Choose Your Gender",
                 email: user?.email
             }
             const src = user?.admin?.profile?.startsWith("https") ? user?.admin?.profile : `${ImageConfig}/${user?.admin?.profile}`
@@ -265,7 +264,7 @@ const Profile = () => {
                                         />
                                     </Form.Item>
 
-                                    <Form.Item 
+                                    {/* <Form.Item 
                                         name="gender"
                                         label={<p className="text-[#415D71] text-sm leading-5 poppins-semibold">Gender</p>}
                                     >
@@ -282,7 +281,7 @@ const Profile = () => {
                                             <Option value="male">Male</Option>
                                             <Option value="female">Female</Option>
                                         </Select>
-                                    </Form.Item>
+                                    </Form.Item> */}
 
                                 <Form.Item 
                                     style={{marginBottom: 0, display: "flex", alignItems: "center", justifyContent: "center"}}

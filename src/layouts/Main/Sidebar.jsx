@@ -13,6 +13,7 @@ import { FiPlusSquare } from "react-icons/fi";
 import { RiListSettingsFill } from "react-icons/ri";
 import { useContext } from "react";
 import { UserContext } from '../../provider/User';
+import { BiSolidCategoryAlt } from "react-icons/bi";
 
 const { SubMenu } = Menu;
 
@@ -47,8 +48,8 @@ const Sidebar = () => {
         },
         {
             id: 5,
-            title: "Patient Category",
-            icon: <MdCategory size={24} />,
+            title: "Patient Plan",
+            icon: <BiSolidCategoryAlt size={24}  />,
             path: "/category"
         },
         {
@@ -98,7 +99,7 @@ const Sidebar = () => {
                 },
                 {
                     id: 5,
-                    title: "Terms & Condition",
+                    title: "Terms & Conditions",
                     path: "/terms-condition"
                 },
                 {
@@ -117,7 +118,7 @@ const Sidebar = () => {
         
         {
             id: 10,
-            title: "Make Admin",
+            title: "Add Team",
             icon: <MdOutlineAdminPanelSettings size={24} />,
             path: "/make-admin"
 

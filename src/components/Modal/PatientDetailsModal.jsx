@@ -1,18 +1,10 @@
 /* eslint-disable react/prop-types */
 import { Modal } from "antd"
 import { IoClose } from "react-icons/io5";
-import { useEffect, useState } from "react";
 import { ImageConfig } from "../../redux/api/baseApi";
 
 
 const UserDetailsModal = ({open, setOpen}) => {
-    const [imageUrl, setImageUrl] = useState(null);
-
-    useEffect(()=>{
-        if(open){
-            setImageUrl(`${ImageConfig}${open?.profile}`) 
-        }
-    }, [open])
     return (
         <>
             <Modal
@@ -62,16 +54,6 @@ const UserDetailsModal = ({open, setOpen}) => {
                         <div className="">
                             <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Age</label>
                             <p className="text-[#415D71] text-[12] leading-5 poppins-regular"> {open?.patient?.age}  </p>
-                        </div>
-
-                        <div className="">
-                            <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Gender</label>
-                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular"> {open?.patient?.gender}  </p>
-                        </div>
-
-                        <div className="">
-                            <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Plan</label>
-                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular">{open?.patient?.plan}</p>
                         </div>
                     </div>
 

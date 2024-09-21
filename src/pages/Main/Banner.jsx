@@ -37,7 +37,7 @@ const Banner = () => {
                     className='roboto-regular text-[14px] leading-[17px] flex items-center justify-center'
                     icon={<HiOutlinePlusSm color="#FCFCFC" size={20} />}
                 >
-                    Creae Banner
+                    Create Banner
                 </Button>
             </div>
             <BannerTableList setValue={setValue}  refresh={refresh} />
