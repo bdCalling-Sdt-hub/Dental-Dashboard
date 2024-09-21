@@ -10,6 +10,7 @@ const ForgotPassword = () => {
     const dispatch = useDispatch()
     const {loading} = useSelector(state=> state?.forgotPassword)
     const navigate = useNavigate();
+    
     const handleSubmit=(values)=>{
         dispatch(forgotPassword(values)).then((response)=>{
             console.log(response)

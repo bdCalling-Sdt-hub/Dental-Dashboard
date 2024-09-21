@@ -15,11 +15,9 @@ export const resetPassword = createAsyncThunk(
         try{
             const response = await baseURL.post(`/auth/reset-password`, {...value}, {
                 headers: {
-                    "Content-Type": "application/json",
-                    authorization: `${localStorage.getItem("rToken")}`,
+                    "Content-Type": "application/json"
                 }
             });
-            console.log(response)
             return response?.data?.data;
         }catch(error){
             console.log(error)

@@ -22,8 +22,8 @@ const Category = () => {
     }
     return (
         <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-auto">
-            <MetaTag title={"Category"} />
-            <PageHeader title={"Category"} buttonName={"Category"} keyword={keyword} setKeyword={setKeyword} setOpen={setOpen} />
+            <MetaTag title={"Plan"} />
+            <PageHeader title={"Plan"} buttonName={"Plan"} keyword={keyword} setKeyword={setKeyword} setOpen={setOpen} />
             <CategoryTableList keyword={keyword} setValue={setValue} refresh={refresh} />
             <CategoryModal setValue={setValue} value={value} setRefresh={setRefresh} open={open} handleClose={handleClose} setOpen={setOpen} />
         </div>

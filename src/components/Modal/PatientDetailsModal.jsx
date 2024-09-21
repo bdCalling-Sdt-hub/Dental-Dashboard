@@ -26,34 +26,34 @@ const UserDetailsModal = ({open, setOpen}) => {
 
                     <div className="grid grid-cols-1 gap-3 mt-6 px-2">
                         <div className="">
-                            <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Name</label>
-                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular"> {open?.patient?.name} </p>
+                            <label className="text-[#415D71] text-sm leading-3 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Name</label>
+                            <p className="text-[#415D71] text-[12px] leading-3 poppins-regular"> {open?.patient?.name} </p>
                         </div>
 
                         <div className="">
-                            <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Patient Category</label>
-                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular">{open?.patient?.category} </p>
+                            <label className="text-[#415D71] text-sm leading-3 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Patient Plan</label>
+                            <p className="text-[#415D71] text-[12px] leading-3 poppins-regular">{open?.patient?.category} </p>
                         </div>
 
                         <div className="">
-                            <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Email</label>
-                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular">{open?.email}</p>
+                            <label className="text-[#415D71] text-sm leading-3 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Email</label>
+                            <p className="text-[#415D71] text-[12px] leading-3 poppins-regular">{open?.email}</p>
                         </div>
 
 
                         <div className="">
-                            <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Contact No</label>
-                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular"> {open?.patient?.contactNo}  </p>
+                            <label className="text-[#415D71] text-sm leading-3 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Contact No</label>
+                            <p className="text-[#415D71] text-[12px] leading-3 poppins-regular"> {open?.patient?.contactNo}  </p>
                         </div>
 
                         <div className="">
-                            <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Date of Birth</label>
-                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular"> {open?.patient?.dateOfBirth}</p>
+                            <label className="text-[#415D71] text-sm leading-3 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Date of Birth</label>
+                            <p className="text-[#415D71] text-[12px] leading-3 poppins-regular"> {open?.patient?.dateOfBirth}</p>
                         </div>
 
                         <div className="">
-                            <label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Age</label>
-                            <p className="text-[#415D71] text-[12] leading-5 poppins-regular"> {open?.patient?.age}  </p>
+                            <label className="text-[#415D71] text-sm leading-3 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Age</label>
+                            <p className="text-[#415D71] text-[12px] leading-3 poppins-regular"> {open?.patient?.age}  </p>
                         </div>
                     </div>
 

@@ -56,7 +56,7 @@ const CategoryTableList = ({refresh, keyword, setValue }) => {
                 <thead>
                     <tr className="text-left w-full bg-[#E7EBED] custom-table-list">
                         {
-                            ["S.ID ", "Category Name", "Actions"].map((item, index)=>{
+                            ["S.ID ", "Plan Name", "Actions"].map((item, index)=>{
                                 return (
                                     <th key={index} className={`text-[#575757] poppins-medium text-[18px] leading-7`}>
                                         {item}

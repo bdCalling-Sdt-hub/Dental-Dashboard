@@ -13,6 +13,7 @@ import { getCategory } from "../../redux/apiSlice/Category/getCategorySlice";
 import { IoClose } from "react-icons/io5";
 import { deletePatient } from "../../redux/apiSlice/Patient/deletePatientSlice";
 import { ImageConfig } from "../../redux/api/baseApi";
+import ForgotPasswordModal from "../../components/Modal/ForgotPassword";
 
 const { Option } = Select;
 
@@ -23,7 +24,8 @@ const PatientList = () => {
     const [keyword, setKeyword] = useState(null)
     const [page, setPage] = useState(new URLSearchParams(window.location.search).get('page') || 1);
     const {categories} = useSelector(state=> state.getCategory);
-    const [selectedCategory, setSelectedCategory] = useState(null)
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [forgotPassword, setForgotPassword] = useState(null)
 
     const handlePageChange = (page) => {
         setPage(page);
@@ -77,8 +79,6 @@ const PatientList = () => {
         });
     }
 
-    // const src = patient?.profile?.startsWith("https") ?  patient?.profile : `${ImageConfig}${patient?.profile}`
-
     return (
         <div>
             <MetaTag title={"Patient List"}/>
@@ -99,6 +99,7 @@ const PatientList = () => {
                             borderRadius: 8
                         }}
                         value={keyword}
+                        type="search"
                         className="poppins-regular text-[#B6C0C8] text-[14px] leading-5"
                     />
 
@@ -131,7 +132,7 @@ const PatientList = () => {
                 <thead>
                     <tr className="text-left w-full bg-[#E7EBED] custom-table-list">
                         {
-                        ["S.ID ", "Patient", "Email", "Contact", "P. Category", "Actions"].map((item, index)=>
+                        ["S.ID ", "Patient", "Email", "Contact", "P. Plan", "Actions"].map((item, index)=>
                             <th key={index} className="text-[#575757] poppins-medium text-[18px] leading-7">
                                 {item}
                             </th>
@@ -170,6 +171,12 @@ const PatientList = () => {
                                         <div onClick={()=>handleDelete(patient?._id)} className="flex cursor-pointer items-center border w-10 h-10 rounded-lg border-[#E6E5F1] justify-center">
                                             <RiDeleteBin6Line size={18} color="#B6C0C8" />
                                         </div>
+                                        <div
+                                            onClick={()=>setForgotPassword(patient)}
+                                            className="flex cursor-pointer items-center px-2 border w-fit h-10 rounded-lg border-[#E6E5F1] justify-center"
+                                        >
+                                            Reset Password
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -202,6 +209,7 @@ const PatientList = () => {
                 />
             </div>
             <PatientDetailsModal open={detailsModal} setOpen={setDetailsModal} />
+            <ForgotPasswordModal open={forgotPassword} setOpen={setForgotPassword} />
         </div>
     )
 }
