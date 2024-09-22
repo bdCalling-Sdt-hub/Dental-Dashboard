@@ -7,7 +7,6 @@ import MetaTag from "../../components/MetaTag"
 import { useDispatch, useSelector } from "react-redux";
 import { createPatient } from "../../redux/apiSlice/Patient/createPatientSlice";
 import { getCategory } from "../../redux/apiSlice/Category/getCategorySlice";
-import { sendMail } from "../../redux/apiSlice/Patient/sendMailSlice";
 const { Option } = Select;
 
 
@@ -52,7 +51,6 @@ const CreatePatientProfile = () => {
 
     const handleSubmit=(values)=>{
         dispatch(createPatient(values)).then((response)=>{
-            console.log(response)
             if(response.type === "createPatient/fulfilled"){
                 Swal.fire({
                     title: "Congratulations!",
@@ -66,50 +64,16 @@ const CreatePatientProfile = () => {
                         <br> 
                         Email: ${values?.email}
                         <br>
+                        Pin: ${values?.pin}
                         <br>
-                        <h1>Send profile details at your patient email</h1>
+                        Password: ${values?.password}
                     </div>
                     `,
-                    confirmButtonText:'Send Email',
+                    confirmButtonText:'Ok',
                     customClass: {
                         confirmButton: 'custom-send-button',
                     }
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const data = {
-                            name: values?.name,
-                            email: values?.email,
-                            password: values?.password,
-                            pin: values?.pin
-
-                        }
-                        dispatch(sendMail(data)).then((response)=>{
-                            
-                            if(response.type === "sendMail/fulfilled"){
-                                Swal.fire({
-                                    position: "center",
-                                    icon: "success",
-                                    title: response?.payload,
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                }).then(()=>{
-                                    form.resetFields();
-                                    setRandomPassword(null)
-                                    setRandomPin(null)
-                                })
-                            }else{
-                                Swal.fire({
-                                    position: "center",
-                                    icon: "error",
-                                    title: response?.payload,
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                })
-                            }
-                        })
-                        
-                    }
-                }); 
+                }) 
             }else{
                 Swal.fire({
                     position: "center",

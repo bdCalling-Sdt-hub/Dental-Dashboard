@@ -9,10 +9,7 @@ import Spinner from "../Spinner";
 
 
 const ForgotPasswordModal = ({open, setOpen}) => {
-    console.log(open)
     const [randomPin, setRandomPin] = useState(null)
-    const [randomPinState, setRandomPinState] = useState("");
-    const [randomPasswordState, setRandomPasswordState] = useState("");
     const [randomPassword, setRandomPassword] = useState(null);
     const [form] = Form.useForm();
     const dispatch =useDispatch();
@@ -20,26 +17,13 @@ const ForgotPasswordModal = ({open, setOpen}) => {
 
     form.setFieldsValue()
 
-    if(randomPinState){
-        setTimeout(()=>{
-            setRandomPinState(false)
-        }, 1000)
-    }
-
-    if(randomPasswordState){
-        setTimeout(()=>{
-            setRandomPasswordState(false)
-        }, 1000)
-    }
     const handleGeneratedPin=()=>{
         const randomNumber = Math.floor(Math.random() * 900000) + 100000;
-        setRandomPinState(true);
         setRandomPin(randomNumber)
         form.setFieldsValue({ password: randomNumber.toString() });
     }
     const handleGeneratePassword=()=>{
         const randomNumber = Math.floor(Math.random() * 900000) + 100000;
-        setRandomPasswordState(true);
         setRandomPassword(randomNumber)
         form.setFieldsValue({ pin: randomNumber.toString() });
     }
@@ -58,7 +42,7 @@ const ForgotPasswordModal = ({open, setOpen}) => {
                     showConfirmButton: false,
                     timer: 1500,
                 }).then(()=>{
-                    
+                    setOpen(null)
                 })
             }else{
                 Swal.fire({
@@ -105,7 +89,6 @@ const ForgotPasswordModal = ({open, setOpen}) => {
                     >
                             <div className="w-full flex items-center  gap-6">
                                 <Input
-                                    type={`${randomPinState ? "text" : "password"}`}
                                     placeholder="Enter Patient Random Pin"
                                     style={{
                                         width: "100%",
@@ -157,7 +140,6 @@ const ForgotPasswordModal = ({open, setOpen}) => {
                         <div className="w-full flex items-center  gap-6">
                             <Input
                                 placeholder="Enter Patient Random Password"
-                                type={`${randomPasswordState ? "text" : "password"}`}
                                 style={{
                                     width: "100%",
                                     height: 48,

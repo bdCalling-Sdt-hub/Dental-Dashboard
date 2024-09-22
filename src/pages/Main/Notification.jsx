@@ -9,11 +9,13 @@ import { getNotifications } from "../../redux/apiSlice/Notifications/getNotifica
 import moment from 'moment';
 import { readNotification } from '../../redux/apiSlice/Notifications/readNotificationSlice';
 import { deleteNotification } from '../../redux/apiSlice/Notifications/deleteNotificationSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Notification = () => {
     const [page, setPage] = useState(new URLSearchParams(window.location.search).get('page') || 1);
     const dispatch = useDispatch()
     const {notifications , pagination } = useSelector(state=> state.getNotifications);
+    const navigate = useNavigate()
 
     const handlePageChange = (page) => {
         setPage(page);
@@ -21,6 +23,12 @@ const Notification = () => {
         params.set('page', page);
         window.history.pushState(null, "", `?${params.toString()}`);
     };
+
+    const handleNavigate = (type)=>{
+        if(type === "profile"){
+            navigate("/patient-list")
+        }
+    }
 
     useEffect(()=>{
         dispatch(getNotifications(page))
@@ -91,8 +99,9 @@ const Notification = () => {
                                         return (
                                             <React.Fragment key={index} >
                                                 <tr  className={`border-b-[1px] border-[#E0E0E0] h-[50px] ${ item?.read === false ? "bg-[#FCF8F9]" : null} `}>
-                                                    {/* <td className='pl-4 poppins-regular text-base leading-[21px] py-4'>{"Lulu"}</td> */}
-                                                    <td className='text-[#707070] poppins-regular text-base leading-[21px]'>{item?.message}</td>
+                                                    <td className='cursor-pointer' onClick={()=>handleNavigate(item?.type)} >
+                                                        <div className=' poppins-regular text-base leading-[21px]' dangerouslySetInnerHTML={{__html: item?.message}} />
+                                                    </td>
                                                     <td className='text-[#707070] poppins-regular text-base leading-[21px]'>{moment(item?.createdAt).format('LT')}</td>
                                                     <td >
                                                         <PiTrash onClick={()=>handleDelete(item._id)} size={20} color='red' className='cursor-pointer' />

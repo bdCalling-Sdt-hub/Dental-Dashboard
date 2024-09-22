@@ -10,6 +10,8 @@ import { sendMessage } from '../../redux/apiSlice/Chat/sendMessageSlice';
 import { CiImageOn } from "react-icons/ci";
 import { getPatientChat } from '../../redux/apiSlice/Chat/getPatientChatSlice';
 import { Input } from 'antd';
+import EmojiPicker from 'emoji-picker-react';
+import { MdOutlineEmojiEmotions } from 'react-icons/md';
 
 const Chat = () => {
     const dispatch = useDispatch();
@@ -23,6 +25,7 @@ const Chat = () => {
     const [partner, setPartner] = useState();
     const {messages} = useSelector(state=> state?.getMessages);
     const {patients} = useSelector(state=> state?.getPatientChat);
+    const [emoji, setEmoji] = useState(false)
 
     useEffect(()=>{
         dispatch(getPatientChat());
@@ -51,6 +54,7 @@ const Chat = () => {
                 setKeyword("")
                 setImage(null)
                 setImageURL(null)
+                setEmoji(false)
             }
         })
     }
@@ -210,15 +214,26 @@ const Chat = () => {
                                 <div style={{display: imageURL ? "block" : "none"}} className='absolute left-3 bottom-[70px]  w-full'>
                                     <img style={{width: 200 ,height: 200, }} src={imageURL} alt="" />
                                 </div>
+
+                                <div style={{display: emoji ? "block" : "none"}} className='absolute right-3 bottom-[70px]  w-fit'>
+                                    <EmojiPicker onEmojiClick={(event)=> setKeyword(prevInput => prevInput + event.emoji)} />
+                                </div>
                                 <div className='flex items-center gap-4 bg-white  rounded p-1' style={{boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px"}}>
-                                    <textarea 
+                                    <Input 
                                         onChange={(e)=> setKeyword(e.target.value)} 
                                         value={keyword} 
+                                        style={{
+                                            width: "100%",
+                                            border: "none",
+                                            outline: "none",
+                                            boxShadow: "none"
+                                        }}
                                         className='w-full resize-none bg-transparent font-normal h-10 px-3 outline-none text-black placeholder:text-black' 
                                         type="text"
-                                         placeholder='Type Message'
+                                        placeholder='Type Message'
                                     />
                                     <div className='flex items-center gap-4'>
+                                        <MdOutlineEmojiEmotions onClick={()=>setEmoji(!emoji)} className='cursor-pointer' size={24} />
                                         <div>
                                             <input type="file" onChange={handleChange} id='img' style={{display: "none"}} />
                                             <label htmlFor="img">

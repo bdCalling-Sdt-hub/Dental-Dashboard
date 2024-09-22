@@ -93,13 +93,13 @@ const Login = () => {
                     <Form.Item name="remember" noStyle>
                         <Checkbox checked={checked} onChange={(e)=>setChecked(e.target.checked)} className='poppins-regular text-base leading-6' style={{color: "#6A6D7C"}}>Remember me</Checkbox>
                     </Form.Item> 
-                    <p
+                    {/* <p
                         className="poppins-medium text-base leading-6 cursor-pointer"
                         style={{ color: "#F16365" }}
                         onClick={()=>navigate("/auth/forgot-password")}
                     >
                         Forgot password
-                    </p>
+                    </p> */}
                 </div>
 
                 <Form.Item style={{display: "flex", alignItems: "center", justifyContent: "center"}}>

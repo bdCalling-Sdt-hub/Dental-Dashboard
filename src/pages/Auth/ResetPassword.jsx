@@ -55,6 +55,7 @@ const ResetPassword = () => {
                             message: "Please Enter New Password"
                         }
                     ]}
+                    label={<p>New Password</p>}
                 >
                     <Input.Password 
                         placeholder='Enter Your New Password'
@@ -78,6 +79,7 @@ const ResetPassword = () => {
                             message: "Please Enter Confirm Password"
                         }
                     ]}
+                    label={<p>Confirm Password</p>}
                 >
                     <Input.Password 
                         placeholder='Enter Your Confirm Password'
