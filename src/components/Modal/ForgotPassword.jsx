@@ -43,6 +43,7 @@ const ForgotPasswordModal = ({open, setOpen}) => {
                     timer: 1500,
                 }).then(()=>{
                     setOpen(null)
+                    form.resetFields()
                 })
             }else{
                 Swal.fire({
