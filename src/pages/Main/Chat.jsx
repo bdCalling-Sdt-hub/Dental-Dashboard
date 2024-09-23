@@ -21,11 +21,12 @@ const Chat = () => {
     const {socket} = useContext(UserContext);
     const [image, setImage] = useState(null)
     const [imageURL, setImageURL] = useState(null)
-    const [messageList, setMessageList] = useState([])
     const [partner, setPartner] = useState();
     const {messages} = useSelector(state=> state?.getMessages);
     const {patients} = useSelector(state=> state?.getPatientChat);
     const [emoji, setEmoji] = useState(false)
+    const [messageList, setMessageList] = useState([]);
+
 
     useEffect(()=>{
         dispatch(getPatientChat());
@@ -136,7 +137,7 @@ const Chat = () => {
                                             <div className='w-full'>
                                                 <div className='flex items-center justify-between pb-[6px]'>
                                                     <h1 className='text-[#12354E] poppins-medium  text-sm leading-5'>{patient?.participants?.patient?.name}</h1>
-                                                    <p className='text-[#8B8B8B] poppins-regular  text-sm leading-5'>3:00 PM</p>
+                                                    {/* <p className='text-[#8B8B8B] poppins-regular  text-sm leading-5'>3:00 PM</p> */}
                                                 </div>
                                                 <p className='text-[#8B8B8B] poppins-regular  text-sm leading-5'>{patient?.participants?.email}</p>
                                             </div>
@@ -203,9 +204,12 @@ const Chat = () => {
                                 }
                                 <div 
                                     style={{display: messageList?.length > 0 ? "none" : "flex"}} 
-                                    className='w-full h-full flex items-center justify-center'
+                                    className='items-end justify-end'
                                 >
-                                    <p>Welcome to Smile Club</p>
+                                    <div className='border rounded-t-lg rounded-bl-lg p-4 w-[50%]'>
+                                        <p className='text-[#6A6A6A] poppins-regular  text-sm leading-5'>Welcome To Smile Club</p>
+                                        <p className='text-[#6A6A6A] poppins-regular  text-sm leading-5'>Need Help? Just send us a message, and we&apos;ll be right with you!</p>
+                                    </div>
                                 </div>
                             </div>
 
