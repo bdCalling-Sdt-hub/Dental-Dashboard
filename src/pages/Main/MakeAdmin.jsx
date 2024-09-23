@@ -22,7 +22,7 @@ const MakeAdmin = () => {
         <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-auto">
 
             <div className='flex items-center justify-between mb-6'>
-                <Heading title={`Make Admin`} style={""} />
+                <Heading title={`Make Team`} style={""} />
                 <Button
                     onClick={() => setOpen(true)}
                     style={{
@@ -37,10 +37,10 @@ const MakeAdmin = () => {
                     className='roboto-regular text-[14px] leading-[17px] flex items-center justify-center'
                     icon={<HiOutlinePlusSm color="#FCFCFC" size={20} />}
                 >
-                    Add Admin
+                    Add Team
                 </Button>
             </div>
-            <MetaTag title={`Make Admin`} />
+            <MetaTag title={`Make Team`} />
 
             <AdminTable refresh={refresh} />
             <MakeAdminModal open={open} setOpen={setOpen} setRefresh={setRefresh} />
