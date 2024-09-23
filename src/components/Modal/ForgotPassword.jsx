@@ -62,8 +62,8 @@ const ForgotPasswordModal = ({open, setOpen}) => {
                 centered 
                 title={<p className="pl-4 font-semibold text-xl mt-[8px]">Patient Forgot Pin And Password</p>}
                 open={open} 
-                onOk={()=>setOpen(null)} 
-                onCancel={()=>setOpen(null)} 
+                onOk={()=>(setOpen(null), form.resetFields())} 
+                onCancel={()=>(setOpen(null), form.resetFields())} 
                 footer={false}
                 width={519}
             >
