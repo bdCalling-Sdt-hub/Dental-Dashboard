@@ -20,12 +20,12 @@ const ForgotPasswordModal = ({open, setOpen}) => {
     const handleGeneratedPin=()=>{
         const randomNumber = Math.floor(Math.random() * 900000) + 100000;
         setRandomPin(randomNumber)
-        form.setFieldsValue({ password: randomNumber.toString() });
+        form.setFieldsValue({ pin: randomNumber.toString() });
     }
     const handleGeneratePassword=()=>{
         const randomNumber = Math.floor(Math.random() * 900000) + 100000;
         setRandomPassword(randomNumber)
-        form.setFieldsValue({ pin: randomNumber.toString() });
+        form.setFieldsValue({ password: randomNumber.toString() });
     }
 
     const handleSubmit =(values)=>{
@@ -161,7 +161,7 @@ const ForgotPasswordModal = ({open, setOpen}) => {
                                     color: "#12354E",
                                     }}
                                     className="roboto-medium text-sm leading-4 flex items-center justify-center gap-4"
-                                    >
+                            >
                                 Random Password
                                 <FaRandom size={18} color="#12354E" />
                             </Button>
