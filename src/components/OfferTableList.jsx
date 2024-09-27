@@ -79,7 +79,7 @@ const OfferTableList = ({ refresh, setValue }) => {
                                     <div className="h-[60px]">
                                         <img 
                                             style={{
-                                                height : 80, 
+                                                height : 60, 
                                                 width: 60,
                                                 objectFit: 'contain'
                                             }} 

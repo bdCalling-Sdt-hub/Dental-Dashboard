@@ -60,7 +60,7 @@ const Sidebar = () => {
         },
         {
             id: 7,
-            title: "Manage Package",
+            title: "Manage Perks",
             icon: <MdCategory size={24} />,
             path: "/package"
         },

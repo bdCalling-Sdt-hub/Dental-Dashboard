@@ -89,7 +89,7 @@ const AddOfferSliderModal = ({open, setOpen, setValue, setRefresh, value}) => {
 
     return (
         <Modal
-            title={<p className='text-[#262727] poppins-medium text-[20px] pl-4 leading-[30px]'> {value ? "Edit Odder" : "Create Offer"}  </p>}
+            title={<p className='text-[#262727] poppins-medium text-[20px] pl-4 leading-[30px]'> {value ? "Edit Offer" : "Create Offer"}  </p>}
             centered
             open={open || value} 
             onCancel={handleClose} 
@@ -153,8 +153,8 @@ const AddOfferSliderModal = ({open, setOpen, setValue, setRefresh, value}) => {
                         `}
                     >
                         <RiImageAddLine color='#607888' size={38} /> 
-                        <h3 className="text-[#12354E] text-[14px] leading-5 poppins-light ">Browse Photo</h3>
-                        <h3 className="text-[#12354E] text-[14px] leading-5 poppins-light ">Size: 540 x 860</h3>
+                        <h3 className={` ${value ? "text-white" : "text-[#12354E]" }  text-[14px] leading-5 poppins-light`}>Browse Photo</h3>
+                        <h3 className={` ${value ? "text-white" : "text-[#12354E]" }  text-[14px] leading-5 poppins-light`}>Size: 540 x 860</h3>
                     </label>
                 </Form.Item>
                 

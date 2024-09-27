@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import MetaTag from '../../components/MetaTag'
-import { Button, Form, Input, Modal } from 'antd'
+import { Button, Form, Input } from 'antd'
 import { FaCircleCheck } from "react-icons/fa6";
 import Swal from 'sweetalert2';
 import { CiCircleMinus } from 'react-icons/ci';
@@ -56,8 +56,8 @@ const Package = () => {
         <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-y-scroll">
 
             {/* helmet */}
-            <MetaTag title={"Manage Package"}/>
-            <h1 className={`text-[#12354E] text-base leading-8 poppins-semibold text-left mb-5 `}>Manage Package</h1>
+            <MetaTag title={"Manage Perks"}/>
+            <h1 className={`text-[#12354E] text-base leading-8 poppins-semibold text-left mb-5 `}>Manage Perk</h1>
 
             <Form
                 onFinish={handleSubmit}
