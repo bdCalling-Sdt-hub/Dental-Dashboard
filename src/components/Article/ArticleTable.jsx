@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React from 'react';
 import { RiDeleteBin6Line, RiEdit2Line } from 'react-icons/ri';
 import Swal from 'sweetalert2';
 import { Empty, Pagination } from 'antd';
@@ -83,7 +83,13 @@ const ArticleTable = ({data, name, page, setPage, setRefresh, pagination}) => {
                                 <td>#123{index}</td>
                                 <td >
                                     <div className="h-[60px] flex items-center justify-between">
-                                        <img style={{height: 50, width: 80}}  src={`${ImageConfig}${item?.buttonImage}`} alt="" />
+                                        <img 
+                                            style={{
+                                                height: 50, 
+                                                width: 80,
+                                                objectFit: "contain"
+                                            }}  
+                                            src={`${ImageConfig}${item?.buttonImage}`} alt="" />
                                     </div>
                                 </td>
 

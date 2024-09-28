@@ -69,8 +69,8 @@ const Article = () => {
                                     <img 
                                         src={`${ImageConfig}${article?.articleCategoryImage}`}  
                                         style={{
-                                            width: 63, 
-                                            height: 63, 
+                                            width: 60, 
+                                            height: 60, 
                                             objectFit: "contain",
                                             margin: "0 auto"
                                         }} 
@@ -123,7 +123,7 @@ const Article = () => {
                             }}
                             className={`
                                 w-full 
-                                h-[139px]
+                                h-fit
                                 cursor-pointer  
                                 border border-[#929394]  border-dashed
                                 flex 
@@ -132,8 +132,8 @@ const Article = () => {
                             `}
                         >
                             <RiImageAddLine color='#607888' size={38} /> 
-                            <h3 className="text-[#12354E] text-[14px] mt-[4px] leading-5 poppins-light ">Browse Thumbnail Photo</h3>
-                            <h3 className="text-[#12354E] text-[14px] mt-[4px] leading-5 poppins-light ">Size : 63 x 63</h3>
+                            <h3 style={{fontWeight: open ? 700 : 400}} className="text-[#12354E] text-[14px] mt-[4px] leading-5 poppins-light ">Browse Thumbnail Photo</h3>
+                            <h3 style={{fontWeight: open ? 700 : 400}} className="text-[#12354E] text-[14px] mt-[4px] leading-5 poppins-light ">Size : 63 x 63</h3>
                         </label>
                     </div>
 

@@ -132,11 +132,12 @@ const BannerModal = ({open, setOpen, value, setValue, setRefresh}) => {
                             backgroundImage: `url(${imageURL})`,
                             backgroundSize: "contain",
                             backgroundRepeat: "no-repeat",
-                            backgroundPosition: "center" 
+                            backgroundPosition: "center",
+                            margin: "0 auto" 
                         }}
                         className={`
-                            w-[840px]
-                            h-[300px]
+                            w-[540px]
+                            h-[200px]
                             cursor-pointer  
                             border border-[#929394]  border-dashed
                             flex 
@@ -145,8 +146,8 @@ const BannerModal = ({open, setOpen, value, setValue, setRefresh}) => {
                         `}
                     >
                         <RiImageAddLine color='#607888' size={38} /> 
-                        <h3 className="text-[#12354E] text-[14px] leading-5 poppins-light ">Browse Photo</h3>
-                        <h3 className="text-[#12354E] text-[14px] leading-5 poppins-light ">Size: 840 x 300</h3>
+                        <h3 style={{fontWeight: value ? 700 : 400}} className="text-[#12354E] text-[14px] leading-5 poppins-light ">Browse Photo</h3>
+                        <h3 style={{fontWeight: value ? 700 : 400}} className="text-[#12354E] text-[14px] leading-5 poppins-light ">Size: 840 x 300</h3>
                     </label>
                 </Form.Item>
 

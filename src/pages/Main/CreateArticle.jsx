@@ -225,7 +225,8 @@ const CreateArticle = () => {
                             htmlFor="img"
                             style={{
                                 backgroundImage: `url(${imageURL})`,
-                                backgroundSize: "cover",
+                                backgroundSize: "contain",
+                                backgroundRepeat: "no-repeat",
                                 backgroundPosition: "center"
                             }}
                             className={`
@@ -238,9 +239,19 @@ const CreateArticle = () => {
                                 rounded-lg 
                             `}
                         >
-                            <RiImageAddLine color='#607888' size={38} />
-                            <h3 className="text-[#12354E] text-[14px] leading-5 poppins-light ">Browse Photo</h3>
-                            <h3 className="text-[#12354E] text-[14px] leading-5 poppins-light ">Size 345x250px </h3>
+                            <RiImageAddLine color={`${details? "white" : "#607888"}`} size={38} />
+                            <h3 
+                                style={{
+                                    fontWeight: details ? 700 : 400,
+                                    color: details ? "white": "#12354E"
+                                }} 
+                                className="text-[#12354E] text-[14px] leading-5 poppins-light ">Browse Photo</h3>
+                            <h3 
+                                style={{
+                                    fontWeight: details ? 700 : 400,
+                                    color: details ? "white": "#12354E"
+                                }} 
+                                className="text-[#12354E] text-[14px] leading-5 poppins-light ">Size 345x250px </h3>
                         </label>
                     </div>
                 </div>
@@ -257,7 +268,12 @@ const CreateArticle = () => {
                                     <div key={index} className='relative'>
                                         <img 
                                             src={item?.startsWith("/images") ? `${ImageConfig}${item}` : item } 
-                                            style={{ width: 162, height: 162, borderRadius: 8 }} 
+                                            style={{ 
+                                                width: 162, 
+                                                height: 162, 
+                                                borderRadius: 8,
+                                                objectFit: "contain" 
+                                            }} 
                                             alt=""
                                         />
                                         <BiTrash 

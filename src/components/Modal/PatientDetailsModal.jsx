@@ -19,7 +19,15 @@ const UserDetailsModal = ({open, setOpen}) => {
             >
                 <div className="">
                     <header className="w-full relative h-[238px] flex items-center justify-center bg-[#12354E] rounded-lg">
-                        <img  style={{width: 144, height: 144, borderRadius: "100%", border: "2px solid white"}} src={`${open?.patient?.profile?.startsWith("https") ?  open?.patient?.profile : `${ImageConfig}${open?.patient?.profile}` }`} alt="" />
+                        <img  
+                            style={{
+                                width: 144, 
+                                height: 144, 
+                                borderRadius: "100%", 
+                                border: "2px solid white",
+                                
+                            }} 
+                            src={`${open?.patient?.profile?.startsWith("https") ?  open?.patient?.profile : `${ImageConfig}${open?.patient?.profile}` }`} alt="" />
 
                         <IoClose onClick={()=>setOpen(false)} className="cursor-pointer absolute top-4 right-4" size={25} color="white" />
                     </header>

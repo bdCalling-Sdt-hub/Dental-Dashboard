@@ -153,7 +153,13 @@ const PatientList = () => {
                                 <td>{index + 1}</td>
                                 <td >
                                     <div className="flex items-center h-[60px]  justify-start gap-2">
-                                        <img  style={{width: 40, height: 40}} src={`${patient?.patient?.profile?.startsWith("https") ?  patient?.patient?.profile : `${ImageConfig}${patient?.patient?.profile}` }`} alt="" />
+                                        <img  
+                                            style={{
+                                                width: 40, 
+                                                height: 40,
+                                                objectFit: "contain"
+                                            }} 
+                                            src={`${patient?.patient?.profile?.startsWith("https") ?  patient?.patient?.profile : `${ImageConfig}${patient?.patient?.profile}` }`} alt="" />
                                         <p className="text-[#707070] roboto-regular text-base leading-[21px] ">{patient?.patient?.name}</p>
                                     </div>
                                 </td>
