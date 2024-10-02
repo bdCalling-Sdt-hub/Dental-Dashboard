@@ -70,7 +70,7 @@ const OfferSliderEditModal = ({open, setOpen}) => {
                     >
                         <RiImageAddLine color='#607888' size={38} /> 
                         <h3 className="text-[#12354E] text-[14px] leading-5 poppins-light ">Browse Photo</h3>
-                        <h3 className="text-[#12354E] text-[14px] leading-5 poppins-light ">Size: 540 x 860</h3>
+                        <h3 className="text-[#12354E] text-[14px] leading-5 poppins-light ">Pixel Size: 540 x 860</h3>
                     </label>
                 </Form.Item>
 

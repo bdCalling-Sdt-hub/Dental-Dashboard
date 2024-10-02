@@ -133,7 +133,7 @@ const EditArticalBlog = () => {
                         >
                             <RiImageAddLine color='#607888' size={38} /> 
                             <h3 className="text-[#12354E] text-[14px] leading-5 poppins-light ">Browse Photo</h3>
-                            <h3 className="text-[#12354E] text-[14px] leading-5 poppins-light ">Size 345x250px </h3>
+                            <h3 className="text-[#12354E] text-[14px] leading-5 poppins-light ">Pixel Size: 345 x 250 </h3>
                         </label>
                     </div>
                 </div>
