@@ -239,17 +239,17 @@ const CreateArticle = () => {
                                 rounded-lg 
                             `}
                         >
-                            <RiImageAddLine color={`${details? "white" : "#607888"}`} size={38} />
+                            <RiImageAddLine color={`${details && id? "white" : "#607888"}`} size={38} />
                             <h3 
                                 style={{
-                                    fontWeight: details ? 700 : 400,
-                                    color: details ? "white": "#12354E"
+                                    fontWeight: details && id ? 700 : 400,
+                                    color: details && id ? "white": "#12354E"
                                 }} 
-                                className="text-[#12354E] text-[14px] leading-5 poppins-light ">Browse Photo</h3>
+                                className=" text-[14px] leading-5 poppins-light ">Browse Photo</h3>
                             <h3 
                                 style={{
-                                    fontWeight: details ? 700 : 400,
-                                    color: details ? "white": "#12354E"
+                                    fontWeight: details && id ? 700 : 400,
+                                    color: details && id ? "white": "#12354E"
                                 }} 
                                 className="text-[#12354E] text-[14px] leading-5 poppins-light ">Pixel Size: 345 x 250 </h3>
                         </label>

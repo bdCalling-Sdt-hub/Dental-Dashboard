@@ -48,7 +48,7 @@ const MakeAdminModal = ({open, setOpen, setRefresh}) => {
                 onCancel={() => ( form.resetFields() ,setOpen(false))}
                 width={500}
                 footer={false}
-                title={<p className='text-[#262727] pl-4 poppins-medium text-[20px] leading-[30px]'>Make Admin</p>}
+                title={<p className='text-[#262727] pl-4 poppins-medium text-[20px] leading-[30px]'>Add Team</p>}
             >
                 <div className='p-4'>
 

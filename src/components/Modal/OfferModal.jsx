@@ -152,9 +152,9 @@ const AddOfferSliderModal = ({open, setOpen, setValue, setRefresh, value}) => {
                             rounded-lg 
                         `}
                     >
-                        <RiImageAddLine style={{fontWeight: value ? 700 : 400, color: value ? "white" : "#12354E" }} size={38} /> 
-                        <h3 style={{fontWeight: value ? 700 : 400}} className={` ${value ? "text-white" : "text-[#12354E]" }  text-[14px] leading-5 poppins-light`}>Browse Photo</h3>
-                        <h3 style={{fontWeight: value ? 700 : 400}} className={` ${value ? "text-white" : "text-[#12354E]" }  text-[14px] leading-5 poppins-light`}>Pixel Size: 540 x 860 </h3>
+                        <RiImageAddLine style={{fontWeight: value ? 700 : 400, color: value ? "#2563eb" : "#12354E" }} size={38} /> 
+                        <h3 style={{fontWeight: value ? 700 : 400}} className={` ${value ? "text-blue-600" : "text-[#12354E]" }  text-[14px] leading-5 poppins-light`}>Browse Photo</h3>
+                        <h3 style={{fontWeight: value ? 700 : 400}} className={` ${value ? "text-blue-600" : "text-[#12354E]" }  text-[14px] leading-5 poppins-light`}>Pixel Size: 540 x 860 </h3>
                     </label>
                 </Form.Item>
                 
