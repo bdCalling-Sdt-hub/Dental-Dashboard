@@ -15,7 +15,7 @@ import { MdOutlineEmojiEmotions } from 'react-icons/md';
 
 const Chat = () => {
     const dispatch = useDispatch();
-    const [partnerId, setPartnerId] = useState("");
+    const [partnerId, setPartnerId] = useState(new URLSearchParams(window.location.search).get('chatId'));
     const scrollRef = useRef();
     const [keyword, setKeyword] = useState("");
     const {socket} = useContext(UserContext);
@@ -90,6 +90,9 @@ const Chat = () => {
     const handlePartner=(patient)=>{
         setPartner(patient);
         setPartnerId(patient?._id);
+        const params = new URLSearchParams(window.location.search);
+        params.set('chatId', patient?._id);
+        window.history.pushState(null, "", `?${params.toString()}`);
     }
 
 

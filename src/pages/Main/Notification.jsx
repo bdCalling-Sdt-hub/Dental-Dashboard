@@ -15,7 +15,7 @@ const Notification = () => {
     const [page, setPage] = useState(new URLSearchParams(window.location.search).get('page') || 1);
     const dispatch = useDispatch()
     const {notifications , pagination } = useSelector(state=> state.getNotifications);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const handlePageChange = (page) => {
         setPage(page);
@@ -24,9 +24,13 @@ const Notification = () => {
         window.history.pushState(null, "", `?${params.toString()}`);
     };
 
-    const handleNavigate = (type)=>{
-        if(type === "profile"){
+    const handleNavigate = (value)=>{
+        if(value.type === "profile"){
             navigate("/patient-list")
+        }
+
+        if(value.type === "chat"){
+            navigate(`/chat?chatId=${value?.chatId}` )
         }
     }
 
@@ -99,7 +103,7 @@ const Notification = () => {
                                         return (
                                             <React.Fragment key={index} >
                                                 <tr  className={`border-b-[1px] border-[#E0E0E0] h-[50px] ${ item?.read === false ? "bg-[#FCF8F9]" : null} `}>
-                                                    <td className='cursor-pointer' onClick={()=>handleNavigate(item?.type)} >
+                                                    <td className='cursor-pointer' onClick={()=>handleNavigate(item)} >
                                                         <div className=' poppins-regular text-base leading-[21px]' dangerouslySetInnerHTML={{__html: item?.message}} />
                                                     </td>
                                                     <td className='text-[#707070] poppins-regular text-base leading-[21px]'>{moment(item?.createdAt).format('LT')}</td>
