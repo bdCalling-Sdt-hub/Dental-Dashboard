@@ -67,7 +67,7 @@ const Chat = () => {
     }, [messageList]);
 
     const handleConnection = useCallback((data) => {
-        setMessageList([...messageList, data])
+        setMessageList([...messageList, data]);
     }, [messageList]);
     
     useEffect(() => {
@@ -77,6 +77,18 @@ const Chat = () => {
             socket.off(event, handleConnection);
         };
     }, [partnerId, socket, handleConnection]);
+
+    const handleRefreshConnection = useCallback(() => {
+        dispatch(getPatientChat());
+    }, [dispatch]);
+
+    useEffect(() => {
+        const event = `chat-list-update`;
+        socket.on(event, handleRefreshConnection);
+        return () => {
+            socket.off(event, handleRefreshConnection);
+        };
+    }, [socket, handleRefreshConnection]);
 
 
 
@@ -140,9 +152,9 @@ const Chat = () => {
                                             <div className='w-full'>
                                                 <div className='flex items-center justify-between pb-[6px]'>
                                                     <h1 className='text-[#12354E] poppins-medium  text-sm leading-5'>{patient?.participants?.patient?.name}</h1>
-                                                    {/* <p className='text-[#8B8B8B] poppins-regular  text-sm leading-5'>3:00 PM</p> */}
+                                                    <p className='text-[#8B8B8B] poppins-regular  text-sm leading-5'>{moment(patient?.lastMessageTime).format('LT')}</p>
                                                 </div>
-                                                <p className='text-[#8B8B8B] poppins-regular  text-sm leading-5'>{patient?.participants?.email}</p>
+                                                <p className='text-[#8B8B8B] poppins-regular  text-sm leading-5'>{patient?.lastMessage}</p>
                                             </div>
                                         </div>
                                     )

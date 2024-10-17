@@ -11,15 +11,16 @@ import { MdCategory } from "react-icons/md";
 import { IoIosHelpCircleOutline } from "react-icons/io";
 import { FiPlusSquare } from "react-icons/fi";
 import { RiListSettingsFill } from "react-icons/ri";
-import { useContext } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from '../../provider/User';
 import { BiSolidCategoryAlt } from "react-icons/bi";
 
 const { SubMenu } = Menu;
 
 const Sidebar = () => {
+    const [active, setActive] = useState(false)
     const navigate = useNavigate();
-    const {user} = useContext(UserContext);
+    const {user, socket} = useContext(UserContext);
 
     const menuItems = [
         {
@@ -132,6 +133,20 @@ const Sidebar = () => {
         localStorage.removeItem("token")
     }
 
+    console.log(active);
+    
+    const handleRefreshConnection = useCallback(() => {
+        setActive(true)
+    }, []);
+
+    useEffect(() => {
+        const event = `chat-list-update`;
+        socket.on(event, handleRefreshConnection);
+        return () => {
+            socket.off(event, handleRefreshConnection);
+        };
+    }, [socket, handleRefreshConnection]);
+
 
     return (
         <div className=''>
@@ -183,6 +198,7 @@ const Sidebar = () => {
                             key={`item-${index}`}
                             icon={item.icon}
                             style={{
+                                width: "100%",
                                 color: "#415D71",
                                 fontSize: "16px",
                                 marginBottom: "10px",
@@ -191,9 +207,15 @@ const Sidebar = () => {
                         >
                             <Link 
                                 to={item.path} 
-                                className="poppins-regular text-[14px] leading-[21px]"
+                                className="poppins-regular text-[14px] leading-[21px] relative w-full"
                             >
-                                {item.title}
+                                <span>{item.title}</span>
+                                {
+                                    item.path === "/chat" && active ?
+                                    <span className="w-2 h-2 rounded-full bg-green-500 absolute -right-12 -top-1"></span>
+                                    :
+                                    null
+                                }
                             </Link>
                         </Menu.Item>
                     )
