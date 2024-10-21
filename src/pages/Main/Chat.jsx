@@ -9,6 +9,7 @@ import { UserContext } from '../../provider/User';
 import { sendMessage } from '../../redux/apiSlice/Chat/sendMessageSlice';
 import { CiImageOn } from "react-icons/ci";
 import { getPatientChat } from '../../redux/apiSlice/Chat/getPatientChatSlice';
+import { readMessage } from '../../redux/apiSlice/Chat/readMessageSlice';
 import { Input } from 'antd';
 import EmojiPicker from 'emoji-picker-react';
 import { MdOutlineEmojiEmotions } from 'react-icons/md';
@@ -27,6 +28,7 @@ const Chat = () => {
     const [emoji, setEmoji] = useState(false)
     const [messageList, setMessageList] = useState([]);
 
+    console.log(patients)
 
     useEffect(()=>{
         dispatch(getPatientChat());
@@ -102,6 +104,8 @@ const Chat = () => {
     const handlePartner=(patient)=>{
         setPartner(patient);
         setPartnerId(patient?._id);
+        dispatch(readMessage(patient?._id));
+        dispatch(getPatientChat());
         const params = new URLSearchParams(window.location.search);
         params.set('chatId', patient?._id);
         window.history.pushState(null, "", `?${params.toString()}`);
@@ -141,7 +145,7 @@ const Chat = () => {
 
                         <div className='mt-[14px] grid grid-cols-1 gap-1'>
                             {
-                                patients?.map((patient, index)=>{
+                                patients?.chatList?.map((patient, index)=>{
                                     return (
                                         <div onClick={()=> handlePartner(patient)} key={index} className={`flex cursor-pointer items-center gap-[10px] ${patient?._id === partnerId ? "bg-[#E7EBED]" : "bg-[#FDFDFD]"}  rounded-lg p-2`}>
                                             <img 
@@ -154,7 +158,7 @@ const Chat = () => {
                                                     <h1 className='text-[#12354E] poppins-medium  text-sm leading-5'>{patient?.participants?.patient?.name}</h1>
                                                     <p className='text-[#8B8B8B] poppins-regular  text-sm leading-5'>{moment(patient?.lastMessageTime).format('LT')}</p>
                                                 </div>
-                                                <p className='text-[#8B8B8B] poppins-regular  text-sm leading-5'>{patient?.lastMessage}</p>
+                                                <h1 className={` ${patient?.lastMessage?.status ? "font-bold text-[#12354E]" : ""}  text-base leading-5`}>{patient?.lastMessage?.message}</h1>
                                             </div>
                                         </div>
                                     )

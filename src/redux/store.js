@@ -52,6 +52,7 @@ import updatePackageSlice from './apiSlice/Package/updatePackageSlice';
 import getPatientChatSlice from './apiSlice/Chat/getPatientChatSlice';
 import getMessageSlice from './apiSlice/Chat/getMessageSlice';
 import sendMessageSlice from './apiSlice/Chat/sendMessageSlice';
+import readMessageSlice from './apiSlice/Chat/readMessageSlice';
 import getPatientOverviewSlice from './apiSlice/Home/getPatientOverviewSlice';
 import sendMailSlice from './apiSlice/Patient/sendMailSlice';
 import getNotificationSlice from './apiSlice/Notifications/getNotificationSlice';
@@ -149,6 +150,7 @@ export const store = configureStore({
         getPatientChat: getPatientChatSlice,
         getMessages: getMessageSlice,
         sendMessage: sendMessageSlice,
+        readMessage: readMessageSlice,
 
         // home 
         getOverview : getPatientOverviewSlice,
