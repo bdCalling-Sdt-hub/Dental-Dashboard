@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2';
 import { PiTrash } from 'react-icons/pi';
 import { Empty, Pagination } from 'antd'
-import Swal from 'sweetalert2';
 import MetaTag from '../../components/MetaTag';
 import Heading from '../../components/Heading';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +16,8 @@ const Notification = () => {
     const dispatch = useDispatch()
     const {notifications , pagination } = useSelector(state=> state.getNotifications);
     const navigate = useNavigate();
+
+    console.log(notifications)
 
     const handlePageChange = (page) => {
         setPage(page);

@@ -16,12 +16,13 @@ export const getNotifications = createAsyncThunk(
     'getNotifications',
     async (page, thunkApi) => {
         try{
-            const response = await baseURL.get(`/notifications?page=${page}`, {
+            const response = await baseURL.get(`/notifications/admin-notifications?page=${page}`, {
                 headers: {
                     "Content-Type": "application/json",
                     authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
                 }
             });
+            console.log(response);
             return response?.data;
         }catch(error){
             const message = error?.response?.data?.message;
