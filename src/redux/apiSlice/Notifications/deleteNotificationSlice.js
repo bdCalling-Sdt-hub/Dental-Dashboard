@@ -15,8 +15,7 @@ export const deleteNotification = createAsyncThunk(
         try{
             const response = await baseURL.delete(`/notifications/${id}`, {
                 headers: {
-                    "Content-Type": "application/json",
-                    authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+                    "Content-Type": "application/json"
                 }
             });
             return response?.data?.data;

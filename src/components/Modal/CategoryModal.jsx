@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import { updateCategory } from '../../redux/apiSlice/Category/updateCategorySlice';
 
 const CategoryModal = ({open, handleClose, value, setValue, setRefresh}) => {
-    console.log(value)
+
     const dispatch = useDispatch();
     const {loading} = useSelector(state=> state.createCategory);
     const [form] = Form.useForm();
@@ -85,7 +85,7 @@ const CategoryModal = ({open, handleClose, value, setValue, setRefresh}) => {
 
     return (
         <Modal
-            title={<p className='text-[#262727] poppins-medium pl-4 text-[20px] leading-[30px]'>{value ? "Edit Category" : "Add Category"}</p>}
+            title={<p className='text-[#262727] poppins-medium pl-4 text-[20px] leading-[30px]'>{value ? "Edit Plan" : "Add Plan"}</p>}
             centered
             open={open || value}  
             onCancel={handleCloseModal} 
@@ -101,7 +101,7 @@ const CategoryModal = ({open, handleClose, value, setValue, setRefresh}) => {
                 >
                     <Form.Item
                         name={"categoryName"}
-                        label={<label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 0, display: "block"}}>Category Name</label>}
+                        label={<label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 0, display: "block"}}>Plan Name</label>}
                         rules={[
                             {
                                 required: true,
@@ -110,7 +110,7 @@ const CategoryModal = ({open, handleClose, value, setValue, setRefresh}) => {
                         ]}
                     >
                         <Input
-                            placeholder="Gum"
+                            placeholder="Plan"
                             style={{
                                 width: "100%",
                                 height: 48,
