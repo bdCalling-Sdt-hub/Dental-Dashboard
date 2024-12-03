@@ -182,7 +182,7 @@ const Chat = () => {
                             <div className='flex items-center gap-3 border-b-[1px] border-gray-200 p-2'>
                                 <img 
                                     src={  partner?.participants?.patient?.profile?.startsWith("https") ? partner?.participants?.patient?.profile  :    `${ImageConfig}${partner?.participants?.patient?.profile}`} 
-                                    style={{width: 56, height: 56, borderRadius: "100%", border: "2px solid #92A2AE"}} 
+                                    style={{width: 56, height: 56, clipPath: "circle()", border: "2px solid #92A2AE"}} 
                                     alt=""
                                 />
                                 <div>
