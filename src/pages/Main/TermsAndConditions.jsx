@@ -43,6 +43,8 @@ const TermsAndConditions = () => {
             }
         })
     }
+
+
     return (
         <div className="bg-white shadow-lg rounded-lg p-6 h-[86vh] overflow-auto">
             <MetaTag title={"Terms And Conditions"} />

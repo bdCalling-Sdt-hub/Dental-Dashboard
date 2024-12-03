@@ -146,3 +146,13 @@ button:where(.swal2-styled){
 .swal2-confirm, .swal2-cancel{
     width: fit-content !important;
 }
+
+/* Add this CSS to your styles */
+.jodit {
+    background-color: transparent !important; /* Set to transparent */
+}
+
+.jodit .jodit-wysiwyg {
+    background-color: transparent !important; /* Set to transparent */
+    color: #000; /* Ensure text visibility */
+}

@@ -17,42 +17,42 @@ const CreatePatientProfile = () => {
     const [randomPasswordState, setRandomPasswordState] = useState("");
     const [randomPassword, setRandomPassword] = useState(null);
     const [form] = Form.useForm();
-    const { categories } = useSelector(state=> state.getCategory)
+    const { categories } = useSelector(state => state.getCategory)
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getCategory())
-    },[dispatch])
+    }, [dispatch])
 
     form.setFieldsValue()
 
-    if(randomPinState){
-        setTimeout(()=>{
+    if (randomPinState) {
+        setTimeout(() => {
             setRandomPinState(false)
         }, 1000)
     }
 
-    if(randomPasswordState){
-        setTimeout(()=>{
+    if (randomPasswordState) {
+        setTimeout(() => {
             setRandomPasswordState(false)
         }, 1000)
     }
-    const handleGeneratedPin=()=>{
+    const handleGeneratedPin = () => {
         const randomNumber = Math.floor(Math.random() * 900000) + 100000;
         setRandomPinState(true);
         setRandomPin(randomNumber)
         form.setFieldsValue({ password: randomNumber.toString() });
     }
-    const handleGeneratePassword=()=>{
+    const handleGeneratePassword = () => {
         const randomNumber = Math.floor(Math.random() * 900000) + 100000;
         setRandomPasswordState(true);
         setRandomPassword(randomNumber)
         form.setFieldsValue({ pin: randomNumber.toString() });
     }
 
-    const handleSubmit=(values)=>{
+    const handleSubmit = (values) => {
         values.plan = "ss"
-        dispatch(createPatient(values)).then((response)=>{
-            if(response.type === "createPatient/fulfilled"){
+        dispatch(createPatient(values)).then((response) => {
+            if (response.type === "createPatient/fulfilled") {
                 Swal.fire({
                     title: "Congratulations!",
                     html: `
@@ -70,12 +70,12 @@ const CreatePatientProfile = () => {
                         Password: ${values?.password}
                     </div>
                     `,
-                    confirmButtonText:'Ok',
+                    confirmButtonText: 'Ok',
                     customClass: {
                         confirmButton: 'custom-send-button',
                     }
-                }) 
-            }else{
+                })
+            } else {
                 Swal.fire({
                     position: "center",
                     icon: "error",
@@ -87,20 +87,33 @@ const CreatePatientProfile = () => {
         })
     }
 
+    const handleDateChange = (e) => {
+        const dob = new Date(e.target.value);
+        const today = new Date();
+
+        const calculatedAge = today.getFullYear() - dob.getFullYear();
+        const isBeforeBirthdayThisYear =
+            today.getMonth() < dob.getMonth() ||
+            (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate());
+
+        // Update age field dynamically
+        form.setFieldsValue({ age: isBeforeBirthdayThisYear ? calculatedAge - 1 : calculatedAge });
+    };
+
     return (
         <div className="bg-white shadow-lg rounded-lg p-6">
-            <MetaTag title={"Create Patient Profile"}/>
+            <MetaTag title={"Create Patient Profile"} />
             <h1 className={`text-[#12354E] text-base leading-8 poppins-semibold text-left mb-5 `}>Create Patient Profile</h1>
 
 
-            <Form form={form} 
-                layout="vertical" 
-                className="grid grid-cols-12 gap-6 mt-6" 
+            <Form form={form}
+                layout="vertical"
+                className="grid grid-cols-12 gap-6 mt-6"
                 onFinish={handleSubmit}
             >
-                    
+
                 <Form.Item
-                    style={{marginBottom: 0}}
+                    style={{ marginBottom: 0 }}
                     name={"name"}
                     rules={[
                         {
@@ -125,7 +138,7 @@ const CreatePatientProfile = () => {
                 </Form.Item>
 
                 <Form.Item
-                    style={{marginBottom: 0}}
+                    style={{ marginBottom: 0 }}
                     name={"surname"}
                     rules={[
                         {
@@ -150,110 +163,112 @@ const CreatePatientProfile = () => {
                 </Form.Item>
 
                 <Form.Item
-                        style={{marginBottom: 0}}
-                        name={"email"}
-                        rules={[
-                            {
-                                required: true,
-                                message: "Enter Patient Email"
-                            }
-                        ]}
-                        className="col-span-6"
-                        label={<label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{marginBottom: 8, display: "block"}}>Email</label>}
-                    >
-                        <Input
-                            placeholder="Enter Patient Email"
-                            style={{
-                                width: "100%",
-                                height: 48,
-                                border: "1px solid #E7EBED",
-                                outline: "none",
-                                borderRadius: 8
-                            }}
-                            className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
-                        />
-                </Form.Item>
-
-                <Form.Item
-                        style={{marginBottom: 0}}
-                        name={"contactNo"}
-                        rules={[
-                            {
-                                required: true,
-                                message: "Enter Contact Number"
-                            }
-                        ]}
-                        className="col-span-6"
-                        label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold"  >Contact Number</label>}
-                    >
-                        <Input
-                            placeholder="Enter Contact Number"
-                            style={{
-                                width: "100%",
-                                height: 48,
-                                border: "1px solid #E7EBED",
-                                outline: "none",
-                                borderRadius: 8
-                            }}
-                            className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
-                        />
-                </Form.Item>
-
-                <Form.Item
-                        style={{marginBottom: 0}}
-                        name={"dateOfBirth"}
-                        rules={[
-                            {
-                                required: true,
-                                message: "Enter Patient Date Of Birth"
-                            }
-                        ]}
-                        className="col-span-6"
-                        label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold"  >Date of Birth</label>}
-                    >
-                        <Input
-                            placeholder="Enter Patient Date Of Birth"
-                            style={{
-                                width: "100%",
-                                height: 48,
-                                border: "1px solid #E7EBED",
-                                outline: "none",
-                                borderRadius: 8
-                            }}
-                            className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
-                        />
-                </Form.Item>
-
-                <Form.Item
-                        style={{marginBottom: 0}}
-                        name={"age"}
-                        className="col-span-6"
-                        rules={[
-                            {
-                                required: true,
-                                message: "Enter Patient Age"
-                            }
-                        ]}
-                        getValueFromEvent={(e)=>Number(e.target.value)}
-                        label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold" >Age</label>}
-                    >
-                        <Input
-                            type="number"
-                            placeholder="Enter Patient Age"
-                            style={{
-                                width: "100%",
-                                height: 48,
-                                border: "1px solid #E7EBED",
-                                outline: "none",
-                                borderRadius: 8
-                            }}
-                            className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
-                        />
-                </Form.Item>
-
-                <Form.Item 
+                    style={{ marginBottom: 0 }}
+                    name={"email"}
+                    rules={[
+                        {
+                            required: true,
+                            message: "Enter Patient Email"
+                        }
+                    ]}
                     className="col-span-6"
-                    style={{marginBottom: 0}}
+                    label={<label className="text-[#415D71] text-sm leading-5 poppins-semibold" htmlFor="" style={{ marginBottom: 8, display: "block" }}>Email</label>}
+                >
+                    <Input
+                        placeholder="Enter Patient Email"
+                        style={{
+                            width: "100%",
+                            height: 48,
+                            border: "1px solid #E7EBED",
+                            outline: "none",
+                            borderRadius: 8
+                        }}
+                        className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
+                    />
+                </Form.Item>
+
+                <Form.Item
+                    style={{ marginBottom: 0 }}
+                    name={"contactNo"}
+                    rules={[
+                        {
+                            required: true,
+                            message: "Enter Contact Number"
+                        }
+                    ]}
+                    className="col-span-6"
+                    label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold"  >Contact Number</label>}
+                >
+                    <Input
+                        placeholder="Enter Contact Number"
+                        style={{
+                            width: "100%",
+                            height: 48,
+                            border: "1px solid #E7EBED",
+                            outline: "none",
+                            borderRadius: 8
+                        }}
+                        className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
+                    />
+                </Form.Item>
+
+                <Form.Item
+                    style={{ marginBottom: 0 }}
+                    name={"dateOfBirth"}
+                    rules={[
+                        {
+                            required: true,
+                            message: "Enter Patient Date Of Birth"
+                        }
+                    ]}
+                    className="col-span-6"
+                    label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold"  >Date of Birth</label>}
+                >
+                    <Input
+                        onChange={handleDateChange}
+                        type="date"
+                        placeholder="Enter Patient Date Of Birth"
+                        style={{
+                            width: "100%",
+                            height: 48,
+                            border: "1px solid #E7EBED",
+                            outline: "none",
+                            borderRadius: 8
+                        }}
+                        className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
+                    />
+                </Form.Item>
+
+                <Form.Item
+                    style={{ marginBottom: 0 }}
+                    name={"age"}
+                    className="col-span-6"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Enter Patient Age"
+                        }
+                    ]}
+                    getValueFromEvent={(e) => Number(e.target.value)}
+                    label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold" >Age</label>}
+                >
+                    <Input
+                        type="number"
+                        placeholder="Enter Patient Age"
+                        style={{
+                            width: "100%",
+                            height: 48,
+                            border: "1px solid #E7EBED",
+                            outline: "none",
+                            borderRadius: 8
+                        }}
+                        className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
+                    />
+                </Form.Item>
+
+                <Form.Item
+                    className="col-span-6"
+                    style={{ marginBottom: 0 }}
                     name="gender"
                     rules={[
                         {
@@ -277,20 +292,53 @@ const CreatePatientProfile = () => {
                         <Option value="female">Female</Option>
                     </Select>
                 </Form.Item>
-                
+
                 <Form.Item
-                        className="col-span-6"
-                        style={{marginBottom: 0}}
-                        name={"category"}
-                        rules={[
-                            {
-                                required: true,
-                                message: "Enter Patient Plan"
-                            }
-                        ]}
-                        label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold"  >Patient Plan</label>}
+                    className="col-span-6"
+                    style={{ marginBottom: 0 }}
+                    name={"category"}
+                    rules={[
+                        {
+                            required: true,
+                            message: "Enter Patient Plan"
+                        }
+                    ]}
+                    label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold"  >Patient Plan</label>}
+                >
+                    <Select
+                        style={{
+                            width: "100%",
+                            height: 48,
+                            border: "1px solid #E7EBED",
+                            outline: "none",
+                            borderRadius: 8
+                        }}
+                        className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
+                        placeholder="Select Patient Plan"
                     >
-                        <Select
+                        {
+                            categories?.map((category, index) => {
+                                return (
+                                    <Option key={index} value={category?.categoryName}  >{category?.categoryName}</Option>
+                                )
+                            })
+                        }
+                    </Select>
+                </Form.Item>
+
+                <Form.Item
+                    style={{
+                        marginBottom: 0,
+                        width: "100%"
+                    }}
+                    name={"pin"}
+                    className="col-span-6"
+                    label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold" >Random Pin number</label>}
+                >
+                    <div className="w-full flex items-center  gap-6">
+                        <Input
+                            type={`${randomPinState ? "text" : "password"}`}
+                            placeholder="Enter Patient Random Pin"
                             style={{
                                 width: "100%",
                                 height: 48,
@@ -298,62 +346,29 @@ const CreatePatientProfile = () => {
                                 outline: "none",
                                 borderRadius: 8
                             }}
+                            value={randomPin}
                             className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
-                            placeholder="Select Patient Plan"
+                        />
+                        <Button
+                            onClick={handleGeneratedPin}
+                            style={{
+                                width: "100%",
+                                height: 48,
+                                border: "1px solid #E7EBED",
+                                outline: "none",
+                                borderRadius: 8,
+                                color: "#12354E",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                gap: "4px"
+                            }}
+                            className="roboto-medium text-sm leading-4"
                         >
-                            {
-                                categories?.map((category, index)=>{
-                                    return(
-                                        <Option key={index} value={category?.categoryName}  >{category?.categoryName}</Option>
-                                    )
-                                })
-                            }
-                        </Select>
-                </Form.Item>
-
-                <Form.Item
-                        style={{
-                            marginBottom: 0,
-                            width: "100%"
-                        }}
-                        name={"pin"}
-                        className="col-span-6"
-                        label={<label className="text-[#415D71] text-sm block leading-5 poppins-semibold" >Random Pin number</label>}
-                >
-                        <div className="w-full flex items-center  gap-6">
-                            <Input
-                                type={`${randomPinState ? "text" : "password"}`}
-                                placeholder="Enter Patient Random Pin"
-                                style={{
-                                    width: "100%",
-                                    height: 48,
-                                    border: "1px solid #E7EBED",
-                                    outline: "none",
-                                    borderRadius: 8
-                                }}
-                                value={randomPin}
-                                className="poppins-regular text-[#6A6A6A] text-[14px] leading-5"
-                            />
-                            <Button
-                                onClick={handleGeneratedPin}
-                                style={{
-                                    width: "100%",
-                                    height: 48,
-                                    border: "1px solid #E7EBED",
-                                    outline: "none",
-                                    borderRadius: 8,
-                                    color: "#12354E",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    gap: "4px"
-                                }}
-                                className="roboto-medium text-sm leading-4"
-                            >
-                                Random Pin
-                                <FaRandom size={18} color="#12354E" />
-                            </Button>
-                        </div>
+                            Random Pin
+                            <FaRandom size={18} color="#12354E" />
+                        </Button>
+                    </div>
                 </Form.Item>
 
                 <Form.Item
@@ -363,7 +378,7 @@ const CreatePatientProfile = () => {
                     }}
                     className="col-span-6"
                     name={"password"}
-                    label={ <label className="text-[#415D71] block text-sm leading-5 poppins-semibold" htmlFor="">Random Password</label>}
+                    label={<label className="text-[#415D71] block text-sm leading-5 poppins-semibold" htmlFor="">Random Password</label>}
                 >
                     <div className="w-full flex items-center  gap-6">
                         <Input
@@ -388,16 +403,16 @@ const CreatePatientProfile = () => {
                                 outline: "none",
                                 borderRadius: 8,
                                 color: "#12354E",
-                                }}
-                                className="roboto-medium text-sm leading-4 flex items-center justify-center gap-4"
-                                >
+                            }}
+                            className="roboto-medium text-sm leading-4 flex items-center justify-center gap-4"
+                        >
                             Random Password
                             <FaRandom size={18} color="#12354E" />
                         </Button>
                     </div>
                 </Form.Item>
-                
-                <Form.Item className="col-span-12" style={{display: "flex", width: "100%", marginBottom: 0, alignItems: "center", justifyContent: "center"}}>
+
+                <Form.Item className="col-span-12" style={{ display: "flex", width: "100%", marginBottom: 0, alignItems: "center", justifyContent: "center" }}>
                     <Button
                         htmlType='submit'
                         style={{
