@@ -150,7 +150,12 @@ const Chat = () => {
                                         <div onClick={()=> handlePartner(patient)} key={index} className={`flex cursor-pointer items-center gap-[10px] ${patient?._id === partnerId ? "bg-[#E7EBED]" : "bg-[#FDFDFD]"}  rounded-lg p-2`}>
                                             <img 
                                                 src={  patient?.participants?.patient?.profile.startsWith("https") ? patient?.participants?.patient?.profile  :    `${ImageConfig}${patient?.participants?.patient?.profile}`} 
-                                                style={{width: 56, height: 56, borderRadius: "100%", border: "2px solid #92A2AE"}} 
+                                                style={{
+                                                    width: 56, 
+                                                    height: 56,
+                                                    clipPath: "circle()",
+                                                    border: "2px solid #92A2AE"
+                                                }} 
                                                 alt=""
                                             />
                                             <div className='w-full'>

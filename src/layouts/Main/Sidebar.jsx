@@ -153,12 +153,14 @@ const Sidebar = () => {
     }, [socket, handleRefreshConnection]);
 
 
+    const handleMenuClick = (path) => navigate(path);
+
+
     return (
         <div className=''>
-            
             <div className='pt-5 pb-[50px]'>
                 <Link to="/">
-                    <img src={Logo} style={{width: 78, height: 82, margin: "0 auto"}} alt="" />
+                    <img src={Logo} style={{ width: 78, height: 82, margin: "0 auto" }} alt="" />
                 </Link>
             </div>
 
@@ -168,74 +170,69 @@ const Sidebar = () => {
             >
                 {
                     menuItems.map((item, index) =>
-                        item.subMenu 
-                        ?
-                        <SubMenu
-                            key={`sub-${index}`}
-                            icon={item.icon}
-                            title={item.title}
-                            style={{
-                                color: "#575757",
-                                fontSize: "16px",
-                                marginBottom: "10px",
-                            }}
-                        >
-                            {   
-                                item.subMenu.map((subItem, subIndex) => (
-                                <Menu.Item
-                                    key={`sub-${index}-${subIndex}`}
-                                    icon={subItem.icon}
-                                    style={{
-                                        color: "#415D71",
-                                        fontSize: "16px",
-                                        marginBottom: "10px",
-                                    }}
-                                >
-                                    <Link to={`${subItem.path}`} className="poppins-regular text-[14px] leading-[21px]">
-                                        {subItem.title}
-                                    </Link>
-                                </Menu.Item>
-                                ))
-                            }
-                        </SubMenu>
-                        : 
-                        <Menu.Item
-                            key={`item-${index}`}
-                            icon={item.icon}
-                            style={{
-                                width: "100%",
-                                color: "#415D71",
-                                fontSize: "16px",
-                                marginBottom: "10px",
-                                display: user?.role === "admin" && item.path === "/make-admin"  ? "none" : "block"
-                            }}
-                        >
-                            <Link 
-                                to={item.path} 
-                                className="poppins-regular text-[14px] leading-[21px] relative w-full"
+                        item.subMenu
+                            ?
+                            <SubMenu
+                                key={`sub-${index}`}
+                                icon={item.icon}
+                                title={item.title}
+                                style={{
+                                    color: "#575757",
+                                    fontSize: "16px",
+                                    marginBottom: "10px",
+                                }}
                             >
-                                <span>{item.title}</span>
                                 {
-                                    item.path === "/chat" && patients?.unReadMessage > 0 ?
-                                    <span className="w-4 h-4 flex items-center justify-center text-[11px] text-white rounded-full bg-[#E2BCC1] absolute -right-12 -top-1">{patients?.unReadMessage}</span>
-                                    :
-                                    null
+                                    item.subMenu.map((subItem, subIndex) => (
+                                        <Menu.Item
+                                            key={`sub-${index}-${subIndex}`}
+                                            icon={subItem.icon}
+                                            style={{
+                                                color: "#415D71",
+                                                fontSize: "16px",
+                                                marginBottom: "10px",
+                                            }}
+                                            onClick={() => handleMenuClick(subItem.path)}
+                                        >
+                                            {subItem.title}
+                                        </Menu.Item>
+                                    ))
                                 }
-                            </Link>
-                        </Menu.Item>
+                            </SubMenu>
+                            :
+                            <Menu.Item
+                                key={`item-${index}`}
+                                icon={item.icon}
+                                style={{
+                                    width: "100%",
+                                    color: "#415D71",
+                                    fontSize: "16px",
+                                    marginBottom: "10px",
+                                    display: user?.role === "admin" && item.path === "/make-admin" ? "none" : "block"
+                                }}
+                                onClick={() => handleMenuClick(item.path)}
+                            >
+                                <span className="poppins-regular text-[14px] leading-[21px] relative w-full">
+                                    {item.title}
+                                    {
+                                        item.path === "/chat" && patients?.unReadMessage > 0 ?
+                                            <span className="w-4 h-4 flex items-center justify-center text-[11px] text-white rounded-full bg-[#E2BCC1] absolute -right-12 -top-1">{patients?.unReadMessage}</span>
+                                            :
+                                            null
+                                    }
+                                </span>
+                            </Menu.Item>
                     )
                 }
             </Menu>
 
-            <div 
+            <div
                 onClick={handleLogOut}
                 className="flex text-[#415D71] items-center gap-3 cursor-pointer px-6 hover:bg-gray-200 py-2 mx-2 rounded-lg transition-all"
             >
-                <CiLogout size={24} color="#415D71"  />
+                <CiLogout size={24} color="#415D71" />
                 Logout
             </div>
-
-
         </div>
     )
 }
