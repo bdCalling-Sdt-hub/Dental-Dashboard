@@ -157,6 +157,7 @@ const PatientList = () => {
                                             style={{
                                                 width: 40, 
                                                 height: 40,
+                                                clipPath: "circle()",
                                                 objectFit: "contain"
                                             }} 
                                             src={`${patient?.patient?.profile?.startsWith("https") ?  patient?.patient?.profile : `${ImageConfig}${patient?.patient?.profile}` }`} alt="" />
