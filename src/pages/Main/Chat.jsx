@@ -28,8 +28,6 @@ const Chat = () => {
     const [emoji, setEmoji] = useState(false)
     const [messageList, setMessageList] = useState([]);
 
-    console.log(patients)
-
     useEffect(() => {
         dispatch(getPatientChat());
     }, [dispatch])
@@ -61,6 +59,14 @@ const Chat = () => {
             }
         })
     }
+
+
+    const handleKeyUp = (e) => {
+        e.preventDefault();
+        if (e.key === "Enter") {
+            handleSubmit();
+        }
+      };
 
     useEffect(() => {
         if (scrollRef.current) {
@@ -267,6 +273,7 @@ const Chat = () => {
                                 <div className='flex items-center gap-4 bg-white  rounded p-1' style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px" }}>
                                     <Input
                                         onChange={(e) => setKeyword(e.target.value)}
+                                        onKeyUp={handleKeyUp}
                                         value={keyword}
                                         style={{
                                             width: "100%",
